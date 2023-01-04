@@ -1,6 +1,6 @@
 #!/bin/bash
 PROJECT_NAME="github_action"
-JAR_PATH="/home/ubuntu/github_action/calendar/build/libs/*.jar"
+JAR_PATH="/home/ubuntu/github_action/calendar/build/libs/calendar-0.0.1-SNAPSHOT.jar"
 DEPLOY_PATH=/home/ubuntu/$PROJECT_NAME/
 DEPLOY_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy.log"
 DEPLOY_ERR_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy_err.log"
