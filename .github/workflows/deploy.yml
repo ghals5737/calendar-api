@@ -43,7 +43,7 @@ jobs:
         # [2]
       - name: Build with Gradle
         run: ./gradlew build
-       # working-directory: ${{ env.WORKING_DIRECTORY }}
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
 
         # [3]
