@@ -37,13 +37,13 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+       # working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
 
         # [2]
       - name: Build with Gradle
         run: ./gradlew build
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+       # working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
 
         # [3]
