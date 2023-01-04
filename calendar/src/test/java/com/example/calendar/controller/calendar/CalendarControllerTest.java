@@ -37,7 +37,7 @@ public class CalendarControllerTest {
 
     @Test
     void getTest() throws Exception {
-        this.mockMvc.perform(get("/api/calendar"))
+        this.mockMvc.perform(get("/api/calendar/test"))
                 .andExpect(status().isOk())
                 .andDo(document("sample"));
     }
