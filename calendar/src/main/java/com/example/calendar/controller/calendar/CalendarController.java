@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/calendar")
 public class CalendarController {
 
-    @GetMapping
+    @GetMapping("/test")
     public String ControllerTest(){
         return "test성공";
     }
