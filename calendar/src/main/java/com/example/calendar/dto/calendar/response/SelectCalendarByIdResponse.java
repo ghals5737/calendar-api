@@ -1,24 +1,22 @@
-package com.example.calendar.domain.calendar;
+package com.example.calendar.dto.calendar.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 
-@Entity
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Calendar {
-    @Id
-    @Column(name = "calendar_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class SelectCalendarByIdResponse {
+    private Long calendarId;
     private String title;
     private String description;
-    private String color;
     private String category;
+    private String color;
+
 }
+
+
