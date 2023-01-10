@@ -18,7 +18,7 @@ public class CalendarServiceTest {
 
     @Test
     @DisplayName("캘린더 API 조회 정상 동작 테스트")
-    void selectCalendarByIdTest() {
+    void selectCalendarByIdTest() throws Exception {
         //given
         Long calendarId = 1L;
         SelectCalendarByIdResponse expect = SelectCalendarByIdResponse.builder()
