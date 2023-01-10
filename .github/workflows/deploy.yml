@@ -35,10 +35,9 @@ jobs:
 #           spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
 #           spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
       - name: make application.yml        
-        run: |
-          cd ./calendar/src/main/resources
-          touch ./application.yml
-          echo "${{secrets.APPLICATION}}" > ./application.yml
+        run: |          
+          touch ./calendar/src/main/resources/application.yml
+          echo "${{secrets.APPLICATION}}" > ./calendar/src/main/resources/application.yml
         shell: bash
         #run: echo "${{secrets.APPLICATION}}" > ${{RESOURCE_PATH}}
         
