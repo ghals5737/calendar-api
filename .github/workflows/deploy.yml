@@ -38,8 +38,7 @@ jobs:
       - name: make application.yml           
         run: |          
           touch ./calendar/src/main/resources/application.yml
-          echo "${{secrets.APPLICATION}}" > ./calendar/src/main/resources/application.yml
-          awk '{print}' ./calendar/src/main/resources/application.yml
+          echo "${{secrets.APPLICATION}}" > ./calendar/src/main/resources/application.yml        
         shell: bash
         #run: echo "${{secrets.APPLICATION}}" > ${{RESOURCE_PATH}}
         
