@@ -16,7 +16,7 @@ public class ScheduleServiceTest {
 
     @Test
     @DisplayName("schedule_id로 schedule 조회가 정상 작동한다.")
-    void selectScheduleByIdTest(){
+    void selectScheduleByIdTest() throws Exception {
         //given
         Long scheduleId=1L;
         SelectScheduleByIdResponse expect=SelectScheduleByIdResponse.builder().build();
