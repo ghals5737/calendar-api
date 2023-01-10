@@ -34,13 +34,12 @@ jobs:
 #           spring.datasource.url: ${{ secrets.RDS_HOST }} 
 #           spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
 #           spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
-      - name: make application.yml   
-        uses: actions/checkout@v2
-        with:
-          run: |          
-            touch ./calendar/src/main/resources/application.yml
-            echo "${{secrets.APPLICATION}}" > ./calendar/src/main/resources/application.yml
-          shell: bash
+
+      - name: make application.yml           
+        run: |          
+          touch ./calendar/src/main/resources/application.yml
+          echo "${{secrets.APPLICATION}}" > ./calendar/src/main/resources/application.yml        
+        shell: bash
         #run: echo "${{secrets.APPLICATION}}" > ${{RESOURCE_PATH}}
         
       - name: Gradle Caching
@@ -60,7 +59,7 @@ jobs:
 
         # [2]
       - name: Build with Gradle
-        run: ./gradlew build --exclude-task test
+        run: ./gradlew build
         working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
 
