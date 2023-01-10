@@ -1,8 +1,10 @@
 package com.example.calendar.global.common;
 
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class ApiResponse<T>{
     private int result;		//error일 때 false
     //private ErrorResponse error;	//error가 아닐 때 null

@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="황호민">
-<title>Natural REST API Guide</title>
+<meta name="author" content="backtony.github.io(부제)">
+<title>REST Docs 문서 만들기 (글의 제목)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,282 +436,43 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="book">
 <div id="header">
-<h1>Natural REST API Guide</h1>
+<h1>REST Docs 문서 만들기 (글의 제목)</h1>
 <div class="details">
-<span id="author" class="author">황호민</span><br>
+<span id="author" class="author">backtony.github.io(부제)</span><br>
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
-<br><span id="revremark">doctype: book</span>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#Schedule-API">Schedule API</a>
+<ul class="sectlevel2">
+<li><a href="#Schedule-단일-조회">Schedule 단일 조회</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div id="content">
-<div class="literalblock">
-<div class="content">
-<pre>:icons: font
-:source-highlighter: highlightjs
-:toc: left
-:toclevels: 4
-:sectlinks:
-:operation-curl-request-title: Example request
-:operation-http-response-title: Example response</pre>
+<div class="sect1">
+<h2 id="Schedule-API"><a class="link" href="#Schedule-API">Schedule API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="Schedule-단일-조회"><a class="link" href="#Schedule-단일-조회">Schedule 단일 조회</a></h3>
+<div class="paragraph">
+<p>operation::schedule-api[snippets='http-request,path-parameters,http-response,response-fields']</p>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>[[overview]]
-= 개요</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[overview-http-verbs]]
-== HTTP 동사</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>본 REST API에서 사용하는 HTTP 동사(verbs)는 가능한한 표준 HTTP와 REST 규약을 따릅니다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>|===
-| 동사 | 용례</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `GET`
-| 리소스를 가져올 때 사용</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `POST`
-| 새 리소스를 만들 때 사용</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `PUT`
-| 기존 리소스를 수정할 때 사용</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `PATCH`
-| 기존 리소스의 일부를 수정할 때 사용</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `DELETE`
-| 기존 리소스를 삭제할 떄 사용
-|===</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[overview-http-status-codes]]
-== HTTP 상태 코드</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>본 REST API에서 사용하는 HTTP 상태 코드는 가능한한 표준 HTTP와 REST 규약을 따릅니다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>|===
-| 상태 코드 | 용례</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `200 OK`
-| 요청을 성공적으로 처리함</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `201 Created`
-| 새 리소스를 성공적으로 생성함. 응답의 `Location` 헤더에 해당 리소스의 URI가 담겨있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `204 No Content`
-| 기존 리소스를 성공적으로 수정함.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `400 Bad Request`
-| 잘못된 요청을 보낸 경우. 응답 본문에 더 오류에 대한 정보가 담겨있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>| `404 Not Found`
-| 요청한 리소스가 없음.
-|===</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[overview-errors]]
-== 오류</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>에러 응답이 발생했을 때 (상태 코드 &gt;= 400), 본문에 해당 문제를 기술한 JSON 객체가 담겨있다. 에러 객체는 다음의 구조를 따른다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>include::{snippets}/create-event/response-fields.adoc[]</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>예를 들어, 잘못된 요청으로 이벤트를 만들려고 했을 때 다음과 같은 `400 Bad Request` 응답을 받는다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>include::{snippets}/create-event/http-response.adoc[]</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[overview-hypermedia]]
-== 하이퍼미디어</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>본 REST API는 하이퍼미디어와 사용하며 응답에 담겨있는 리소스는 다른 리소스에 대한 링크를 가지고 있다.
-응답은 http://stateless.co/hal_specification.html[Hypertext Application from resource to resource. Language (HAL)] 형식을 따른다.
-링크는 `_links`라는 키로 제공한다. 본 API의 사용자(클라이언트)는 URI를 직접 생성하지 않아야 하며, 리소스에서 제공하는 링크를 사용해야 한다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources]]
-= 리소스</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-index]]
-== 인덱스</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>인덱스는 서비스 진입점을 제공한다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-index-access]]
-=== 인덱스 조회</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>`GET` 요청을 사용하여 인덱스에 접근할 수 있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>operation::index[snippets='response-body,http-response,links']</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-events]]
-== 이벤트</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>이벤트 리소스는 이벤트를 만들거나 조회할 때 사용한다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-events-list]]
-=== 이벤트 목록 조회</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>`GET` 요청을 사용하여 서비스의 모든 이벤트를 조회할 수 있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>operation::get-events[snippets='response-fields,curl-request,http-response,links']</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-events-create]]
-=== 이벤트 생성</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>`POST` 요청을 사용해서 새 이벤트를 만들 수 있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>operation::create-event[snippets='request-fields,curl-request,http-request, request-headers, http-response, response-headers, response-fields, links']</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-events-get]]
-=== 이벤트 조회</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>`Get` 요청을 사용해서 기존 이벤트 하나를 조회할 수 있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>operation::get-event[snippets='request-fields,curl-request,http-response,links']</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>[[resources-events-update]]
-=== 이벤트 수정</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>`PUT` 요청을 사용해서 기존 이벤트를 수정할 수 있다.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>operation::update-event[snippets='request-fields,curl-request,http-response,links']</pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-01-09 11:02:39 +0900
+Last updated 2023-01-10 18:16:18 +0900
 </div>
 </div>
 </body>
