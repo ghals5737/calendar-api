@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CalendarService {
     private final CalendarRepository calendarRepository;
 
-    public SelectCalendarByIdResponse selectCalendarById(Long calendarId) {
-        return CalendarResponse.toSelectCalendarByIdResponse(calendarRepository.findById(calendarId).orElseThrow());
+    public SelectCalendarByIdResponse selectCalendarById(Long calendarId) throws Exception {
+        return CalendarResponse.toSelectCalendarByIdResponse(calendarRepository.findById(calendarId).orElseThrow(Exception::new));
     }
 }
