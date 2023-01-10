@@ -1,5 +1,6 @@
 package com.example.calendar.service.schedule;
 
+import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class ScheduleServiceTest {
     void selectScheduleByIdTest(){
         //given
         Long scheduleId=1L;
-        SelectScheduleByIdResponse expect=SelectScheduleByIdResponse().builder().build();
+        SelectScheduleByIdResponse expect=SelectScheduleByIdResponse.builder().build();
         //when
         SelectScheduleByIdResponse result=scheduleService.selectScheduleById(scheduleId);
         //then
