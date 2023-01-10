@@ -19,7 +19,9 @@ public class ScheduleServiceTest {
     void selectScheduleByIdTest() throws Exception {
         //given
         Long scheduleId=1L;
-        SelectScheduleByIdResponse expect=SelectScheduleByIdResponse.builder().build();
+        SelectScheduleByIdResponse expect=SelectScheduleByIdResponse.builder()
+                .title("test")
+                .build();
         //when
         SelectScheduleByIdResponse result=scheduleService.selectScheduleById(scheduleId);
         //then
