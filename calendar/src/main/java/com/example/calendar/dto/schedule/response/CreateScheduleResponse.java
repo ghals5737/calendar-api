@@ -11,12 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SelectScheduleByIdResponse {
+public class CreateScheduleResponse {
     private Long scheduleId;
-    private Long calendarId;
-    private String title;
-    private LocalDateTime startDt;
-    private LocalDateTime endDt;
-    private String des;
-    private String color;
 }

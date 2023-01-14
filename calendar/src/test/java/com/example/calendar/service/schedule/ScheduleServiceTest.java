@@ -1,6 +1,8 @@
 package com.example.calendar.service.schedule;
 
 import com.example.calendar.domain.schedule.Schedule;
+import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
+import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
 import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -50,10 +53,24 @@ public class ScheduleServiceTest {
     @DisplayName("schedule생성이 정상 작동한다.")
     void createScheduleTest() throws Exception {
         //given
-        CreateScheduleRequest request=CreateScheduleRequest().builder().build();
+        CreateScheduleRequest request= CreateScheduleRequest.builder()
+                .calendarId(1L)
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .des("test des")
+                .color("test color")
+                .build();
         //when
         CreateScheduleResponse result=scheduleService.createSchedule(request);
+
         //then
-        assertThat(result.getTitle()).isEqualTo(expect.getTitle());
+        List<Schedule> results=scheduleRepository.findAll();
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getId()).isEqualTo(result.getScheduleId());
+        assertThat(results.get(0).getCalendarId()).isEqualTo(request.getCalendarId());
+        assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
+        assertThat(results.get(0).getDescription()).isEqualTo(request.getDes());
+        assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
     }
 }
