@@ -63,9 +63,10 @@ public class ScheduleControllerTest {
                         RestDocumentationRequestBuilders
                             .post("/api/schedule")
                             .content(objectMapper.writeValueAsString(request))
+                            .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
                             .andExpect(status().isOk())
-                            .andDo(document("schedule-api",
+                            .andDo(document("schedule-create",
                                     requestFields(
                                             fieldWithPath("calendarId").description("달력 아이디"),
                                             fieldWithPath("title").description("일정 제목"),
@@ -78,11 +79,6 @@ public class ScheduleControllerTest {
                                             fieldWithPath("headers").description("해더 정보"),
                                             fieldWithPath("body.result").description("API 실행결과정보"),
                                             fieldWithPath("body.data.scheduleId").description("일정 ID"),
-                                            fieldWithPath("body.data.title").description("제목"),
-                                            fieldWithPath("body.data.startDt").description("시작일"),
-                                            fieldWithPath("body.data.endDt").description("종료일"),
-                                            fieldWithPath("body.data.des").description("상세 설명"),
-                                            fieldWithPath("body.data.color").description("색깔"),
                                             fieldWithPath("statusCode").description("http status 상태코드"),
                                             fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                                     )));
@@ -107,7 +103,7 @@ public class ScheduleControllerTest {
                         .get("/api/schedule/{scheduleId}", expect.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("schedule-api"
+                .andDo(document("schedule-selectByID"
                         ,pathParameters(
                                 parameterWithName("scheduleId").description("조회할 일정 ID")
                         )                        ,
