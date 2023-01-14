@@ -1,3 +1,6 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
 = REST Docs 문서 만들기 (글의 제목)
 backtony.github.io(부제)
 :doctype: book
@@ -12,4 +15,8 @@ backtony.github.io(부제)
 
 [[Schedule-단일-조회]]
 === Schedule 단일 조회
-operation::schedule-api[snippets='http-request,path-parameters,http-response,response-fields']
+include::{snippets}/schedule-api/http-request.adoc[]
+include::{snippets}/schedule-api/http-response.adoc[]
+include::{snippets}/schedule-api/path-parameters.adoc[]
+include::{snippets}/schedule-api/response-body.adoc[]
+include::{snippets}/schedule-api/response-fields.adoc[]
