@@ -73,4 +73,24 @@ public class ScheduleServiceTest {
         assertThat(results.get(0).getDescription()).isEqualTo(request.getDes());
         assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
     }
+
+    @Test
+    @DisplayName("scheduleID로 삭제가 정상 작동한다.")
+    void deleteScheduleTest() throws Exception {
+        //given
+        Schedule expect=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .description("test")
+                .color("test")
+                .build());
+        //when
+        ScheduleDeleteResponse result=scheduleService.deleteScheduleById(expect.getId());
+
+        //then
+        List<Schedule> results=scheduleRepository.findAll();
+        assertThat(results).isEmpty();
+    }
 }
