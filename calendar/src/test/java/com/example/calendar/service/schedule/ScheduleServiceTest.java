@@ -87,7 +87,7 @@ public class ScheduleServiceTest {
                 .color("test")
                 .build());
         //when
-        ScheduleDeleteResponse result=scheduleService.deleteScheduleById(expect.getId());
+        scheduleService.deleteScheduleById(expect.getId());
 
         //then
         List<Schedule> results=scheduleRepository.findAll();

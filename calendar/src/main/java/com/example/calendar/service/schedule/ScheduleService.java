@@ -1,5 +1,6 @@
 package com.example.calendar.service.schedule;
 
+import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
 import com.example.calendar.dto.schedule.response.ScheduleResponse;
@@ -22,5 +23,10 @@ public class ScheduleService {
         return ScheduleResponse.toCreateScheduleResponse(
                 scheduleRepository.save(request.toSchedule())
         );
+    }
+
+    public void deleteScheduleById(Long scheduleId)throws  Exception{
+        Schedule schedule=scheduleRepository.findById(scheduleId).orElseThrow(Exception::new);
+        scheduleRepository.delete(schedule);
     }
 }
