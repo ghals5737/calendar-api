@@ -21,4 +21,10 @@ public class ScheduleResponse {
                 .scheduleId(schedule.getId())
                 .build();
     }
+
+    public static DeleteScheduleResponse toDeleteScheduleResponse(Schedule schedule){
+        return DeleteScheduleResponse.builder()
+                .scheduleId(schedule.getId())
+                .build();
+    }
 }

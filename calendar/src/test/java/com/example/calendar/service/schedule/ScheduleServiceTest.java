@@ -3,6 +3,7 @@ package com.example.calendar.service.schedule;
 import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
+import com.example.calendar.dto.schedule.response.DeleteScheduleResponse;
 import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
@@ -87,10 +88,11 @@ public class ScheduleServiceTest {
                 .color("test")
                 .build());
         //when
-        scheduleService.deleteScheduleById(expect.getId());
+        DeleteScheduleResponse result=scheduleService.deleteScheduleById(expect.getId());
 
         //then
         List<Schedule> results=scheduleRepository.findAll();
         assertThat(results).isEmpty();
+        assertThat(expect.getId()).isEqualTo(result.getScheduleId());
     }
 }

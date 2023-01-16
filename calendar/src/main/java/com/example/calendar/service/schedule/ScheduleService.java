@@ -3,6 +3,7 @@ package com.example.calendar.service.schedule;
 import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
+import com.example.calendar.dto.schedule.response.DeleteScheduleResponse;
 import com.example.calendar.dto.schedule.response.ScheduleResponse;
 import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
@@ -25,8 +26,9 @@ public class ScheduleService {
         );
     }
 
-    public void deleteScheduleById(Long scheduleId)throws  Exception{
+    public DeleteScheduleResponse deleteScheduleById(Long scheduleId)throws  Exception{
         Schedule schedule=scheduleRepository.findById(scheduleId).orElseThrow(Exception::new);
         scheduleRepository.delete(schedule);
+        return ScheduleResponse.toDeleteScheduleResponse(schedule);
     }
 }
