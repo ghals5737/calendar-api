@@ -121,4 +121,36 @@ public class ScheduleControllerTest {
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
+
+    @Test
+    @DisplayName("스케쥴아이디로 삭제하는 API 정상동작 확인")
+    public void deleteScheduleByIdTest() throws Exception{
+        //given
+        Schedule expect=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .description("test")
+                .color("test")
+                .build());
+
+        //when,then
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .delete("/api/schedule/{scheduleId}", expect.getId())
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("schedule-selectByID"
+                        ,pathParameters(
+                                parameterWithName("scheduleId").description("조회할 일정 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data.scheduleId").description("삭제된 일정 ID"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
 }

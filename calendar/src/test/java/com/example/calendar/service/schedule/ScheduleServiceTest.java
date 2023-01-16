@@ -3,6 +3,7 @@ package com.example.calendar.service.schedule;
 import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
+import com.example.calendar.dto.schedule.response.DeleteScheduleResponse;
 import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
@@ -72,5 +73,26 @@ public class ScheduleServiceTest {
         assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
         assertThat(results.get(0).getDescription()).isEqualTo(request.getDes());
         assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
+    }
+
+    @Test
+    @DisplayName("scheduleID로 삭제가 정상 작동한다.")
+    void deleteScheduleTest() throws Exception {
+        //given
+        Schedule expect=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .description("test")
+                .color("test")
+                .build());
+        //when
+        DeleteScheduleResponse result=scheduleService.deleteScheduleById(expect.getId());
+
+        //then
+        List<Schedule> results=scheduleRepository.findAll();
+        assertThat(results).isEmpty();
+        assertThat(expect.getId()).isEqualTo(result.getScheduleId());
     }
 }
