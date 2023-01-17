@@ -1,15 +1,34 @@
 package com.example.calendar.controller.calendar;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
+import com.example.calendar.dto.calendar.response.CreateCalendarResponse;
+import com.example.calendar.dto.calendar.response.DeleteCalendarResponse;
+import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
+import com.example.calendar.service.calendar.CalendarService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/calendar")
 public class CalendarController {
 
-    @GetMapping("/test")
-    public String ControllerTest(){
-        return "test성공";
+    private final CalendarService calendarService;
+
+    @PostMapping
+    public CreateCalendarResponse createCalendar(@RequestBody CreateCalendarRequest request) {
+        return calendarService.createCalendar(request);
     }
+
+    @GetMapping("{id}")
+    public SelectCalendarByIdResponse selectCalendarById(@PathVariable Long id) throws Exception {
+        return calendarService.selectCalendarById(id);
+    }
+
+    @DeleteMapping("{id}")
+    public DeleteCalendarResponse deleteCalendarById(@PathVariable Long id) {
+        return calendarService.deleteCalendarById(id);
+    }
+
+
 }
