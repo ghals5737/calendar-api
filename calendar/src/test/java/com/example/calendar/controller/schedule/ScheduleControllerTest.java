@@ -195,6 +195,7 @@ public class ScheduleControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.error").description("API 에러 정보??"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data.calendarId").description("달력 ID"),
                                 fieldWithPath("body.data.scheduleId").description("일정 ID"),
