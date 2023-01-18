@@ -22,7 +22,7 @@ import static com.example.calendar.global.error.ErrorCode.DUPLICATE_RESOURCE;
 @Slf4j
 @RequiredArgsConstructor
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
@@ -50,9 +50,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ErrorResponse.builder()
                 .code(e.getErrorCode().toString())
-//                .status(request.get)
                 .message(e.getMessage())
-//                .error(e.getCause())
                 .build();
     }
 }

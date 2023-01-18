@@ -21,12 +21,17 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-                                  Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        if(body instanceof ErrorResponse) {
+        if (body instanceof ErrorResponse) {
             ErrorResponse errorResponse = (ErrorResponse) body;
-            ApiResponse<Object> apiResponse = ApiResponse.builder().code(HttpStatus.BAD_REQUEST).error(errorResponse).build();
+            ApiResponse<Object> apiResponse = ApiResponse
+                    .builder()
+                    .code(HttpStatus.BAD_REQUEST)
+                    .error(errorResponse)
+                    .build();
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         }
 

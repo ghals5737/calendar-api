@@ -9,16 +9,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Date;
-
 @RestControllerAdvice
-public class ValidationExceptionHandler {
+public class ValidationExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ValidationErrorResponse handleValidationExceptions(ValidationException e) {
         return ValidationErrorResponse.builder()
-//                .timestamp(new Date().toString())
                 .build();
     }
 }
