@@ -8,6 +8,9 @@ import com.example.calendar.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/calendar")
@@ -16,7 +19,7 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @PostMapping
-    public CreateCalendarResponse createCalendar(@RequestBody CreateCalendarRequest request) {
+    public CreateCalendarResponse createCalendar(@RequestBody @Valid CreateCalendarRequest request) {
         return calendarService.createCalendar(request);
     }
 
