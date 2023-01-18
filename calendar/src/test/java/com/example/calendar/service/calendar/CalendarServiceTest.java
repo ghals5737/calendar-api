@@ -7,6 +7,7 @@ import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
 import com.example.calendar.repository.calendar.CalendarRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -28,6 +30,10 @@ public class CalendarServiceTest {
     @Autowired
     private CalendarRepository calendarRepository;
 
+    @AfterEach
+    public void clear(){
+        calendarRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("캘린더 API 조회 정상 동작 테스트")
@@ -93,8 +99,8 @@ public class CalendarServiceTest {
         calendarService.deleteCalendarById(save.getId());
 
         // then
-        Assertions.assertThrows(NoSuchElementException.class, () -> calendarService.selectCalendarById(save.getId()));
-
+        Optional<Calendar> byId = calendarRepository.findById(save.getId());
+        assertThat(byId.isPresent()).isEqualTo(false);
     }
 
 }
