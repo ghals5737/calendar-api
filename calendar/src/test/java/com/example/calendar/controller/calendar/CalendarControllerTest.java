@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
+@SpringBootTest
 class CalendarControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -72,6 +74,10 @@ class CalendarControllerTest {
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.title").description("캘린더 제목"),
+                                fieldWithPath("body.data.color").description("캘린더 색상"),
+                                fieldWithPath("body.data.category").description("캘린더 카테고리"),
+                                fieldWithPath("body.data.description").description("캘린더 설명"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
@@ -89,8 +95,6 @@ class CalendarControllerTest {
                 .description("test desc")
                 .build());
 
-        log.info("expect.getId()={}", expect.getId());
-
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
@@ -104,9 +108,12 @@ class CalendarControllerTest {
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.title").description("제목"),
-                                fieldWithPath("body.data.des").description("상세 설명"),
-                                fieldWithPath("body.data.color").description("색깔"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("body.data.calendarId").description("캘린더 ID"),
+                                fieldWithPath("body.data.title").description("캘린더 제목"),
+                                fieldWithPath("body.data.color").description("캘린더 색상"),
+                                fieldWithPath("body.data.category").description("캘린더 카테고리"),
+                                fieldWithPath("body.data.description").description("캘린더 설명"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
@@ -136,8 +143,9 @@ class CalendarControllerTest {
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.calendarId").description("삭제된 일정 ID"),
+                                fieldWithPath("body.data.calendarId").description("삭제된 캘린더 ID"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
