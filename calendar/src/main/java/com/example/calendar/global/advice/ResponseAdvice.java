@@ -1,6 +1,7 @@
 package com.example.calendar.global.advice;
 
 import com.example.calendar.global.common.ApiResponse;
+import com.example.calendar.global.error.ErrorResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,11 +23,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
                                   ServerHttpResponse response) {
-//        if(body instanceof ErrorResponse) {
-//            ErrorResponse errorResponse = (ErrorResponse) body;
-//            ApiResponse apiResponse = ApiResponse.builder().code(ResultCode.FAIL).error(errorResponse).build();
-//            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-//        }
+
+        if(body instanceof ErrorResponse) {
+            ErrorResponse errorResponse = (ErrorResponse) body;
+            ApiResponse<Object> apiResponse = ApiResponse.builder().code(HttpStatus.BAD_REQUEST).error(errorResponse).build();
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        }
+
         ApiResponse<Object> apiResponse = ApiResponse.builder().code(HttpStatus.OK).data(body).build();
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
