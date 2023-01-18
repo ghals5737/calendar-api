@@ -95,4 +95,37 @@ public class ScheduleServiceTest {
         assertThat(results).isEmpty();
         assertThat(expect.getId()).isEqualTo(result.getScheduleId());
     }
+
+    @Test
+    @DisplayName("schedule수정이 정상 작동한다.")
+    void createScheduleTest() throws Exception {
+        //given
+        Schedule expect=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .description("test")
+                .color("test")
+                .build());
+        UpdateScheduleRequest request= UpdateScheduleRequest.builder()
+
+                .title("test")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .des("test des")
+                .color("test color")
+                .build();
+        //when
+        UpdateScheduleResponse result=scheduleService.updateSchedule(request);
+
+        //then
+        List<Schedule> results=scheduleRepository.findAll();
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getId()).isEqualTo(result.getScheduleId());
+        assertThat(results.get(0).getCalendarId()).isEqualTo(request.getCalendarId());
+        assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
+        assertThat(results.get(0).getDescription()).isEqualTo(request.getDes());
+        assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
+    }
 }
