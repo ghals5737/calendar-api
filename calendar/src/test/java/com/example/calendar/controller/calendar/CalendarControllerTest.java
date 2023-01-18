@@ -12,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -39,10 +37,10 @@ class CalendarControllerTest {
     @Autowired
     private CalendarRepository calendarRepository;
 
-//    @AfterEach
-//    public void clear() {
-//        calendarRepository.deleteAll();
-//    }
+    @AfterEach
+    public void clear() {
+        calendarRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("캘린더 생성 API 정상동작 확인")
@@ -101,16 +99,12 @@ class CalendarControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document("calendar-selectByID"
                         , pathParameters(
-                                parameterWithName("id").description("조회할 일정 ID")
+                                parameterWithName("id").description("조회할 캘린더 ID")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.calendarId").description("달력 ID"),
-                                fieldWithPath("body.data.scheduleId").description("일정 ID"),
                                 fieldWithPath("body.data.title").description("제목"),
-                                fieldWithPath("body.data.startDt").description("시작일"),
-                                fieldWithPath("body.data.endDt").description("종료일"),
                                 fieldWithPath("body.data.des").description("상세 설명"),
                                 fieldWithPath("body.data.color").description("색깔"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
@@ -119,7 +113,7 @@ class CalendarControllerTest {
     }
 
     @Test
-    @DisplayName("스케쥴아이디로 삭제하는 API 정상동작 확인")
+    @DisplayName("캘린더아이디로 삭제하는 API 정상동작 확인")
     public void deleteScheduleByIdTest() throws Exception {
         //given
         Calendar expect = calendarRepository.save(Calendar.builder()
@@ -137,13 +131,13 @@ class CalendarControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document("calendar-selectByID"
                         , pathParameters(
-                                parameterWithName("id").description("조회할 일정 ID")
+                                parameterWithName("id").description("삭제할 캘린더 id")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.scheduleId").description("삭제된 일정 ID"),
+                                fieldWithPath("body.data.calendarId").description("삭제된 일정 ID"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
