@@ -89,7 +89,7 @@ class CalendarControllerTest {
                 .description("test desc")
                 .build());
 
-        log.info("expect.getId()={}", expect.getId());
+//        log.info("expect.getId()={}", expect.getId());
 
         //when,then
         this.mockMvc.perform(
