@@ -2,9 +2,11 @@ package com.example.calendar.service.schedule;
 
 import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
+import com.example.calendar.dto.schedule.request.UpdateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
 import com.example.calendar.dto.schedule.response.DeleteScheduleResponse;
 import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
+import com.example.calendar.dto.schedule.response.UpdateScheduleResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -98,7 +100,7 @@ public class ScheduleServiceTest {
 
     @Test
     @DisplayName("schedule수정이 정상 작동한다.")
-    void createScheduleTest() throws Exception {
+    void updateScheduleTest() throws Exception {
         //given
         Schedule expect=scheduleRepository.save(Schedule.builder()
                 .calendarId(1L)
@@ -109,12 +111,12 @@ public class ScheduleServiceTest {
                 .color("test")
                 .build());
         UpdateScheduleRequest request= UpdateScheduleRequest.builder()
-
-                .title("test")
+                .scheduleId(expect.getId())
+                .title("update test")
                 .startDt(LocalDateTime.now())
                 .endDt(LocalDateTime.now())
-                .des("test des")
-                .color("test color")
+                .des("update test des")
+                .color("update test color")
                 .build();
         //when
         UpdateScheduleResponse result=scheduleService.updateSchedule(request);
@@ -123,9 +125,9 @@ public class ScheduleServiceTest {
         List<Schedule> results=scheduleRepository.findAll();
         assertThat(results).hasSize(1);
         assertThat(results.get(0).getId()).isEqualTo(result.getScheduleId());
-        assertThat(results.get(0).getCalendarId()).isEqualTo(request.getCalendarId());
-        assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
-        assertThat(results.get(0).getDescription()).isEqualTo(request.getDes());
-        assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
+        assertThat(results.get(0).getCalendarId()).isEqualTo(result.getCalendarId());
+        assertThat(results.get(0).getTitle()).isEqualTo(result.getTitle());
+        assertThat(results.get(0).getDescription()).isEqualTo(result.getDes());
+        assertThat(results.get(0).getColor()).isEqualTo(result.getColor());
     }
 }

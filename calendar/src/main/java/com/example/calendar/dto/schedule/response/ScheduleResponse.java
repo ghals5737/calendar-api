@@ -27,4 +27,16 @@ public class ScheduleResponse {
                 .scheduleId(schedule.getId())
                 .build();
     }
+
+    public static UpdateScheduleResponse toUpdateScheduleResponse(Schedule schedule) {
+        return UpdateScheduleResponse.builder()
+                .scheduleId(schedule.getId())
+                .calendarId(schedule.getCalendarId())
+                .title(schedule.getTitle())
+                .des(schedule.getDescription())
+                .startDt(schedule.getStartDt())
+                .endDt(schedule.getEndDt())
+                .color(schedule.getColor())
+                .build();
+    }
 }

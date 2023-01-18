@@ -1,6 +1,7 @@
 package com.example.calendar.domain.schedule;
 
 
+import com.example.calendar.dto.schedule.request.UpdateScheduleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,4 +26,12 @@ public class Schedule {
     private LocalDateTime endDt;
     private String description;
     private String color;
+
+    public void updateSchedule(UpdateScheduleRequest request){
+        this.title=request.getTitle();
+        this.startDt=request.getStartDt();
+        this.endDt=request.getEndDt();
+        this.description=request.getDes();
+        this.color=request.getColor();
+    }
 }
