@@ -59,7 +59,7 @@ jobs:
 
         # [2]
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew build --exclude-task test
         working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
 
