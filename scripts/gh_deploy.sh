@@ -9,12 +9,14 @@ APPLICATION_LOG_PATH="/home/ubuntu/$PROJECT_NAME/application.log"
 
 echo "===== 배포 시작 : $(date +%c) =====" >> $DEPLOY_LOG_PATH
 
-echo "> build 파일명: $JAR_NAME" >> $DEPLOY_LOG_PATH
-echo "> build 파일 복사" >> $DEPLOY_LOG_PATH
-cp $BUILD_JAR $DEPLOY_PATH
+# echo "> build 파일명: $JAR_NAME" >> $DEPLOY_LOG_PATH
+# echo "> build 파일 복사" >> $DEPLOY_LOG_PATH
+# cp $BUILD_JAR $DEPLOY_PATH
 
-echo "> 현재 동작중인 어플리케이션 pid 체크" >> $DEPLOY_LOG_PATH
-CURRENT_PID=$(pgrep -f $JAR_NAME)
+# echo "> 현재 동작중인 어플리케이션 pid 체크" >> $DEPLOY_LOG_PATH
+# CURRENT_PID=$(pgrep -f $JAR_NAME)
+
+fuser -k 8080/tcp
 
 if [ -z $CURRENT_PID ]
 then
