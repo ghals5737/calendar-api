@@ -1,9 +1,13 @@
 package com.example.calendar.controller.calendar;
 
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
+import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.CreateCalendarResponse;
 import com.example.calendar.dto.calendar.response.DeleteCalendarResponse;
 import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
+import com.example.calendar.dto.calendar.response.UpdateCalendarResponse;
+import com.example.calendar.dto.schedule.request.UpdateScheduleRequest;
+import com.example.calendar.dto.schedule.response.UpdateScheduleResponse;
 import com.example.calendar.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +37,8 @@ public class CalendarController {
         return calendarService.deleteCalendarById(id);
     }
 
-
+    @PutMapping
+    public UpdateCalendarResponse updateCalendar(@RequestBody UpdateCalendarRequest request) throws Exception {
+        return calendarService.updateCalendar(request);
+    }
 }
