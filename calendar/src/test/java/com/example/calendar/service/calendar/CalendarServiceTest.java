@@ -1,20 +1,23 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
+import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.CreateCalendarResponse;
 import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
+import com.example.calendar.dto.calendar.response.UpdateCalendarResponse;
 import com.example.calendar.repository.calendar.CalendarRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -31,7 +34,7 @@ public class CalendarServiceTest {
     private CalendarRepository calendarRepository;
 
     @AfterEach
-    public void clear(){
+    public void clear() {
         calendarRepository.deleteAll();
     }
 
@@ -103,4 +106,37 @@ public class CalendarServiceTest {
         assertThat(byId.isPresent()).isEqualTo(false);
     }
 
+    @Test
+    @DisplayName("캘린더 수정 API 정상 동작 테스트")
+    void updateCalendarTest() {
+
+        // given
+        Calendar calendar = Calendar.builder()
+                .title("test title")
+                .description("test des")
+                .category("test category")
+                .color("test color")
+                .build();
+
+        Calendar save = calendarRepository.save(calendar);
+
+        // when
+        UpdateCalendarRequest request = UpdateCalendarRequest.builder()
+                .id(save.getId())
+                .title("update title")
+                .description("update des")
+                .category("update category")
+                .color("update color")
+                .build();
+        UpdateCalendarResponse updated = calendarService.updateCalendar(request);
+
+        // then
+        List<Calendar> results=calendarRepository.findAll();
+        assertThat(results).hasSize(1);
+        AssertionsForClassTypes.assertThat(results.get(0).getId()).isEqualTo(request.getId());
+        AssertionsForClassTypes.assertThat(results.get(0).getCategory()).isEqualTo(request.getCategory());
+        AssertionsForClassTypes.assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
+        AssertionsForClassTypes.assertThat(results.get(0).getDescription()).isEqualTo(request.getDescription());
+        AssertionsForClassTypes.assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
+    }
 }

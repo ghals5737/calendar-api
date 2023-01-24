@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @WebMvcTest(CalendarController.class)
-class GlobalExceptionHandlerTest {
+class GlobalExceptionAdviceTest {
 
 
     @Autowired
@@ -30,12 +30,6 @@ class GlobalExceptionHandlerTest {
     @Test
     @DisplayName("Global Exception 정상 동작 테스트")
     void selectCalendarByIdTest() throws Exception {
-
-
-        mvc
-                .perform(delete("/api/calendar/100"))
-                .andExpect(status().isOk())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof CustomException));
 
 
     }

@@ -26,4 +26,13 @@ public class CalendarResponse {
                 .calendarId(calendar.getId())
                 .build();
     }
+
+    public static UpdateCalendarResponse toUpdateCalendarResponse(Calendar calendar) {
+        return UpdateCalendarResponse.builder()
+                .calendarId(calendar.getId())
+                .category(calendar.getCategory())
+                .color(calendar.getColor())
+                .description(calendar.getDescription())
+                .build();
+    }
 }
