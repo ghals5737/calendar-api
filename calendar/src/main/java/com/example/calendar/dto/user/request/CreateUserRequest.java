@@ -17,16 +17,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateUserRequest {
-    @NotBlank
+    @NotBlank(message = "닉네임에 공백이 포함될 수 없습니다.")
     private String nickname;
-    @NotBlank
+    @NotBlank(message = "이메일이 공백일 수 없습니다.")
     @Email
     private String email;
-    @NotBlank
+    @NotBlank(message = "생년월일이 공백일 수 없습니다.")
     @DateTimeFormat(pattern = "yyyyMMdd")
     @PastOrPresent
     private LocalDate birthday;
-    @NotBlank
+    @NotBlank(message = "비밀번호가 공백일 수 없습니다.")
     private String password;
 
     public User toUser() {
