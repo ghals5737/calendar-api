@@ -13,11 +13,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.UnexpectedTypeException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.example.calendar.global.error.ErrorCode.DUPLICATE_RESOURCE;
+import static com.example.calendar.global.error.ErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,5 +53,11 @@ public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
                 .code(e.getErrorCode().toString())
                 .message(e.getMessage())
                 .build();
+    }
+
+    @ExceptionHandler(value = {UnexpectedTypeException.class})
+    protected ResponseEntity<ErrorResponse> handleValidationException() {
+        log.error("handleValidationException throw Exception : {}", INVALID_TYPE);
+        return ErrorResponse.toResponseEntity(INVALID_TYPE);
     }
 }

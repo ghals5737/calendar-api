@@ -38,7 +38,7 @@ public class CalendarController {
     }
 
     @PutMapping
-    public UpdateCalendarResponse updateCalendar(@RequestBody UpdateCalendarRequest request) throws Exception {
+    public UpdateCalendarResponse updateCalendar(@RequestBody @Valid UpdateCalendarRequest request) throws Exception {
         return calendarService.updateCalendar(request);
     }
 }
