@@ -22,6 +22,8 @@ public class CreateCalendarRequest {
     private String category;
     @NotBlank
     private String color;
+    @NotBlank
+    private Long userId;
 
 
     public Calendar toCalendar() {

@@ -33,11 +33,15 @@ public class UserServiceTest {
 
     @Autowired
     private UserRepository userRepository;
-
     @AfterEach
     public void clear() {
         userRepository.deleteAll();
     }
+
+//    @AfterEach
+//    public void clear() {
+//        userRepository.deleteAll();
+//    }
 
 
     @Test
@@ -51,16 +55,20 @@ public class UserServiceTest {
                 .password("abcdefg")
                 .build();
         User save = userRepository.save(user);
+        log.info("getBirthday",save.getBirthday());
+        log.info("getNickname",save.getNickname());
+        log.info("getEmail",save.getEmail());
+        log.info("password",save.getPassword());
 
         //when
         SelectUserByIdResponse response = userService.selectUserById(save.getId());
 
         //then
-        assertThat(response.getUserId()).isEqualTo(save.getId());
-        assertThat(response.getNickname()).isEqualTo(save.getNickname());
-        assertThat(response.getPassword()).isEqualTo(save.getPassword());
-        assertThat(response.getBirthday()).isEqualTo(save.getBirthday());
-        assertThat(response.getEmail()).isEqualTo(save.getEmail());
+        assertThat(response.getUserId()).isEqualTo(user.getId());
+        assertThat(response.getNickname()).isEqualTo(user.getNickname());
+        assertThat(response.getPassword()).isEqualTo(user.getPassword());
+        assertThat(response.getBirthday()).isEqualTo(user.getBirthday());
+        assertThat(response.getEmail()).isEqualTo(user.getEmail());
 
     }
 
