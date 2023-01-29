@@ -22,6 +22,8 @@ public class Schedule {
     private Long id;
     private Long calendarId;
     private String title;
+    private String startYmd;
+    private String endYmd;
     private LocalDateTime startDt;
     private LocalDateTime endDt;
     private String description;

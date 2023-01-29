@@ -130,4 +130,73 @@ public class ScheduleServiceTest {
         assertThat(results.get(0).getDescription()).isEqualTo(result.getDes());
         assertThat(results.get(0).getColor()).isEqualTo(result.getColor());
     }
+
+    @Test
+    @DisplayName("조회하고싶은 월의 시작년원일과 끝년월일을 받아서 scheduleList를 조회하는 서비스가 정상 작동한다.")
+    void selectScheduleListTest() throws Exception {
+        //given
+        //2023년 01 월 기준
+        String startYmd="20230101";
+        String endYmd="20230204";
+
+        //시작날짜 끝날짜 모두 조회하고 싶은 월안에 있음
+        Schedule expect1=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test1")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20230102")
+                .endYmd("20230112")
+                .description("test1")
+                .color("test1")
+                .build());
+
+        //시작날짜는 전월 끝날짜는 포함
+        Schedule expect2=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test2")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20221202")
+                .endYmd("20230106")
+                .description("test2")
+                .color("test2")
+                .build());
+
+        //시작날짜는 포함 끝날짜는 다음월
+        Schedule expect3=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test3")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20230102")
+                .endYmd("20230206")
+                .description("test3")
+                .color("test3")
+                .build());
+
+        //시작,끝날짜 모두 포함 X
+        Schedule expect4=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test4")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20221202")
+                .endYmd("20230206")
+                .description("test4")
+                .color("test4")
+                .build());
+
+
+        //when
+        List<Schedule> results=scheduleService.selectScheduleList(startYmd,endYmd);
+
+        //then
+        assertThat(results).hasSize(4);
+//        assertThat(results.get(0).getId()).isEqualTo(result.getScheduleId());
+//        assertThat(results.get(0).getCalendarId()).isEqualTo(result.getCalendarId());
+//        assertThat(results.get(0).getTitle()).isEqualTo(result.getTitle());
+//        assertThat(results.get(0).getDescription()).isEqualTo(result.getDes());
+//        assertThat(results.get(0).getColor()).isEqualTo(result.getColor());
+    }
 }

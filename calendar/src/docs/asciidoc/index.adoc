@@ -10,13 +10,14 @@ backtony.github.io(부제)
 :toclevels: 2
 :sectlinks:
 
-[[Schedule-API]]
-== Schedule API
+//[[Schedule-API]]
+//== Schedule API
 
-[[Schedule-단일-조회]]
-=== Schedule 단일 조회
-include::{snippets}/schedule-api/http-request.adoc[]
-include::{snippets}/schedule-api/http-response.adoc[]
-include::{snippets}/schedule-api/path-parameters.adoc[]
-include::{snippets}/schedule-api/response-body.adoc[]
-include::{snippets}/schedule-api/response-fields.adoc[]
+//[[Schedule-단일-조회]]
+//=== Schedule 단일 조회
+//include::{snippets}/schedule-selectByID/http-request.adoc[]
+//include::{snippets}/schedule-selectByID/http-response.adoc[]
+//include::{snippets}/schedule-selectByID/path-parameters.adoc[]
+//include::{snippets}/schedule-selectByID/response-body.adoc[]
+//include::{snippets}/schedule-selectByID/response-fields.adoc[]
+
