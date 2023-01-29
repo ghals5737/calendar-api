@@ -12,12 +12,12 @@ import java.util.List;
 public class ScheduleQueryDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<Schedule> find(String startYmd,String endYmd){
+    public List<Schedule> findScheduleList(String startYmd,String endYmd){
         return jpaQueryFactory.select(schedule)
                 .from(schedule)
                 .where(
-                        schedule.startYmd.goe(endYmd),
-                        schedule.endYmd.loe(startYmd)
+                        schedule.startYmd.loe(endYmd),
+                        schedule.endYmd.goe(startYmd)
                 ).fetch();
     }
 }

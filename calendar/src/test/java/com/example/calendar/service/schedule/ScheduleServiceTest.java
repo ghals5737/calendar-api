@@ -193,10 +193,8 @@ public class ScheduleServiceTest {
 
         //then
         assertThat(results).hasSize(4);
-//        assertThat(results.get(0).getId()).isEqualTo(result.getScheduleId());
-//        assertThat(results.get(0).getCalendarId()).isEqualTo(result.getCalendarId());
-//        assertThat(results.get(0).getTitle()).isEqualTo(result.getTitle());
-//        assertThat(results.get(0).getDescription()).isEqualTo(result.getDes());
-//        assertThat(results.get(0).getColor()).isEqualTo(result.getColor());
+        assertThat(results)
+                .extracting("title")
+                .containsExactlyInAnyOrder(expect1.getTitle(),expect2.getTitle(),expect3.getTitle(),expect4.getTitle());
     }
 }

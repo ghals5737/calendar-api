@@ -4,17 +4,21 @@ import com.example.calendar.domain.schedule.Schedule;
 import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.request.UpdateScheduleRequest;
 import com.example.calendar.dto.schedule.response.*;
+import com.example.calendar.repository.schedule.ScheduleQueryDslRepository;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final ScheduleQueryDslRepository scheduleQueryDslRepository;
 
     @Transactional
     public SelectScheduleByIdResponse selectScheduleById(Long scheduleId) throws Exception {
@@ -40,5 +44,11 @@ public class ScheduleService {
         Schedule schedule=scheduleRepository.findById(request.getScheduleId()).orElseThrow(Exception::new);
         schedule.updateSchedule(request);
         return ScheduleResponse.toUpdateScheduleResponse(schedule);
+    }
+
+    @Transactional
+    public List<Schedule> selectScheduleList(String startYmd,String endYmd) throws Exception{
+        return Optional.ofNullable(scheduleQueryDslRepository.findScheduleList(startYmd,endYmd))
+                .orElseThrow(Exception::new);
     }
 }
