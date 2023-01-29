@@ -10,14 +10,83 @@ backtony.github.io(부제)
 :toclevels: 2
 :sectlinks:
 
-//[[Schedule-API]]
-//== Schedule API
 
-//[[Schedule-단일-조회]]
-//=== Schedule 단일 조회
-//include::{snippets}/schedule-selectByID/http-request.adoc[]
-//include::{snippets}/schedule-selectByID/http-response.adoc[]
-//include::{snippets}/schedule-selectByID/path-parameters.adoc[]
-//include::{snippets}/schedule-selectByID/response-body.adoc[]
-//include::{snippets}/schedule-selectByID/response-fields.adoc[]
+[[Calendar-API]]
+== Calendar API
 
+[[Calendar-생성]]
+=== Calendar 생성
+include::{snippets}/calendar-create/http-request.adoc[]
+include::{snippets}/calendar-create/http-response.adoc[]
+include::{snippets}/calendar-create/response-body.adoc[]
+include::{snippets}/calendar-create/response-fields.adoc[]
+
+[[Calendar-단일-조회]]
+=== Calendar 단일 조회
+include::{snippets}/calendar-selectByID/http-request.adoc[]
+include::{snippets}/calendar-selectByID/http-response.adoc[]
+include::{snippets}/calendar-selectByID/response-body.adoc[]
+include::{snippets}/calendar-selectByID/response-fields.adoc[]
+include::{snippets}/calendar-selectByID/path-parameters.adoc[]
+
+
+[[Calendar-수정]]
+=== Calendar 수정
+include::{snippets}/calendar-update/http-request.adoc[]
+include::{snippets}/calendar-update/http-response.adoc[]
+include::{snippets}/calendar-update/response-body.adoc[]
+include::{snippets}/calendar-update/response-fields.adoc[]
+
+
+[[User-API]]
+== User API
+
+[[User-생성]]
+=== User 생성
+include::{snippets}/user-create/http-request.adoc[]
+include::{snippets}/user-create/http-response.adoc[]
+include::{snippets}/user-create/response-body.adoc[]
+include::{snippets}/user-create/response-fields.adoc[]
+
+[[User-단일-조회]]
+=== User 단일 조회
+include::{snippets}/user-selectByID/http-request.adoc[]
+include::{snippets}/user-selectByID/http-response.adoc[]
+include::{snippets}/user-selectByID/response-body.adoc[]
+include::{snippets}/user-selectByID/response-fields.adoc[]
+include::{snippets}/user-selectByID/path-parameters.adoc[]
+
+[[User-수정]]
+=== User 수정
+include::{snippets}/user-update/http-request.adoc[]
+include::{snippets}/user-update/http-response.adoc[]
+include::{snippets}/user-update/response-body.adoc[]
+include::{snippets}/user-update/response-fields.adoc[]
+
+
+
+
+[[Schedule-API]]
+== Schedule API
+
+[[Schedule-생성]]
+=== Schedule 생성
+include::{snippets}/schedule-create/http-request.adoc[]
+include::{snippets}/schedule-create/http-response.adoc[]
+include::{snippets}/schedule-create/response-body.adoc[]
+include::{snippets}/schedule-create/response-fields.adoc[]
+
+[[Schedule-단일-조회]]
+=== Schedule 단일 조회
+include::{snippets}/schedule-selectByID/http-request.adoc[]
+include::{snippets}/schedule-selectByID/http-response.adoc[]
+include::{snippets}/schedule-selectByID/response-body.adoc[]
+include::{snippets}/schedule-selectByID/response-fields.adoc[]
+include::{snippets}/schedule-selectByID/path-parameters.adoc[]
+
+[[Schedule-수정]]
+=== Schedule 수정
+include::{snippets}/schedule-update/http-request.adoc[]
+include::{snippets}/schedule-update/http-response.adoc[]
+include::{snippets}/schedule-update/response-body.adoc[]
+include::{snippets}/schedule-update/response-fields.adoc[]
