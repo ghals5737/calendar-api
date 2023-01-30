@@ -22,8 +22,7 @@ import java.time.LocalDateTime;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -205,6 +204,95 @@ public class ScheduleControllerTest {
                                 fieldWithPath("body.data.des").description("상세 설명"),
                                 fieldWithPath("body.data.color").description("색깔"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+
+    @Test
+    @DisplayName("달력ID,시작년월일,끝년월일로 일정리스트 조회하는 API 정상동작 확인")
+    public void selectScheduleListTest() throws Exception{
+        //given
+        //2023년 01 월 기준
+        Long calendarId=1L;
+        String startYmd="20230101";
+        String endYmd="20230204";
+
+        //시작날짜 끝날짜 모두 조회하고 싶은 월안에 있음
+        Schedule expect1=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test1")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20230102")
+                .endYmd("20230112")
+                .description("test1")
+                .color("test1")
+                .build());
+
+        //시작날짜는 전월 끝날짜는 포함
+        Schedule expect2=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test2")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20221202")
+                .endYmd("20230106")
+                .description("test2")
+                .color("test2")
+                .build());
+
+        //시작날짜는 포함 끝날짜는 다음월
+        Schedule expect3=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test3")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20230102")
+                .endYmd("20230206")
+                .description("test3")
+                .color("test3")
+                .build());
+
+        //시작,끝날짜 모두 포함 X
+        Schedule expect4=scheduleRepository.save(Schedule.builder()
+                .calendarId(1L)
+                .title("test4")
+                .startDt(LocalDateTime.now())
+                .endDt(LocalDateTime.now())
+                .startYmd("20221202")
+                .endYmd("20230206")
+                .description("test4")
+                .color("test4")
+                .build());
+
+        //when,then
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .get("/api/schedule/calendarId/{calendarId}?startYmd="+startYmd+"&endYmd="+endYmd, calendarId)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("schedule-selectByID"
+                        ,pathParameters(
+                                parameterWithName("calendarId").description("조회할 달력 ID")
+                        ),
+                        requestParameters(
+                                parameterWithName("startYmd").description("조회할 시작년월일"),
+                                parameterWithName("endYmd").description("조회할 끝년월일")
+                        )
+                        ,responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data.[].calendarId").description("달력 ID"),
+                                fieldWithPath("body.data.[].scheduleId").description("일정 ID"),
+                                fieldWithPath("body.data.[].title").description("제목"),
+                                fieldWithPath("body.data.[].startYmd").description("시작년월일"),
+                                fieldWithPath("body.data.[].endYmd").description("종료년월일"),
+                                fieldWithPath("body.data.[].startDt").description("시작일"),
+                                fieldWithPath("body.data.[].endDt").description("종료일"),
+                                fieldWithPath("body.data.[].des").description("상세 설명"),
+                                fieldWithPath("body.data.[].color").description("색깔"),
+                                fieldWithPath("body.error").description("http status 상태코드"),
+                                fieldWithPath("statusCode").description("에러코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }

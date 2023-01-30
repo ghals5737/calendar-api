@@ -5,7 +5,7 @@ import com.example.calendar.dto.schedule.request.CreateScheduleRequest;
 import com.example.calendar.dto.schedule.request.UpdateScheduleRequest;
 import com.example.calendar.dto.schedule.response.CreateScheduleResponse;
 import com.example.calendar.dto.schedule.response.DeleteScheduleResponse;
-import com.example.calendar.dto.schedule.response.SelectScheduleByIdResponse;
+import com.example.calendar.dto.schedule.response.SelectScheduleResponse;
 import com.example.calendar.dto.schedule.response.UpdateScheduleResponse;
 import com.example.calendar.repository.schedule.ScheduleRepository;
 import lombok.NoArgsConstructor;
@@ -47,7 +47,7 @@ public class ScheduleServiceTest {
                 .color("test")
                 .build());
         //when
-        SelectScheduleByIdResponse result=scheduleService.selectScheduleById(expect.getId());
+        SelectScheduleResponse result=scheduleService.selectScheduleById(expect.getId());
         //then
         assertThat(result.getTitle()).isEqualTo(expect.getTitle());
     }
@@ -136,6 +136,7 @@ public class ScheduleServiceTest {
     void selectScheduleListTest() throws Exception {
         //given
         //2023년 01 월 기준
+        Long calendarId=1L;
         String startYmd="20230101";
         String endYmd="20230204";
 
@@ -189,7 +190,7 @@ public class ScheduleServiceTest {
 
 
         //when
-        List<Schedule> results=scheduleService.selectScheduleList(startYmd,endYmd);
+        List<SelectScheduleResponse> results=scheduleService.selectScheduleList(calendarId,startYmd,endYmd);
 
         //then
         assertThat(results).hasSize(4);

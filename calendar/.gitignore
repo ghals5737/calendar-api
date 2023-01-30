@@ -35,5 +35,6 @@ src/main/resources/application.yml
 /nbdist/
 /.nb-gradle/
 !**/main/resources/
+resources
 ### VS Code ###
 .vscode/

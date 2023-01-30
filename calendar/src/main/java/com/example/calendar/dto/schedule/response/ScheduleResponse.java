@@ -4,8 +4,8 @@ package com.example.calendar.dto.schedule.response;
 import com.example.calendar.domain.schedule.Schedule;
 
 public class ScheduleResponse {
-    public static SelectScheduleByIdResponse toSelectScheduleByIdResponse(Schedule schedule) {
-        return SelectScheduleByIdResponse.builder()
+    public static SelectScheduleResponse toSelectScheduleResponse(Schedule schedule) {
+        return SelectScheduleResponse.builder()
                 .scheduleId(schedule.getId())
                 .calendarId(schedule.getCalendarId())
                 .title(schedule.getTitle())
