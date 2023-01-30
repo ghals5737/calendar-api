@@ -12,10 +12,11 @@ import java.util.List;
 public class ScheduleQueryDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<Schedule> findScheduleList(String startYmd,String endYmd){
+    public List<Schedule> findScheduleList(Long calendarId,String startYmd,String endYmd){
         return jpaQueryFactory.select(schedule)
                 .from(schedule)
                 .where(
+                        schedule.calendarId.eq(calendarId),
                         schedule.startYmd.loe(endYmd),
                         schedule.endYmd.goe(startYmd)
                 ).fetch();
