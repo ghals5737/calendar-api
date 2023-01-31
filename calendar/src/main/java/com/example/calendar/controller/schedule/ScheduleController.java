@@ -39,7 +39,7 @@ public class ScheduleController {
         return scheduleService.updateSchedule(request);
     }
 
-    @GetMapping("/calendarId/{calendarId}")
+    @GetMapping("/calendar/{calendarId}")
     public List<SelectScheduleResponse> selectScheduleList(@PathVariable Long calendarId,@RequestParam String startYmd,@RequestParam String endYmd) throws Exception {
         return scheduleService.selectScheduleList(calendarId, startYmd, endYmd);
     }
