@@ -268,7 +268,7 @@ public class ScheduleControllerTest {
         //when,then
         this.mockMvc.perform(
                         RestDocumentationRequestBuilders
-                                .get("/api/schedule/calendarId/{calendarId}?startYmd="+startYmd+"&endYmd="+endYmd, calendarId)
+                                .get("/api/schedule/calendar/{calendarId}?startYmd="+startYmd+"&endYmd="+endYmd, calendarId)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("schedule-selectByID"
