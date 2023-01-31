@@ -10,6 +10,8 @@ public class ScheduleResponse {
                 .calendarId(schedule.getCalendarId())
                 .title(schedule.getTitle())
                 .des(schedule.getDescription())
+                .startYmd(schedule.getStartYmd())
+                .endYmd(schedule.getEndYmd())
                 .startDt(schedule.getStartDt())
                 .endDt(schedule.getEndDt())
                 .color(schedule.getColor())
