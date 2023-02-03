@@ -45,6 +45,6 @@ public class CalendarController {
 
     @GetMapping("/user/{id}")
     public List<SelectCalendarByIdResponse> selectCalendarByUserId(@PathVariable Long id) throws Exception {
-        return calendarService.selectCalendarByUserId(id);
+        return calendarService.searchByUserId(id);
     }
 }

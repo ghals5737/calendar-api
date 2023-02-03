@@ -4,7 +4,7 @@ import com.example.calendar.domain.calendar.Calendar;
 import com.example.calendar.domain.calendar.QCalendar;
 import com.example.calendar.domain.mapping.UserCalendar;
 import com.example.calendar.domain.user.User;
-import com.example.calendar.dto.calendar.condition.CalendarSearchCondition;
+import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
 import com.example.calendar.repository.mapping.UserCalendarRepository;
 import com.example.calendar.repository.user.UserRepository;
 import com.querydsl.core.Tuple;
@@ -71,11 +71,11 @@ class CalendarRepositoryImplTest {
     }
     @Test
     void searchTest() {
-        CalendarSearchCondition condition = CalendarSearchCondition
+        CalendarSearchByUserIdCondition condition = CalendarSearchByUserIdCondition
                 .builder()
                 .userId(user.getId())
                 .build();
-        List<Tuple> search = calendarRepositoryCustom.search(condition);
+        List<Tuple> search = calendarRepositoryCustom.searchByUserId(condition);
         Tuple tuple = search.get(0);
         assertThat(tuple.get(QCalendar.calendar.category)).isEqualTo(calendar.getCategory());
     }

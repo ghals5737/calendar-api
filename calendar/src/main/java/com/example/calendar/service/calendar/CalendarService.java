@@ -1,13 +1,17 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.calendar.QCalendar;
 import com.example.calendar.domain.mapping.UserCalendar;
+import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
 import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.*;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.calendar.CalendarRepository;
+import com.example.calendar.repository.calendar.CalendarRepositoryCustom;
 import com.example.calendar.repository.mapping.UserCalendarRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,7 @@ import static com.example.calendar.global.error.ErrorCode.USER_CALENDAR_NOT_FOUN
 @Service
 public class CalendarService {
     private final CalendarRepository calendarRepository;
+    private final CalendarRepositoryCustom calendarRepositoryCustom;
     private final UserCalendarRepository userCalendarRepository;
 
     @Transactional
@@ -79,6 +84,24 @@ public class CalendarService {
         for (Calendar calendar : calendars) {
             SelectCalendarByIdResponse res = CalendarResponse.toSelectCalendarByIdResponse(calendar);
             result.add(res);
+        }
+        return result;
+    }
+
+    @Transactional
+    public List<SelectCalendarByIdResponse> searchByUserId(Long userId) {
+        CalendarSearchByUserIdCondition condition = CalendarSearchByUserIdCondition.builder().userId(userId).build();
+        List<Tuple> tuples = calendarRepositoryCustom.searchByUserId(condition);
+        List<SelectCalendarByIdResponse> result = new ArrayList<>();
+        for (Tuple tuple : tuples) {
+            SelectCalendarByIdResponse build = SelectCalendarByIdResponse.builder()
+                    .category(tuple.get(QCalendar.calendar.category))
+                    .color(tuple.get(QCalendar.calendar.color))
+                    .description(tuple.get(QCalendar.calendar.description))
+                    .title(tuple.get(QCalendar.calendar.title))
+                    .build();
+
+            result.add(build);
         }
         return result;
     }

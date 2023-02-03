@@ -182,7 +182,7 @@ public class CalendarServiceTest {
                 .build());
 
         // when
-        List<SelectCalendarByIdResponse> response = calendarService.selectCalendarByUserId(user.getId());
+        List<SelectCalendarByIdResponse> response = calendarService.searchByUserId(user.getId());
 
         // then
         assertThat(response).hasSize(2);

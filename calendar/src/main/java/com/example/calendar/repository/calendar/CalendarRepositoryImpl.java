@@ -1,6 +1,6 @@
 package com.example.calendar.repository.calendar;
 
-import com.example.calendar.dto.calendar.condition.CalendarSearchCondition;
+import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -20,7 +20,7 @@ public class CalendarRepositoryImpl implements CalendarRepositoryCustom {
 
 
     @Override
-    public List<Tuple> search(CalendarSearchCondition condition) {
+    public List<Tuple> searchByUserId(CalendarSearchByUserIdCondition condition) {
         return queryFactory.select(calendar.category,calendar.color,calendar.description,calendar.title)
                 .from(calendar)
                 .leftJoin(userCalendar)

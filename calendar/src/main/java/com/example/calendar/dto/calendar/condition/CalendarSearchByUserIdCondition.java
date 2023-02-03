@@ -4,6 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 @Builder
 @Data
-public class CalendarSearchCondition {
+public class CalendarSearchByUserIdCondition {
     private Long userId;
 }
