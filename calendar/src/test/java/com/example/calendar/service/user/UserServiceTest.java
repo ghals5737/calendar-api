@@ -74,10 +74,12 @@ public class UserServiceTest {
                 .password("abcdefg")
                 .build();
         User save = userRepository.save(user);
+
         log.info("getBirthday", save.getBirthday());
         log.info("getNickname", save.getNickname());
         log.info("getEmail", save.getEmail());
         log.info("password", save.getPassword());
+
 
         //when
         SelectUserByIdResponse response = userService.selectUserById(save.getId());
