@@ -19,6 +19,7 @@ public class UserResponse {
                 .birthday(user.getBirthday())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .userId(user.getId())
                 .build();
     }
 
@@ -35,6 +36,16 @@ public class UserResponse {
                 .birthday(user.getBirthday())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .build();
+    }
+
+    public static LoginUserResponse toLoginUserResponse(User user) {
+        return LoginUserResponse.builder()
+                .birthday(user.getBirthday())
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .userId(user.getId())
+
                 .build();
     }
 }

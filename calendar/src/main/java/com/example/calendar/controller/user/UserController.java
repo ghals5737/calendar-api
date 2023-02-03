@@ -1,11 +1,9 @@
 package com.example.calendar.controller.user;
 
 import com.example.calendar.dto.user.request.CreateUserRequest;
+import com.example.calendar.dto.user.request.LoginUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
-import com.example.calendar.dto.user.response.CreateUserResponse;
-import com.example.calendar.dto.user.response.DeleteUserResponse;
-import com.example.calendar.dto.user.response.SelectUserByIdResponse;
-import com.example.calendar.dto.user.response.UpdateUserResponse;
+import com.example.calendar.dto.user.response.*;
 import com.example.calendar.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +34,10 @@ public class UserController {
     @PutMapping
     public UpdateUserResponse updateUser(@RequestBody @Valid UpdateUserRequest request) throws Exception {
         return userService.updateUser(request);
+    }
+
+    @PostMapping("login")
+    public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
+        return userService.login(request);
     }
 }

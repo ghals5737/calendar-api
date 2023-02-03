@@ -1,4 +1,4 @@
-package com.example.calendar.domain.user;
+package com.example.calendar.domain.mapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

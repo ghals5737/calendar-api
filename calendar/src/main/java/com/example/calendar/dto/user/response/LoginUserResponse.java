@@ -11,10 +11,9 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserResponse {
+public class LoginUserResponse {
     private Long userId;
     private String email;
     private String nickname;
     private LocalDate birthday;
-    private String password;
 }
