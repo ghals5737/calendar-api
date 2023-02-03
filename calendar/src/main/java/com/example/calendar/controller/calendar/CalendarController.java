@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,5 +41,10 @@ public class CalendarController {
     @PutMapping
     public UpdateCalendarResponse updateCalendar(@RequestBody @Valid UpdateCalendarRequest request) throws Exception {
         return calendarService.updateCalendar(request);
+    }
+
+    @GetMapping("/user/{id}")
+    public List<SelectCalendarByIdResponse> selectCalendarByUserId(@PathVariable Long id) throws Exception {
+        return calendarService.searchByUserId(id);
     }
 }

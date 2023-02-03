@@ -1,14 +1,12 @@
 package com.example.calendar.dto.calendar.response;
 
-import lombok.AllArgsConstructor;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Builder
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 public class SelectCalendarByIdResponse {
     private Long calendarId;
@@ -17,6 +15,19 @@ public class SelectCalendarByIdResponse {
     private String category;
     private String color;
 
+    @QueryProjection
+    public SelectCalendarByIdResponse(Long calendarId,
+                                      String title,
+                                      String description,
+                                      String category,
+                                      String color
+    ) {
+        this.calendarId = calendarId;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.color = color;
+    }
 }
 
 

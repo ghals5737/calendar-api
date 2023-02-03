@@ -2,14 +2,13 @@ package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
 import com.example.calendar.domain.user.User;
-import com.example.calendar.domain.user.UserCalendar;
+import com.example.calendar.domain.mapping.UserCalendar;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
 import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.CreateCalendarResponse;
 import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
-import com.example.calendar.dto.calendar.response.UpdateCalendarResponse;
 import com.example.calendar.repository.calendar.CalendarRepository;
-import com.example.calendar.repository.user.UserCalendarRepository;
+import com.example.calendar.repository.mapping.UserCalendarRepository;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +56,7 @@ public class CalendarServiceTest {
 
     @BeforeEach
     public void create() {
+
         calendar = calendarRepository.save(
                 Calendar.builder()
                         .color("yellow")
@@ -64,6 +64,7 @@ public class CalendarServiceTest {
                         .category("trip")
                         .description("for planning trips")
                         .build());
+
         user = userRepository.save(User.builder()
                 .nickname("star")
                 .password("pw")
@@ -71,12 +72,10 @@ public class CalendarServiceTest {
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
 
-        userCalendar = UserCalendar.builder()
+        userCalendar = userCalendarRepository.save(UserCalendar.builder()
                 .calendarId(calendar.getId())
                 .userId(user.getId())
-                .build();
-
-        userCalendarRepository.save(userCalendar);
+                .build());
     }
 
     @Test
@@ -162,5 +161,30 @@ public class CalendarServiceTest {
         assertThat(results.get(0).getTitle()).isEqualTo(request.getTitle());
         assertThat(results.get(0).getDescription()).isEqualTo(request.getDescription());
         assertThat(results.get(0).getColor()).isEqualTo(request.getColor());
+    }
+
+    @Test
+    @DisplayName("사용자의 캘린더 모두 조회 API 정상 동작 테스트")
+    void selectCalendarByUserId() {
+
+        // given
+        Calendar calendar2 = calendarRepository.save(
+                Calendar.builder()
+                        .color("yellow2")
+                        .title("trip calendar2")
+                        .category("trip2")
+                        .description("for planning trips2")
+                        .build());
+
+        userCalendar = userCalendarRepository.save(UserCalendar.builder()
+                .calendarId(calendar2.getId())
+                .userId(user.getId())
+                .build());
+
+        // when
+        List<SelectCalendarByIdResponse> response = calendarService.searchByUserId(user.getId());
+
+        // then
+        assertThat(response).hasSize(2);
     }
 }

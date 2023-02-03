@@ -1,6 +1,6 @@
-package com.example.calendar.repository.user;
+package com.example.calendar.repository.mapping;
 
-import com.example.calendar.domain.user.UserCalendar;
+import com.example.calendar.domain.mapping.UserCalendar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
