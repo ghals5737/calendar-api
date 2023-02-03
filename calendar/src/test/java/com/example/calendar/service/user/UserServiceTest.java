@@ -2,27 +2,29 @@ package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.user.request.CreateUserRequest;
+import com.example.calendar.dto.user.request.LoginUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
 import com.example.calendar.dto.user.response.CreateUserResponse;
+import com.example.calendar.dto.user.response.LoginUserResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
 import com.example.calendar.dto.user.response.UpdateUserResponse;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @Slf4j
 @SpringBootTest
@@ -33,6 +35,23 @@ public class UserServiceTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    private User user;
+
+    @BeforeEach
+    public void create() {
+
+
+        user = userRepository.save(User.builder()
+                .nickname("star")
+                .password("pw")
+                .email("abc@gmail.com")
+                .birthday(LocalDate.of(2023, 1, 26))
+                .build());
+
+
+    }
+
     @AfterEach
     public void clear() {
         userRepository.deleteAll();
@@ -55,10 +74,12 @@ public class UserServiceTest {
                 .password("abcdefg")
                 .build();
         User save = userRepository.save(user);
-//        log.info("getBirthday",save.getBirthday());
-//        log.info("getNickname",save.getNickname());
-//        log.info("getEmail",save.getEmail());
-//        log.info("password",save.getPassword());
+
+        log.info("getBirthday", save.getBirthday());
+        log.info("getNickname", save.getNickname());
+        log.info("getEmail", save.getEmail());
+        log.info("password", save.getPassword());
+
 
         //when
         SelectUserByIdResponse response = userService.selectUserById(save.getId());
@@ -143,10 +164,24 @@ public class UserServiceTest {
         // then
         List<User> results = userRepository.findAll();
         AssertionsForInterfaceTypes.assertThat(results).hasSize(1);
-        AssertionsForClassTypes.assertThat(results.get(0).getId()).isEqualTo(request.getId());
-        AssertionsForClassTypes.assertThat(results.get(0).getNickname()).isEqualTo(request.getNickname());
-        AssertionsForClassTypes.assertThat(results.get(0).getBirthday()).isEqualTo(request.getBirthday());
-        AssertionsForClassTypes.assertThat(results.get(0).getEmail()).isEqualTo(request.getEmail());
-        AssertionsForClassTypes.assertThat(results.get(0).getPassword()).isEqualTo(request.getPassword());
+        assertThat(results.get(0).getId()).isEqualTo(request.getId());
+        assertThat(results.get(0).getNickname()).isEqualTo(request.getNickname());
+        assertThat(results.get(0).getBirthday()).isEqualTo(request.getBirthday());
+        assertThat(results.get(0).getEmail()).isEqualTo(request.getEmail());
+        assertThat(results.get(0).getPassword()).isEqualTo(request.getPassword());
+    }
+
+    @Test
+    @DisplayName("사용자 로그인 테스트")
+    void loginTest() {
+        LoginUserRequest request = LoginUserRequest.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
+        LoginUserResponse loginUser = userService.login(request);
+        assertThat(loginUser.getUserId()).isEqualTo(user.getId());
+        assertThat(loginUser.getBirthday()).isEqualTo(user.getBirthday());
+        assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
+        assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
     }
 }

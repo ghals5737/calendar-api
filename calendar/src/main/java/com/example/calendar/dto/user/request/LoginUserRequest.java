@@ -1,20 +1,19 @@
-package com.example.calendar.dto.user.response;
+package com.example.calendar.dto.user.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserResponse {
-    private Long userId;
+public class LoginUserRequest {
+    @Email @NotEmpty
     private String email;
-    private String nickname;
-    private LocalDate birthday;
+    @NotEmpty
     private String password;
 }

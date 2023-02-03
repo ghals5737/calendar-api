@@ -24,6 +24,7 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "로그아웃 된 사용자입니다"),
     USER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
     CALENDAR_NOT_FOUND(NOT_FOUND, "해당 캘린더 정보를 찾을 수 없습니다"),
+    EMAIL_NOT_FOUND(NOT_FOUND, "해당 이메일 정보를 찾을 수 없습니다"),
     USER_CALENDAR_NOT_FOUND(NOT_FOUND, "해당 유저 캘린더 매핑 정보를 찾을 수 없습니다"),
     SCHEDULE_NOT_FOUND(NOT_FOUND,"해당 일정 정보를 찾을수 없습니다."),
     CALENDAR_SCHEDULE_NOT_FOUND(NOT_FOUND,"해당 캘린더 일정정보를 찾을 수 없습니다."),
