@@ -22,7 +22,7 @@ public class CreateCalendarRequest {
     private String category;
     @NotBlank
     private String color;
-    @NotBlank
+    @NotNull
     private Long userId;
 
 
