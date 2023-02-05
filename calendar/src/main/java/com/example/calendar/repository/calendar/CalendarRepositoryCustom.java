@@ -7,6 +7,6 @@ import com.querydsl.core.Tuple;
 import java.util.List;
 
 public interface CalendarRepositoryCustom {
-    List<SelectCalendarByIdResponse> searchByUserId(CalendarSearchByUserIdCondition condition);
+    //List<SelectCalendarByIdResponse> searchByUserId(CalendarSearchByUserIdCondition condition);
 
 }
