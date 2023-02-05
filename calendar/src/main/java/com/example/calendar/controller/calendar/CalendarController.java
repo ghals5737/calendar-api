@@ -43,8 +43,8 @@ public class CalendarController {
         return calendarService.updateCalendar(request);
     }
 
-//    @GetMapping("/users/{id}")
-//    public List<SelectCalendarByIdResponse> selectCalendarByUserId(@PathVariable Long id) throws Exception {
-//        return calendarService.searchByUserId(id);
-//    }
+    @GetMapping("/users/{id}")
+    public List<SelectCalendarByIdResponse> selectCalendarByUserId(@PathVariable Long id) throws Exception {
+        return calendarService.searchByUserId(id);
+    }
 }

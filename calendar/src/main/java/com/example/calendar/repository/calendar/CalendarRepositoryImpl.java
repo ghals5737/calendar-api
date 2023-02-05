@@ -9,9 +9,9 @@ import javax.persistence.EntityManager;
 import java.util.Calendar;
 import java.util.List;
 
-//import static com.example.calendar.domain.calendar.QCalendar.calendar;
-//import static com.example.calendar.domain.user.QUser.user;
-//import static com.example.calendar.domain.mapping.QUserCalendarMpng.userCalendarMpng;
+import static com.example.calendar.domain.calendar.QCalendar.calendar;
+import static com.example.calendar.domain.user.QUser.user;
+import static com.example.calendar.domain.mapping.QUserCalendarMpng.userCalendarMpng;
 
 public class CalendarRepositoryImpl implements CalendarRepositoryCustom {
     private final JPAQueryFactory queryFactory;
@@ -20,22 +20,22 @@ public class CalendarRepositoryImpl implements CalendarRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-//    @Override
-//    public List<SelectCalendarByIdResponse> searchByUserId(CalendarSearchByUserIdCondition condition) {
-//        return queryFactory.select(Projections.constructor(SelectCalendarByIdResponse.class
-//                , calendar.id
-//                , calendar.title
-//                , calendar.description
-//                , calendar.category
-//                , calendar.color))
-//                .from(calendar)
-//                .innerJoin(userCalendarMpng)
-//                .on(calendar.id.eq(userCalendarMpng.calendarId))
-//                .innerJoin( user)
-//                .on(user.id.eq(userCalendarMpng.userId))
-//                .where(user.id.eq(condition.getUserId()))
-//                .fetch();
-//    }
+    @Override
+    public List<SelectCalendarByIdResponse> searchByUserId(CalendarSearchByUserIdCondition condition) {
+        return queryFactory.select(Projections.constructor(SelectCalendarByIdResponse.class
+                , calendar.id
+                , calendar.title
+                , calendar.description
+                , calendar.category
+                , calendar.color))
+                .from(calendar)
+                .innerJoin(userCalendarMpng)
+                .on(calendar.id.eq(userCalendarMpng.calendarId))
+                .innerJoin( user)
+                .on(user.id.eq(userCalendarMpng.userId))
+                .where(user.id.eq(condition.getUserId()))
+                .fetch();
+    }
 
 
 }

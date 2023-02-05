@@ -90,14 +90,14 @@ public class CalendarService {
         return result;
     }
 
-//    @Transactional
-//    public List<SelectCalendarByIdResponse> searchByUserId(Long userId) {
-//        CalendarSearchByUserIdCondition condition = CalendarSearchByUserIdCondition
-//                .builder()
-//                .userId(userId)
-//                .build();
-//        return Optional.ofNullable(calendarRepositoryCustom
-//                        .searchByUserId(condition))
-//                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
-//    }
+    @Transactional
+    public List<SelectCalendarByIdResponse> searchByUserId(Long userId) {
+        CalendarSearchByUserIdCondition condition = CalendarSearchByUserIdCondition
+                .builder()
+                .userId(userId)
+                .build();
+        return Optional.ofNullable(calendarRepositoryCustom
+                        .searchByUserId(condition))
+                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+    }
 }
