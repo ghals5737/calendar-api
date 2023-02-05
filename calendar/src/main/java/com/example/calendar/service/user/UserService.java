@@ -52,7 +52,6 @@ public class UserService {
 
     @Transactional
     public LoginUserResponse login(LoginUserRequest request) {
-
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException(EMAIL_NOT_FOUND));
         if (request.getPassword().equals(user.getPassword())) {

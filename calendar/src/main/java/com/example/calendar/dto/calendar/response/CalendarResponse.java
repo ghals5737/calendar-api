@@ -14,6 +14,7 @@ public class CalendarResponse {
     }
     public static CreateCalendarResponse toCreateCalendarResponse(Calendar calendar) {
         return CreateCalendarResponse.builder()
+                .calendarId(calendar.getId())
                 .title(calendar.getTitle())
                 .description(calendar.getDescription())
                 .category(calendar.getCategory())

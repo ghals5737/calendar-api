@@ -1,6 +1,7 @@
 package com.example.calendar.dto.calendar.request;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class CreateCalendarRequest {
     private String category;
     @NotBlank
     private String color;
-    @NotBlank
+    @NotNull
     private Long userId;
 
 

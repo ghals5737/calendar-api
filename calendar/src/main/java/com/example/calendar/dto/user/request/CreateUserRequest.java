@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
@@ -22,8 +23,7 @@ public class CreateUserRequest {
     @NotBlank(message = "이메일이 공백일 수 없습니다.")
     @Email
     private String email;
-    @NotBlank(message = "생년월일이 공백일 수 없습니다.")
-    @DateTimeFormat(pattern = "yyyyMMdd")
+    @NotNull(message = "생년월일이 공백일 수 없습니다.")
     @PastOrPresent
     private LocalDate birthday;
     @NotBlank(message = "비밀번호가 공백일 수 없습니다.")
