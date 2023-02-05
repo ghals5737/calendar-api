@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public class CreateScheduleRequest {
     private Long calendarId;
     private String title;
+    private String startYmd;
+    private String endYmd;
     private LocalDateTime startDt;
     private LocalDateTime endDt;
     private String des;
@@ -24,6 +26,8 @@ public class CreateScheduleRequest {
         return Schedule.builder()
                 .calendarId(this.calendarId)
                 .title(this.title)
+                .startYmd(this.startYmd)
+                .endYmd(this.endYmd)
                 .startDt(this.startDt)
                 .endDt(this.endDt)
                 .description(des)

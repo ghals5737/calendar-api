@@ -36,7 +36,7 @@ public class UserController {
         return userService.updateUser(request);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
         return userService.login(request);
     }

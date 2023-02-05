@@ -1,6 +1,7 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.calendar.QCalendar;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
@@ -10,6 +11,7 @@ import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.calendar.CalendarRepository;
 import com.example.calendar.repository.calendar.CalendarRepositoryCustom;
 import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ import static com.example.calendar.global.error.ErrorCode.USER_CALENDAR_NOT_FOUN
 public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarRepositoryCustom calendarRepositoryCustom;
-    private final UserCalendarMpngRepository userCalendarMpngRepository;
+    private final UserCalendarMpngRepository userCalendarRepository;
 
     @Transactional
     public SelectCalendarByIdResponse selectCalendarById(Long calendarId) throws Exception {
@@ -39,7 +41,7 @@ public class CalendarService {
         // 캘린더 저장
         Calendar calendar = calendarRepository.save(request.toCalendar());
         // 유저캘린더 저장
-        userCalendarMpngRepository.save(UserCalendarMpng.builder()
+        userCalendarRepository.save(UserCalendarMpng.builder()
                 .userId(request.getUserId())
                 .calendarId(calendar.getId())
                 .build());
@@ -53,9 +55,9 @@ public class CalendarService {
                 .findById(calendarId).orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
         calendarRepository.delete(calendar);
 
-        UserCalendarMpng userCalendarMpng = userCalendarMpngRepository
+        UserCalendarMpng userCalendar = userCalendarRepository
                 .findByCalendarId(calendarId).orElseThrow(() -> new CustomException(USER_CALENDAR_NOT_FOUND));
-        userCalendarMpngRepository.delete(userCalendarMpng);
+        userCalendarRepository.delete(userCalendar);
 
         return CalendarResponse.toDeleteCalendarResponse(calendar);
     }
@@ -67,18 +69,17 @@ public class CalendarService {
         return CalendarResponse.toUpdateCalendarResponse(calendar);
     }
 
-    @Transactional // searchByUserId 로 리팩터링
+    @Transactional
     public List<SelectCalendarByIdResponse> selectCalendarByUserId(Long userId) {
-        List<UserCalendarMpng> userCalendarMpngList = userCalendarMpngRepository.findByUserId(userId);
+        List<UserCalendarMpng> userCalendarList = userCalendarRepository.findByUserId(userId);
         List<Long> calendarIds = new ArrayList<>();
-        for (UserCalendarMpng userCalendarMpng : userCalendarMpngList) {
-            Long calendarId = userCalendarMpng.getCalendarId();
+        for (UserCalendarMpng userCalendar : userCalendarList) {
+            Long calendarId = userCalendar.getCalendarId();
             calendarIds.add(calendarId);
         }
         List<Calendar> calendars = new ArrayList<>();
         for (Long calendarId : calendarIds) {
-            Calendar calendar = calendarRepository.findById(calendarId)
-                    .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+            Calendar calendar = calendarRepository.findById(calendarId).orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
             calendars.add(calendar);
         }
         List<SelectCalendarByIdResponse> result = new ArrayList<>();
@@ -96,11 +97,7 @@ public class CalendarService {
                 .userId(userId)
                 .build();
         return Optional.ofNullable(calendarRepositoryCustom
-                .searchByUserId(condition))
-                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND))
-                .stream()
-                .map(CalendarResponse::toSelectCalendarByIdResponse)
-                .collect(Collectors.toList())
-                ;
+                        .searchByUserId(condition))
+                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
     }
 }
