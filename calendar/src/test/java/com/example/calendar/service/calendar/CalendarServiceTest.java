@@ -1,14 +1,14 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
-import com.example.calendar.domain.mapping.UserCalendar;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
 import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.CreateCalendarResponse;
 import com.example.calendar.dto.calendar.response.SelectCalendarByIdResponse;
 import com.example.calendar.repository.calendar.CalendarRepository;
-import com.example.calendar.repository.mapping.UserCalendarRepository;
+import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,17 +42,17 @@ public class CalendarServiceTest {
     private UserRepository userRepository;
 
     @Autowired
-    private UserCalendarRepository userCalendarRepository;
+    private UserCalendarMpngRepository userCalendarMpngRepository;
 
     @AfterEach
     public void clear() {
         calendarRepository.deleteAll();
-        userCalendarRepository.deleteAll();
+        userCalendarMpngRepository.deleteAll();
     }
 
     Calendar calendar;
     User user;
-    UserCalendar userCalendar;
+    UserCalendarMpng userCalendarMpng;
 
     @BeforeEach
     public void create() {
@@ -72,7 +72,7 @@ public class CalendarServiceTest {
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
 
-        userCalendar = userCalendarRepository.save(UserCalendar.builder()
+        userCalendarMpng = userCalendarMpngRepository.save(UserCalendarMpng.builder()
                 .calendarId(calendar.getId())
                 .userId(user.getId())
                 .build());
@@ -84,9 +84,9 @@ public class CalendarServiceTest {
         //given
 
         //when
-        List<UserCalendar> userCalendars = userCalendarRepository.findByUserId(user.getId());
+        List<UserCalendarMpng> userCalendarMpngs = userCalendarMpngRepository.findByUserId(user.getId());
         List<SelectCalendarByIdResponse> calendars = new ArrayList<>();
-        for (UserCalendar calendar : userCalendars) {
+        for (UserCalendarMpng calendar : userCalendarMpngs) {
             SelectCalendarByIdResponse selectCalendarByIdResponse = calendarService.selectCalendarById(calendar.getCalendarId());
             calendars.add(selectCalendarByIdResponse);
         }
@@ -176,7 +176,7 @@ public class CalendarServiceTest {
                         .description("for planning trips2")
                         .build());
 
-        userCalendar = userCalendarRepository.save(UserCalendar.builder()
+        userCalendarMpng = userCalendarMpngRepository.save(UserCalendarMpng.builder()
                 .calendarId(calendar2.getId())
                 .userId(user.getId())
                 .build());

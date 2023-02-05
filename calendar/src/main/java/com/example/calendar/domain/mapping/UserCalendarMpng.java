@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user_calendar_mpng")
-public class UserCalendar {
+public class UserCalendarMpng {
     @Id
     @Column(name = "user_calendar_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

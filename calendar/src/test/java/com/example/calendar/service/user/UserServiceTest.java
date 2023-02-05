@@ -52,15 +52,11 @@ public class UserServiceTest {
 
     }
 
+
     @AfterEach
     public void clear() {
         userRepository.deleteAll();
     }
-
-//    @AfterEach
-//    public void clear() {
-//        userRepository.deleteAll();
-//    }
 
 
     @Test
