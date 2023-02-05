@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.example.calendar.domain.calendar.QCalendar.calendar;
 import static com.example.calendar.domain.user.QUser.user;
-import static com.example.calendar.domain.user.QUserCalendar.userCalendar;
+import static com.example.calendar.domain.mapping.QUserCalendar.userCalendar;
 
 public class CalendarRepositoryImpl implements CalendarRepositoryCustom {
     private final JPAQueryFactory queryFactory;

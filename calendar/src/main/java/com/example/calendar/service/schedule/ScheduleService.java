@@ -26,7 +26,7 @@ public class ScheduleService {
     private final ScheduleQueryDslRepository scheduleQueryDslRepository;
 
     @Transactional
-    public SelectScheduleResponse selectScheduleById(Long scheduleId) throws Exception {
+    public SelectScheduleResponse selectScheduleById(Long scheduleId) {
         return ScheduleResponse.toSelectScheduleResponse(scheduleRepository.findById(scheduleId).orElseThrow(()->new CustomException(SCHEDULE_NOT_FOUND)));
     }
 
@@ -38,21 +38,21 @@ public class ScheduleService {
     }
 
     @Transactional
-    public DeleteScheduleResponse deleteScheduleById(Long scheduleId)throws  Exception{
+    public DeleteScheduleResponse deleteScheduleById(Long scheduleId){
         Schedule schedule=scheduleRepository.findById(scheduleId).orElseThrow(()->new CustomException(SCHEDULE_NOT_FOUND));
         scheduleRepository.delete(schedule);
         return ScheduleResponse.toDeleteScheduleResponse(schedule);
     }
 
     @Transactional
-    public UpdateScheduleResponse updateSchedule(UpdateScheduleRequest request) throws Exception {
+    public UpdateScheduleResponse updateSchedule(UpdateScheduleRequest request){
         Schedule schedule=scheduleRepository.findById(request.getScheduleId()).orElseThrow(()->new CustomException(SCHEDULE_NOT_FOUND));
         schedule.updateSchedule(request);
         return ScheduleResponse.toUpdateScheduleResponse(schedule);
     }
 
     @Transactional
-    public List<SelectScheduleResponse> selectScheduleList(Long calendarId,String startYmd,String endYmd) throws Exception{
+    public List<SelectScheduleResponse> selectScheduleList(Long calendarId,String startYmd,String endYmd){
         return Optional.ofNullable(scheduleQueryDslRepository.findScheduleList(calendarId,startYmd,endYmd))
                 .orElseThrow(()->new CustomException(CALENDAR_SCHEDULE_NOT_FOUND)).stream().map(ScheduleResponse::toSelectScheduleResponse).collect(Collectors.toList());
     }

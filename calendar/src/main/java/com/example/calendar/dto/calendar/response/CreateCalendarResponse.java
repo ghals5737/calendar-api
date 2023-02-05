@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCalendarResponse {
+    private Long calendarId;
     private String title;
     private String description;
     private String category;
