@@ -57,6 +57,6 @@ public class UserService {
         if (request.getPassword().equals(user.getPassword())) {
             return UserResponse.toLoginUserResponse(user);
         }
-        return null; // 로그인 실패 시?
+        throw new CustomException(EMAIL_NOT_FOUND); // 로그인 실패 시?
     }
 }

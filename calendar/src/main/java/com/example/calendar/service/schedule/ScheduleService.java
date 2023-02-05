@@ -54,6 +54,7 @@ public class ScheduleService {
     @Transactional
     public List<SelectScheduleResponse> selectScheduleList(Long calendarId,String startYmd,String endYmd){
         return Optional.ofNullable(scheduleQueryDslRepository.findScheduleList(calendarId,startYmd,endYmd))
-                .orElseThrow(()->new CustomException(CALENDAR_SCHEDULE_NOT_FOUND)).stream().map(ScheduleResponse::toSelectScheduleResponse).collect(Collectors.toList());
+                .orElseThrow(()->new CustomException(CALENDAR_SCHEDULE_NOT_FOUND)).stream()
+                .map(ScheduleResponse::toSelectScheduleResponse).collect(Collectors.toList());
     }
 }
