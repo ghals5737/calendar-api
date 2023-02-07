@@ -1,17 +1,15 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
-import com.example.calendar.domain.calendar.QCalendar;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
 import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import com.example.calendar.dto.calendar.response.*;
 import com.example.calendar.global.error.exception.CustomException;
+import com.example.calendar.repository.calendar.CalendarQueryDslRepository;
 import com.example.calendar.repository.calendar.CalendarRepository;
-import com.example.calendar.repository.calendar.CalendarRepositoryCustom;
 import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
-import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.example.calendar.global.error.ErrorCode.CALENDAR_NOT_FOUND;
 import static com.example.calendar.global.error.ErrorCode.USER_CALENDAR_NOT_FOUND;
@@ -28,7 +25,7 @@ import static com.example.calendar.global.error.ErrorCode.USER_CALENDAR_NOT_FOUN
 @Service
 public class CalendarService {
     private final CalendarRepository calendarRepository;
-    private final CalendarRepositoryCustom calendarRepositoryCustom;
+    private final CalendarQueryDslRepository calendarQueryDslRepository;
     private final UserCalendarMpngRepository userCalendarRepository;
 
     @Transactional
@@ -96,7 +93,7 @@ public class CalendarService {
                 .builder()
                 .userId(userId)
                 .build();
-        return Optional.ofNullable(calendarRepositoryCustom
+        return Optional.ofNullable(calendarQueryDslRepository
                         .searchByUserId(condition))
                 .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
     }
