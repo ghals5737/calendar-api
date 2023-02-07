@@ -11,4 +11,10 @@ public class NotiResponse {
                 .build();
 
     }
+
+    public static DeleteNotiByIdResponse toDeleteNotiByIdResponse(Long id) {
+        return DeleteNotiByIdResponse.builder()
+                .notiId(id)
+                .build();
+    }
 }

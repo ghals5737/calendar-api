@@ -55,6 +55,7 @@ public class NotiControllerTest {
         Noti expect = notiRepository.save(Noti.builder()
                 .responseYn("Y")
                 .notiType(NotiType.FRIEND_REQUEST)
+                .useYn("Y")
                 .build());
 
         //when,then
@@ -63,7 +64,7 @@ public class NotiControllerTest {
                         .get("/api/notis/{id}", expect.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("noti-selectByID"
+                .andDo(document("notis-selectByID"
                         , pathParameters(
                                 parameterWithName("id").description("조회할 알림 ID")
                         ),
@@ -75,6 +76,35 @@ public class NotiControllerTest {
                                 fieldWithPath("body.data.notiType").description("알림 타입"),
                                 fieldWithPath("body.data.responseYn").description("알림 응답 여부"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+    @Test
+    @DisplayName("알림 아이디로 use_yn N 처리 하는 API 정상동작 확인")
+    public void deleteNotiByIdTest() throws Exception {
+        //given
+        Noti expect = notiRepository.save(Noti.builder()
+                .responseYn("Y")
+                .notiType(NotiType.FRIEND_REQUEST)
+                .useYn("Y")
+                .build());
+
+        //when,then
+        this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .delete("/api/notis/{id}", expect.getId())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("notis-selectByID"
+                        , pathParameters(
+                                parameterWithName("id").description("삭제할 알림 id")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data.notiId").description("삭제된 캘린더 ID"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
