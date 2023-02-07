@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CalendarRepositoryImplTest {
 
     @Autowired
-    private CalendarRepositoryCustom calendarRepositoryCustom;
+    private CalendarQueryDslRepository calendarQueryDslRepository;
 
     @Autowired
     private CalendarRepository calendarRepository;
@@ -72,8 +72,8 @@ class CalendarRepositoryImplTest {
                 .builder()
                 .userId(user.getId())
                 .build();
-//        List<Tuple> search = calendarRepositoryCustom.searchByUserId(condition);
-//        Tuple tuple = search.get(0);
-//        assertThat(tuple.get(QCalendar.calendar.category)).isEqualTo(calendar.getCategory());
+//       List<Tuple> search = calendarRepositoryCustom.searchByUserId(condition);
+//       Tuple tuple = search.get(0);
+//       assertThat(tuple.get(QCalendar.calendar.category)).isEqualTo(calendar.getCategory());
     }
 }
