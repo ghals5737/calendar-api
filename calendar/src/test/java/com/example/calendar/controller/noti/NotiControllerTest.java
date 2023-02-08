@@ -104,7 +104,7 @@ public class NotiControllerTest {
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.notiId").description("삭제된 캘린더 ID"),
+                                fieldWithPath("body.data.notiId").description("삭제된 알림 ID"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
