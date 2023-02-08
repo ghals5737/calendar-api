@@ -29,6 +29,7 @@ public enum ErrorCode {
     SCHEDULE_NOT_FOUND(NOT_FOUND,"해당 일정 정보를 찾을수 없습니다."),
     CALENDAR_SCHEDULE_NOT_FOUND(NOT_FOUND,"해당 캘린더 일정정보를 찾을 수 없습니다."),
     NOTI_NOT_FOUND(NOT_FOUND,"해당 알림 정보를 찾을 수 없습니다."),
+    FRIEND_NOT_FOUND(NOT_FOUND,"친구 정보를 찾을 수 없습니다."),
     DELETE_NOTI_FAILED(NOT_FOUND,"해당 알림 정보 삭제를 실패했습니다."),
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
