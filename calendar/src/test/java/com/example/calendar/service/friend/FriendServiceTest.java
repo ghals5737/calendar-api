@@ -3,8 +3,8 @@ package com.example.calendar.service.friend;
 import com.example.calendar.domain.friend.Friend;
 import com.example.calendar.domain.friend.FriendId;
 import com.example.calendar.domain.user.User;
-import com.example.calendar.dto.friend.request.RequestFriendRequest;
-import com.example.calendar.dto.friend.response.RequestFriendResponse;
+import com.example.calendar.dto.friend.request.AcceptFriendRequest;
+import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.friend.FriendRepository;
 import com.example.calendar.repository.user.UserRepository;
@@ -60,15 +60,15 @@ public class FriendServiceTest {
     }
 
     @Test
-    void requestToBeFriendsTest() {
+    void acceptToBeFriendsTest() {
         // given
-        RequestFriendRequest request = RequestFriendRequest.builder()
+        AcceptFriendRequest request = AcceptFriendRequest.builder()
                 .mainUserId(mainUser.getId())
                 .subUserId(subUser.getId())
                 .build();
 
         // when
-        RequestFriendResponse response = friendService.requestToBeFriends(request);
+        AcceptFriendResponse response = friendService.acceptToBeFriends(request);
 
         // then
 

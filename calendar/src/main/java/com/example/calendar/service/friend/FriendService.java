@@ -2,9 +2,9 @@ package com.example.calendar.service.friend;
 
 import com.example.calendar.domain.friend.Friend;
 import com.example.calendar.domain.friend.FriendId;
-import com.example.calendar.dto.friend.request.RequestFriendRequest;
+import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.response.FriendResponse;
-import com.example.calendar.dto.friend.response.RequestFriendResponse;
+import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.repository.friend.FriendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class FriendService {
     private final FriendRepository friendRepository;
 
-    public RequestFriendResponse requestToBeFriends(RequestFriendRequest request) {
+    public AcceptFriendResponse acceptToBeFriends(AcceptFriendRequest request) {
         FriendId friendId = getFriendId(request.getMainUserId(), request.getSubUserId());
         FriendId friendIdReverse = getFriendId(request.getSubUserId(), request.getMainUserId());
         saveFriend(friendIdReverse);
