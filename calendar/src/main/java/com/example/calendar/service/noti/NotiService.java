@@ -5,7 +5,6 @@ import com.example.calendar.dto.noti.response.SelectNotiByIdResponse;
 import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.noti.NotiQueryDslRepository;
-import com.example.calendar.repository.noti.NotiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import static com.example.calendar.global.error.ErrorCode.DELETE_NOTI_FAILED;
 @RequiredArgsConstructor
 @Service
 public class NotiService {
-    private final NotiRepository notiRepository;
+
     private final NotiQueryDslRepository notiQueryDslRepository;
 
     @Transactional
@@ -28,7 +27,7 @@ public class NotiService {
 
     @Transactional
     public DeleteNotiByIdResponse closeNotiById(Long id) {
-        return Optional.ofNullable(notiQueryDslRepository.setUseYnById(id))
+        return Optional.ofNullable(notiQueryDslRepository.updateUseYnById(id))
                 .orElseThrow(() -> new CustomException(DELETE_NOTI_FAILED));
     }
 }
