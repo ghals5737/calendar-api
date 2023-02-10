@@ -86,6 +86,31 @@ public class NotiControllerTest {
                 .build());
     }
     @Test
+    @DisplayName("사용자 아이디로 최신 5건의 미열람 알림 조회 정상 동작 확인")
+    public void selectNotiNotUsedByUserId() throws Exception {
+        //given
+
+        //when,then
+        this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .get("/api/notis/users/{id}", receiveUser.getId())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("notis-selectByUserID"
+                        , pathParameters(
+                                parameterWithName("id").description("조회할 수신자 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("body.data.[].notiId").description("알림 ID"),
+                                fieldWithPath("body.data.[].notiType").description("알림 타입"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+    @Test
     @DisplayName("알림 조회 API 정상동작 확인")
     public void selectNotiByIdTest() throws Exception {
         //given
