@@ -23,11 +23,13 @@ public class User {
     private String nickname;
     private LocalDate birthday;
     private String password;
+    private String snsType;
 
     public void updateUser(UpdateUserRequest request) {
         this.email = request.getEmail();
         this.nickname = request.getNickname();
         this.birthday = request.getBirthday();
         this.password = request.getPassword();
+        this.snsType = request.getSnsType();
     }
 }
