@@ -40,16 +40,13 @@ public class UserServiceTest {
 
     @BeforeEach
     public void create() {
-
-
         user = userRepository.save(User.builder()
                 .nickname("star")
                 .password("pw")
                 .email("abc@gmail.com")
+                .snsType("sns_type")
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
-
-
     }
 
 
@@ -70,11 +67,6 @@ public class UserServiceTest {
                 .password("abcdefg")
                 .build();
         User save = userRepository.save(user);
-
-//        log.info("getBirthday", save.getBirthday());
-//        log.info("getNickname", save.getNickname());
-//        log.info("getEmail", save.getEmail());
-//        log.info("password", save.getPassword());
 
         //when
         SelectUserByIdResponse response = userService.selectUserById(save.getId());
@@ -137,24 +129,17 @@ public class UserServiceTest {
     void updateUserTest() {
 
         // given
-        User user = User.builder()
-                .nickname("test nickname")
-                .email("abc@gmail.com")
-                .birthday(LocalDate.now())
-                .password("abcdefg")
-                .build();
-
-        User save = userRepository.save(user);
 
         // when
         UpdateUserRequest request = UpdateUserRequest.builder()
-                .id(save.getId())
+                .id(user.getId())
                 .nickname("update nickname")
                 .email("update email")
                 .birthday(LocalDate.of(2000, 1, 24))
                 .password("update password")
                 .build();
-        UpdateUserResponse updated = userService.updateUser(request);
+
+        userService.updateUser(request);
 
         // then
         List<User> results = userRepository.findAll();

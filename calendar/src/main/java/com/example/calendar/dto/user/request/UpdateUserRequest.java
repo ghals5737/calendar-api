@@ -27,4 +27,6 @@ public class UpdateUserRequest {
     private LocalDate birthday;
     @NotBlank
     private String password;
+
+    private String snsType;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -17,8 +18,10 @@ public class Noti {
     @Column(name = "noti_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String responseYn;
     @Enumerated(EnumType.STRING)
     private NotiType notiType;
     private String useYn;
+    private Long sendUserId;
+    private Long receiveUserId;
+    private LocalDateTime regDtm;
 }

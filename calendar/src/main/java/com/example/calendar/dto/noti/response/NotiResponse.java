@@ -6,7 +6,6 @@ public class NotiResponse {
     public static SelectNotiByIdResponse toSelectNotiByIdResponse(Noti noti) {
         return SelectNotiByIdResponse.builder()
                 .notiId(noti.getId())
-                .responseYn(noti.getResponseYn())
                 .notiType(noti.getNotiType())
                 .build();
 
