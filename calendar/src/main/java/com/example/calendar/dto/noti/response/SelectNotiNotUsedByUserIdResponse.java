@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SelectNotiByIdResponse {
+public class SelectNotiNotUsedByUserIdResponse {
     private Long notiId;
     private NotiType notiType;
 }
