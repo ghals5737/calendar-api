@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
@@ -17,6 +18,6 @@ public class LoginSnsUserRequest {
     @Email
     @NotEmpty
     private String email;
-    @NotEmpty
+    @NotNull(message = "SnsType이 공백일 수 없습니다.")
     private SnsType snsType;
 }

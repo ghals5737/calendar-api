@@ -4,6 +4,7 @@ import com.example.calendar.domain.user.User;
 import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.user.request.CreateSnsUserRequest;
 import com.example.calendar.dto.user.request.CreateUserRequest;
+import com.example.calendar.dto.user.request.LoginSnsUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
 import com.example.calendar.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -251,13 +252,18 @@ public class UserControllerTest {
     @DisplayName("SNS 사용자 로그인하는 API 정상동작 확인")
     public void loginSnsTest() throws Exception {
         //given
-        User request = userRepository.save(User.builder()
+        User snsUser = userRepository.save(User.builder()
                 .nickname("sns@gmail.com")
                 .password(null)
                 .email("sns@gmail.com")
                 .snsType(SnsType.GOOGLE)
                 .birthday(null)
                 .build());
+
+        LoginSnsUserRequest request = LoginSnsUserRequest.builder()
+                .email(snsUser.getEmail())
+                .snsType(snsUser.getSnsType())
+                .build();
 
         //when,then
         this.mockMvc.perform(
@@ -267,9 +273,10 @@ public class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("user-sns-login"
-                        , pathParameters(
-                                parameterWithName("id").description("조회할 사용자 ID")
+                .andDo(document("user-sns-login",
+                        requestFields(
+                                fieldWithPath("email").description("사용자 이메일"),
+                                fieldWithPath("snsType").description("사용자 로그인 타입")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
@@ -279,7 +286,6 @@ public class UserControllerTest {
                                 fieldWithPath("body.data.nickname").description("사용자 닉네임"),
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
-                                fieldWithPath("body.data.password").description("사용자 비밀번호"),
                                 fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
