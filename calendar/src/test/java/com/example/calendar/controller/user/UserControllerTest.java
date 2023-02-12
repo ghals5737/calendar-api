@@ -77,6 +77,7 @@ public class UserControllerTest {
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.userId").description("사용자 아이디"),
                                 fieldWithPath("body.data.nickname").description("사용자 닉네임"),
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
