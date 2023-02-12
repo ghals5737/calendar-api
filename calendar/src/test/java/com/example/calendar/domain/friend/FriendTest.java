@@ -24,25 +24,25 @@ class FriendTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User mainUser;
-    private User subUser;
+    private User sendUser;
+    private User receiveUser;
 
     @BeforeEach
     void beforeEach() {
-        mainUser = userRepository.save(User.builder()
-                .nickname("mainUser")
+        sendUser = userRepository.save(User.builder()
+                .nickname("sendUser")
                 .password("pw")
-                .email("mainUser@gmail.com")
+                .email("sendUser@gmail.com")
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
-        subUser = userRepository.save(User.builder()
-                .nickname("subUser")
+        receiveUser = userRepository.save(User.builder()
+                .nickname("receiveUser")
                 .password("pw")
-                .email("subUser@gmail.com")
+                .email("receiveUser@gmail.com")
                 .birthday(LocalDate.of(2023, 2, 26))
                 .build());
-        userRepository.save(mainUser);
-        userRepository.save(subUser);
+        userRepository.save(sendUser);
+        userRepository.save(receiveUser);
     }
 
     @AfterEach
@@ -54,8 +54,8 @@ class FriendTest {
     void createFriendTest() {
 
         FriendId friendId = FriendId.builder()
-                .mainUserId(mainUser.getId())
-                .subUserId(subUser.getId())
+                .sendUserId(sendUser.getId())
+                .receiveUserId(receiveUser.getId())
                 .build();
 
         friendRepository.save(Friend.builder()

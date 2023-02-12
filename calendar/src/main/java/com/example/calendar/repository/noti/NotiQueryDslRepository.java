@@ -1,6 +1,8 @@
 package com.example.calendar.repository.noti;
 
+import com.example.calendar.domain.noti.Noti;
 import com.example.calendar.domain.noti.NotiType;
+import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.noti.response.DeleteNotiByIdResponse;
 import com.example.calendar.dto.noti.response.NotiResponse;
@@ -10,14 +12,15 @@ import com.example.calendar.global.error.exception.CustomException;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.example.calendar.domain.noti.NotiType.FRIEND_ACCEPT;
 import static com.example.calendar.domain.noti.QNoti.noti;
 import static com.example.calendar.domain.user.QUser.user;
 import static com.example.calendar.global.error.ErrorCode.DELETE_NOTI_FAILED;
+import static com.example.calendar.global.error.ErrorCode.UPDATE_NOTI_TYPE_FAILED;
 
 @RequiredArgsConstructor
 @Repository
@@ -66,5 +69,27 @@ public class NotiQueryDslRepository {
                         noti.notiType.eq(NotiType.FRIEND_REQUEST),
                         noti.useYn.eq("Y"))
                 .fetchFirst() != null;
+    }
+
+    public Noti findNotiBySendUserIdAndReceiveUserId(Long sendUserId, Long receiveUserId) {
+        return queryFactory.selectFrom(noti)
+                .where(noti.receiveUserId.eq(receiveUserId),
+                        noti.sendUserId.eq(sendUserId),
+                        noti.notiType.eq(FRIEND_ACCEPT),
+                        noti.useYn.eq("Y"))
+                .fetchOne();
+    }
+
+    public void updateNotiTypeAccept(AcceptFriendRequest request) {
+        long execute = queryFactory.update(noti)
+                .set(noti.useYn, "N")
+                .where(noti.id.eq(request.getNotiId())
+                        , noti.notiType.eq(NotiType.FRIEND_REQUEST)
+                        , noti.useYn.eq("Y")
+                )
+                .execute();
+        if (execute < 1) {
+            throw new CustomException(UPDATE_NOTI_TYPE_FAILED);
+        }
     }
 }

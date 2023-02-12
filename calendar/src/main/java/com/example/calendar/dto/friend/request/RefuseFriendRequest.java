@@ -1,4 +1,4 @@
-package com.example.calendar.dto.friend.response;
+package com.example.calendar.dto.friend.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AcceptFriendResponse {
-    private Long sendUserId;
-    private Long receiveUserId;
+public class RefuseFriendRequest {
+    private Long notiID;
+    private Long sendId;
+    private Long receiveId;
 }

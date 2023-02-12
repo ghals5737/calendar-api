@@ -31,7 +31,11 @@ public enum ErrorCode {
     NOTI_NOT_FOUND(NOT_FOUND,"해당 알림 정보를 찾을 수 없습니다."),
     FRIEND_NOT_FOUND(NOT_FOUND,"해당 친구 정보를 찾을 수 없습니다."),
     DELETE_NOTI_FAILED(NOT_FOUND,"해당 알림 정보 삭제를 실패했습니다."),
+
+    UPDATE_NOTI_TYPE_FAILED(NOT_FOUND,"알림 타입 갱신에 실패했습니다."),
+
     SNS_TYPE_NOT_FOUND(NOT_FOUND,"해당 SNS타입을 찾을 수 없습니다."),
+
 
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
