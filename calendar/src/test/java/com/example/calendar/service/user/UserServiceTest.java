@@ -2,6 +2,7 @@ package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
 import com.example.calendar.domain.user.type.SnsType;
+import com.example.calendar.dto.user.request.CreateSnsUserRequest;
 import com.example.calendar.dto.user.request.CreateUserRequest;
 import com.example.calendar.dto.user.request.LoginUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
@@ -109,21 +110,18 @@ public class UserServiceTest {
     void createSnsUserTest() {
         // given
         CreateSnsUserRequest request = CreateSnsUserRequest.builder()
-                .nickname("test nickname")
                 .email("abc@gmail.com")
-                .birthday(LocalDate.now())
-                .password("abcdefg")
+                .birthday(null)
+                .snsType(SnsType.GOOGLE)
                 .build();
 
         // when
-        CreateSnsUserResponse result = userService.createSnsUser(request);
+        CreateUserResponse result = userService.createSnsUser(request);
 
         // then
-        assertThat(request.getNickname()).isEqualTo(result.getNickname());
+        assertThat(request.getEmail()).isEqualTo(result.getNickname());
         assertThat(request.getBirthday()).isEqualTo(result.getBirthday());
-        assertThat(request.getEmail()).isEqualTo(result.getEmail());
-        assertThat(request.getPassword()).isEqualTo(result.getPassword());
-
+        assertThat(request.getSnsType()).isEqualTo(result.getSnsType());
     }
 
     @Test

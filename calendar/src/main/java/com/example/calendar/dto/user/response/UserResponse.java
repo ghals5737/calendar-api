@@ -20,6 +20,7 @@ public class UserResponse {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .userId(user.getId())
+                .snsType(user.getSnsType())
                 .build();
     }
 
