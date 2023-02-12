@@ -72,6 +72,7 @@ public class FriendServiceTest {
     void clear() {
         friendRepository.deleteAll();
         userRepository.deleteAll();
+        notiRepository.deleteAll();
     }
 
 
@@ -124,15 +125,16 @@ public class FriendServiceTest {
                 .sendUserId(sendUser.getId()) // 친구 요청 발신자
                 .receiveUserId(receiveUser.getId())
                 .build();
-
+        RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(request);
+        Long notiId = requestFriendResponse.getNotiId();
         // 친구 수락
         AcceptFriendRequest acceptRequest = AcceptFriendRequest.builder()
                 .sendUserId(receiveUser.getId()) // 친구 수락 발신자 (처음 친구 신청의 수신자)
                 .receiveUserId(sendUser.getId())
+                .notiId(notiId)
                 .build();
 
         // when
-        friendService.requestToBeFriends(request);
         AcceptFriendResponse response = friendService.acceptToBeFriends(acceptRequest);
 
         // then
@@ -151,11 +153,18 @@ public class FriendServiceTest {
                 .sendUserId(acceptRequest.getReceiveUserId())
                 .build()).orElseThrow()).isNotNull();
 
-        // 알림 확인
+        // 알림 확인 - 친구 요청 알림 USER_YN = N
+        Noti friendRequest = notiRepository.findById(notiId)
+                .orElseThrow(() -> new CustomException(NOTI_NOT_FOUND));
+
+        assertThat(friendRequest.getUseYn()).isEqualTo("N");
+
+        // 알림 확인 - 친구 수락
         Noti noti = Optional.of(notiQueryDslRepository
-                .findNotiBySendUserIdAndReceiveUserId(response.getSendUserId(), response.getReceiveUserId())).orElseThrow(
-                () -> new CustomException(NOTI_NOT_FOUND)
-        );
+                .findNotiBySendUserIdAndReceiveUserId(response.getSendUserId(), response.getReceiveUserId()))
+                .orElseThrow(
+                        () -> new CustomException(NOTI_NOT_FOUND)
+                );
 
         assertThat(noti.getNotiType()).isEqualTo(NotiType.FRIEND_ACCEPT);
         assertThat(noti.getReceiveUserId()).isEqualTo(acceptRequest.getReceiveUserId());

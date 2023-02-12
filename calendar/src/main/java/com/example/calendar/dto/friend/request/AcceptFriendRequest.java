@@ -1,15 +1,14 @@
 package com.example.calendar.dto.friend.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AcceptFriendRequest {
+    private Long notiId;
     private Long sendUserId;
     private Long receiveUserId;
 }

@@ -80,5 +80,16 @@ public class NotiQueryDslRepository {
                 .fetchOne();
     }
 
-
+    public void updateNotiTypeAccept(AcceptFriendRequest request) {
+        long execute = queryFactory.update(noti)
+                .set(noti.useYn, "N")
+                .where(noti.id.eq(request.getNotiId())
+                        , noti.notiType.eq(NotiType.FRIEND_REQUEST)
+                        , noti.useYn.eq("Y")
+                )
+                .execute();
+        if (execute < 1) {
+            throw new CustomException(UPDATE_NOTI_TYPE_FAILED);
+        }
+    }
 }

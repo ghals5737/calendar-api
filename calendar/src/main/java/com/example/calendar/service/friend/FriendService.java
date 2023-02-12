@@ -44,6 +44,8 @@ public class FriendService {
 
     @Transactional
     public AcceptFriendResponse acceptToBeFriends(AcceptFriendRequest request) {
+        notiQueryDslRepository.updateNotiTypeAccept(request);
+
         notiRepository.save(Noti.builder()
                 .sendUserId(request.getSendUserId())
                 .receiveUserId(request.getReceiveUserId())
@@ -62,6 +64,7 @@ public class FriendService {
                 .sendUserId(request.getSendUserId())
                 .receiveUserId(request.getReceiveUserId())
                 .build();
+
         return FriendResponse.toAcceptFriendResponse(saveFriend(friendId));
     }
 
