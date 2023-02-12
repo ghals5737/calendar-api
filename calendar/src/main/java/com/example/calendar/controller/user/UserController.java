@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping
-    public CreateUserResponse createUser(@RequestBody @Valid CreateUserRequest request) {
+    public CreateUserResponse createUser(@RequestBody @Valid CreateUserRequest request) throws Exception {
         return userService.createUser(request);
     }
 
