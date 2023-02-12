@@ -2,10 +2,7 @@ package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
 import com.example.calendar.domain.user.type.SnsType;
-import com.example.calendar.dto.user.request.CreateSnsUserRequest;
-import com.example.calendar.dto.user.request.CreateUserRequest;
-import com.example.calendar.dto.user.request.LoginUserRequest;
-import com.example.calendar.dto.user.request.UpdateUserRequest;
+import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.CreateUserResponse;
 import com.example.calendar.dto.user.response.LoginUserResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
@@ -39,6 +36,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     private User user;
+    private User snsUser;
 
     @BeforeEach
     public void create() {
@@ -49,6 +47,14 @@ public class UserServiceTest {
                 .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
+
+        snsUser = userRepository.save(User.builder()
+                    .nickname("sns@gmail.com")
+                    .password(null)
+                    .email("sns@gmail.com")
+                    .snsType(SnsType.GOOGLE)
+                    .birthday(null)
+                    .build());
     }
 
 
@@ -191,13 +197,13 @@ public class UserServiceTest {
     @DisplayName("SNS 사용자 로그인 테스트")
     void loginSnsTest() {
         LoginSnsUserRequest request = LoginSnsUserRequest.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
+                .email(snsUser.getEmail())
+                .snsType(snsUser.getSnsType())
                 .build();
         LoginUserResponse loginUser = userService.loginSns(request);
-        assertThat(loginUser.getUserId()).isEqualTo(user.getId());
-        assertThat(loginUser.getBirthday()).isEqualTo(user.getBirthday());
-        assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
-        assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
+        assertThat(loginUser.getUserId()).isEqualTo(snsUser.getId());
+        assertThat(loginUser.getBirthday()).isEqualTo(snsUser.getBirthday());
+        assertThat(loginUser.getNickname()).isEqualTo(snsUser.getNickname());
+        assertThat(loginUser.getEmail()).isEqualTo(snsUser.getEmail());
     }
 }

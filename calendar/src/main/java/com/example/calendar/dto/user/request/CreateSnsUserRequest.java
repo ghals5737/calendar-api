@@ -7,10 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Builder
@@ -18,11 +15,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateSnsUserRequest {
-    @NotBlank(message = "이메일이 공백일 수 없습니다.")
+    @NotEmpty(message = "이메일이 공백일 수 없습니다.")
     @Email
     private String email;
     private LocalDate birthday;
-    @NotNull(message = "SnsType이 공백일 수 없습니다.")
+    @NotEmpty(message = "SnsType이 공백일 수 없습니다.")
     private SnsType snsType;
 
     public User toUser() {

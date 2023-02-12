@@ -1,10 +1,7 @@
 package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
-import com.example.calendar.dto.user.request.CreateSnsUserRequest;
-import com.example.calendar.dto.user.request.CreateUserRequest;
-import com.example.calendar.dto.user.request.LoginUserRequest;
-import com.example.calendar.dto.user.request.UpdateUserRequest;
+import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.*;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.user.UserRepository;
@@ -65,5 +62,15 @@ public class UserService {
     public CreateUserResponse createSnsUser(CreateSnsUserRequest request) {
         return UserResponse.toCreateUserResponse(
                 userRepository.save(request.toUser()));
+    }
+
+    @Transactional
+    public LoginUserResponse loginSns(LoginSnsUserRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        if (request.getSnsType().equals(user.getSnsType())) {
+            return UserResponse.toLoginUserResponse(user);
+        }
+        throw new CustomException(SNS_TYPE_NOT_FOUND); // 로그인 실패 시?
     }
 }
