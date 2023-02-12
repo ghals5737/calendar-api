@@ -1,9 +1,8 @@
 package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
-import com.example.calendar.dto.user.request.CreateUserRequest;
-import com.example.calendar.dto.user.request.LoginUserRequest;
-import com.example.calendar.dto.user.request.UpdateUserRequest;
+import com.example.calendar.domain.user.type.SnsType;
+import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.CreateUserResponse;
 import com.example.calendar.dto.user.response.LoginUserResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
@@ -36,6 +35,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     private User user;
+    private User snsUser;
 
     @BeforeEach
     public void create() {
@@ -43,9 +43,17 @@ public class UserServiceTest {
                 .nickname("star")
                 .password("pw")
                 .email("abc@gmail.com")
-                .snsType("sns_type")
+                .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
+
+        snsUser = userRepository.save(User.builder()
+                    .nickname("sns@gmail.com")
+                    .password(null)
+                    .email("sns@gmail.com")
+                    .snsType(SnsType.GOOGLE)
+                    .birthday(null)
+                    .build());
     }
 
 
@@ -62,6 +70,7 @@ public class UserServiceTest {
         User user = User.builder()
                 .nickname("test nickname")
                 .email("abc@gmail.com")
+                .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.now())
                 .password("abcdefg")
                 .build();
@@ -102,6 +111,24 @@ public class UserServiceTest {
     }
 
     @Test
+
+    @DisplayName("SNS사용자 생성 API 정상 동작 테스트")
+    void createSnsUserTest() {
+        // given
+        CreateSnsUserRequest request = CreateSnsUserRequest.builder()
+                .email("abc@gmail.com")
+                .birthday(null)
+                .snsType(SnsType.GOOGLE)
+                .build();
+
+        // when
+        CreateUserResponse result = userService.createSnsUser(request);
+
+        // then
+        assertThat(request.getEmail()).isEqualTo(result.getNickname());
+        assertThat(request.getBirthday()).isEqualTo(result.getBirthday());
+        assertThat(request.getSnsType()).isEqualTo(result.getSnsType());
+
     @DisplayName("사용자 생성 API 중복으로 인한 사용자 생성 실패 테스트")
     void createUserDuplicateExceptionTest() throws Exception {
         // given
@@ -115,6 +142,7 @@ public class UserServiceTest {
         // when
         userService.createUser(request);
         assertThrows(CustomException.class, () -> userService.createUser(request));
+
     }
 
     @Test
@@ -178,5 +206,19 @@ public class UserServiceTest {
         assertThat(loginUser.getBirthday()).isEqualTo(user.getBirthday());
         assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
         assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
+    @DisplayName("SNS 사용자 로그인 테스트")
+    void loginSnsTest() {
+        LoginSnsUserRequest request = LoginSnsUserRequest.builder()
+                .email(snsUser.getEmail())
+                .snsType(snsUser.getSnsType())
+                .build();
+        LoginUserResponse loginUser = userService.loginSns(request);
+        assertThat(loginUser.getUserId()).isEqualTo(snsUser.getId());
+        assertThat(loginUser.getBirthday()).isEqualTo(snsUser.getBirthday());
+        assertThat(loginUser.getNickname()).isEqualTo(snsUser.getNickname());
+        assertThat(loginUser.getEmail()).isEqualTo(snsUser.getEmail());
     }
 }
