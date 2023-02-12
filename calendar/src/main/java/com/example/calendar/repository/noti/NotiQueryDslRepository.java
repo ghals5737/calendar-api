@@ -37,7 +37,7 @@ public class NotiQueryDslRepository {
                 .fetchOne();
     }
 
-    public DeleteNotiByIdResponse updateUseYnById(Long id) {
+    public DeleteNotiByIdResponse updateUseYnNById(Long id) {
         long execute = queryFactory.update(noti)
                 .set(noti.useYn, "N")
                 .where(noti.id.eq(id))

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class RefuseFriendResponse {
     private Long sendUserId;
     private Long receiveUserId;
+    private Long notiId;
 }

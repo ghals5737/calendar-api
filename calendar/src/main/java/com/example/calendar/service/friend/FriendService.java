@@ -8,6 +8,7 @@ import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.FriendResponse;
+import com.example.calendar.dto.friend.response.RefuseFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
 import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
@@ -74,5 +75,16 @@ public class FriendService {
                 .build());
     }
 
-
+    @Transactional
+    public RefuseFriendResponse refuseToBeFriends(Long notiId) {
+        Noti requestNoti = notiRepository.findById(notiId).orElseThrow();
+        notiQueryDslRepository.updateUseYnNById(notiId);
+        return FriendResponse.toRefuseFriendResponse(notiRepository.save(Noti.builder()
+                .sendUserId(requestNoti.getReceiveUserId())
+                .receiveUserId(requestNoti.getSendUserId())
+                .notiType(NotiType.FRIEND_DECLINE)
+                .regDtm(LocalDateTime.now())
+                .useYn("Y")
+                .build()));
+    }
 }

@@ -12,10 +12,19 @@ public class FriendResponse {
                 .notiId(save.getId())
                 .build();
     }
+
     public static AcceptFriendResponse toAcceptFriendResponse(Friend save) {
         return AcceptFriendResponse.builder()
                 .sendUserId(save.getId().getSendUserId())
                 .receiveUserId(save.getId().getReceiveUserId())
+                .build();
+    }
+
+    public static RefuseFriendResponse toRefuseFriendResponse(Noti noti) {
+        return RefuseFriendResponse.builder()
+                .notiId(noti.getId())
+                .sendUserId(noti.getSendUserId())
+                .receiveUserId(noti.getReceiveUserId())
                 .build();
     }
 }
