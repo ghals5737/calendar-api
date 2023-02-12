@@ -6,15 +6,12 @@ import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.CreateUserResponse;
 import com.example.calendar.dto.user.response.LoginUserResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
-import com.example.calendar.dto.user.response.UpdateUserResponse;
+import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -23,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @Slf4j
@@ -91,7 +90,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("사용자 생성 API 정상 동작 테스트")
-    void createUserTest() {
+    void createUserTest() throws Exception {
         // given
         CreateUserRequest request = CreateUserRequest.builder()
                 .nickname("test nickname")
@@ -112,6 +111,7 @@ public class UserServiceTest {
     }
 
     @Test
+
     @DisplayName("SNS사용자 생성 API 정상 동작 테스트")
     void createSnsUserTest() {
         // given
@@ -128,6 +128,21 @@ public class UserServiceTest {
         assertThat(request.getEmail()).isEqualTo(result.getNickname());
         assertThat(request.getBirthday()).isEqualTo(result.getBirthday());
         assertThat(request.getSnsType()).isEqualTo(result.getSnsType());
+
+    @DisplayName("사용자 생성 API 중복으로 인한 사용자 생성 실패 테스트")
+    void createUserDuplicateExceptionTest() throws Exception {
+        // given
+        CreateUserRequest request = CreateUserRequest.builder()
+                .nickname("test nickname")
+                .email("abc@gmail.com")
+                .birthday(LocalDate.now())
+                .password("abcdefg")
+                .build();
+
+        // when
+        userService.createUser(request);
+        assertThrows(CustomException.class, () -> userService.createUser(request));
+
     }
 
     @Test

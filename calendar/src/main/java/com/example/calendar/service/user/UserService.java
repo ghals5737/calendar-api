@@ -3,7 +3,9 @@ package com.example.calendar.service.user;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.*;
+import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
+import com.example.calendar.repository.user.UserQueryDslRepository;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import static com.example.calendar.global.error.ErrorCode.*;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserQueryDslRepository userQueryDslRepository;
 
     @Transactional
     public SelectUserByIdResponse selectUserById(Long id) {
@@ -27,7 +30,9 @@ public class UserService {
     }
 
     @Transactional
-    public CreateUserResponse createUser(CreateUserRequest request) {
+    public CreateUserResponse createUser(CreateUserRequest request){
+        if (userQueryDslRepository.existsByEmailAndSnsType(request.toUser()))
+            throw new CustomException(ErrorCode.DUPLICATE_USER);
         return UserResponse.toCreateUserResponse(
                 userRepository.save(request.toUser()));
     }
