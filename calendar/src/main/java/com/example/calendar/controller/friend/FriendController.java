@@ -3,6 +3,7 @@ package com.example.calendar.controller.friend;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
+import com.example.calendar.dto.friend.response.RefuseFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
 import com.example.calendar.service.friend.FriendService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,9 @@ public class FriendController {
     public AcceptFriendResponse acceptToBeFriends(@PathVariable Long id, @RequestBody @Valid AcceptFriendRequest request) {
         request.setNotiId(id);
         return friendService.acceptToBeFriends(request);
+    }
+    @PostMapping("refuse/notis/{id}")
+    public RefuseFriendResponse refuseToBeFriends(@PathVariable Long id) {
+        return friendService.refuseToBeFriends(id);
     }
 }

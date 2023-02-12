@@ -7,6 +7,7 @@ import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
+import com.example.calendar.dto.friend.response.RefuseFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.friend.FriendRepository;
@@ -51,6 +52,7 @@ public class FriendServiceTest {
 
     private User sendUser;
     private User receiveUser;
+    private RequestFriendRequest requestFriendRequest;
 
     @BeforeEach
     void createNoti() {
@@ -66,6 +68,10 @@ public class FriendServiceTest {
                 .email("receiveUser@gmail.com")
                 .birthday(LocalDate.of(2023, 2, 26))
                 .build());
+        requestFriendRequest = RequestFriendRequest.builder()
+                .sendUserId(sendUser.getId())
+                .receiveUserId(receiveUser.getId())
+                .build();
     }
 
     @AfterEach
@@ -80,19 +86,15 @@ public class FriendServiceTest {
     @DisplayName("친구 요청 API 정상 동작 확인 테스트")
     void requestFriendsTest() throws Exception {
         // given
-        RequestFriendRequest request = RequestFriendRequest.builder()
-                .sendUserId(sendUser.getId())
-                .receiveUserId(receiveUser.getId())
-                .build();
 
         // when
-        RequestFriendResponse response = friendService.requestToBeFriends(request);
+        RequestFriendResponse response = friendService.requestToBeFriends(requestFriendRequest);
         Noti noti = notiRepository.findByReceiveUserId(response.getReceiveUserId())
                 .orElseThrow(() -> new CustomException(NOTI_NOT_FOUND));
 
         // then
-        assertThat(noti.getReceiveUserId()).isEqualTo(request.getReceiveUserId());
-        assertThat(noti.getSendUserId()).isEqualTo(request.getSendUserId());
+        assertThat(noti.getReceiveUserId()).isEqualTo(requestFriendRequest.getReceiveUserId());
+        assertThat(noti.getSendUserId()).isEqualTo(requestFriendRequest.getSendUserId());
         assertThat(noti.getUseYn()).isEqualTo("Y");
         assertThat(noti.getNotiType()).isEqualTo(NotiType.FRIEND_REQUEST);
 
@@ -103,14 +105,10 @@ public class FriendServiceTest {
     @DisplayName("친구 요청 API 실패 테스트")
     void requestFriendsDuplicateTest() throws Exception {
         // given
-        RequestFriendRequest request = RequestFriendRequest.builder()
-                .sendUserId(sendUser.getId())
-                .receiveUserId(receiveUser.getId())
-                .build();
 
         // when
-        friendService.requestToBeFriends(request);
-        assertThrows(CustomException.class, () -> friendService.requestToBeFriends(request));
+        friendService.requestToBeFriends(requestFriendRequest);
+        assertThrows(CustomException.class, () -> friendService.requestToBeFriends(requestFriendRequest));
 
     }
 
@@ -121,11 +119,7 @@ public class FriendServiceTest {
         // given
 
         // 친구 요청
-        RequestFriendRequest request = RequestFriendRequest.builder()
-                .sendUserId(sendUser.getId()) // 친구 요청 발신자
-                .receiveUserId(receiveUser.getId())
-                .build();
-        RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(request);
+        RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(requestFriendRequest);
         Long notiId = requestFriendResponse.getNotiId();
         // 친구 수락
         AcceptFriendRequest acceptRequest = AcceptFriendRequest.builder()
@@ -172,15 +166,24 @@ public class FriendServiceTest {
 
     }
 
-//    @Test
-//    @DisplayName("친구 거절 API 정상 동작 확인 테스트")
-//    void refuseToBeFriendsTest() {
-//        // given
-//
-//        // when
-////        RefuseFriendResponse response = friendService.refuseToBeFriends(request);
-//        RefuseFriendResponse response = notiService.refuseToBeFriendsById();
-//        // then
-//
-//    }
+    @Test
+    @DisplayName("친구 거절 서비스 로직 정상 동작 확인 테스트")
+    void refuseToBeFriendsTest() throws Exception{
+        // given
+        RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(requestFriendRequest);
+        Long notiId = requestFriendResponse.getNotiId();
+
+        // when
+        RefuseFriendResponse response = friendService.refuseToBeFriends(notiId);
+
+        // then
+        Noti requestNoti = notiRepository.findById(notiId).orElseThrow();
+        assertThat(requestNoti.getUseYn()).isEqualTo("N");
+
+        Noti noti = notiRepository.findById(response.getNotiId()).orElseThrow();
+        assertThat(noti.getNotiType()).isEqualTo(NotiType.FRIEND_DECLINE);
+        assertThat(noti.getUseYn()).isEqualTo("Y");
+        assertThat(noti.getReceiveUserId()).isEqualTo(requestNoti.getSendUserId());
+        assertThat(noti.getSendUserId()).isEqualTo(requestNoti.getReceiveUserId());
+    }
 }

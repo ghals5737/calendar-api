@@ -29,7 +29,7 @@ public class NotiService {
 
     @Transactional
     public DeleteNotiByIdResponse closeNotiById(Long id) {
-        return Optional.ofNullable(notiQueryDslRepository.updateUseYnById(id))
+        return Optional.ofNullable(notiQueryDslRepository.updateUseYnNById(id))
                 .orElseThrow(() -> new CustomException(DELETE_NOTI_FAILED));
     }
 
