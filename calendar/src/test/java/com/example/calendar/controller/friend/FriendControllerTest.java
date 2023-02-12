@@ -2,6 +2,7 @@ package com.example.calendar.controller.friend;
 
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
+import com.example.calendar.dto.friend.request.RefuseFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
 import com.example.calendar.repository.friend.FriendRepository;
@@ -150,6 +151,42 @@ public class FriendControllerTest {
                                 fieldWithPath("body.data").description("바디"),
                                 fieldWithPath("body.data.sendUserId").description("메인 사용자 아이디"),
                                 fieldWithPath("body.data.receiveUserId").description("서브 사용자 아이디"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+    @Test
+    @DisplayName("친구 거절 API 정상동작 확인")
+    public void refuseFriendTest() throws Exception {
+        //given
+        // 친구 요청
+        RequestFriendRequest request = RequestFriendRequest.builder()
+                .sendUserId(sendUser.getId()) // 친구 요청 발신자
+                .receiveUserId(receiveUser.getId())
+                .build();
+        RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(request);
+        Long notiId = requestFriendResponse.getNotiId();
+
+
+        //when,then
+        this.mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .post("/api/friends/refuse/notis/{id}", notiId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("calendar-create",
+                        pathParameters(
+                                parameterWithName("id").description("조회할 알림 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.notiId").description("알림 아이디"),
+                                fieldWithPath("body.data.sendUserId").description("발시 사용자 아이디"),
+                                fieldWithPath("body.data.receiveUserId").description("수신 사용자 아이디"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")

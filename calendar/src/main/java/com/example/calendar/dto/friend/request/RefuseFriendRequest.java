@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RefuseFriendRequest {
-    private Long notiID;
+    private Long notiId;
     private Long sendId;
     private Long receiveId;
 }

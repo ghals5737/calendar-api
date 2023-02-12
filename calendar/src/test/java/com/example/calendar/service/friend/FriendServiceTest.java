@@ -167,7 +167,7 @@ public class FriendServiceTest {
     }
 
     @Test
-    @DisplayName("친구 거절 API 정상 동작 확인 테스트")
+    @DisplayName("친구 거절 서비스 로직 정상 동작 확인 테스트")
     void refuseToBeFriendsTest() throws Exception{
         // given
         RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(requestFriendRequest);
