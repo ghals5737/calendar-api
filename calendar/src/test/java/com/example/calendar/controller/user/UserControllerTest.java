@@ -247,4 +247,43 @@ public class UserControllerTest {
                         )));
     }
 
+    @Test
+    @DisplayName("SNS 사용자 로그인하는 API 정상동작 확인")
+    public void loginSnsTest() throws Exception {
+        //given
+        User request = userRepository.save(User.builder()
+                .nickname("sns@gmail.com")
+                .password(null)
+                .email("sns@gmail.com")
+                .snsType(SnsType.GOOGLE)
+                .birthday(null)
+                .build());
+
+        //when,then
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .post("/api/user/sns-login")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("user-sns-login"
+                        , pathParameters(
+                                parameterWithName("id").description("조회할 사용자 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("body.data.userId").description("사용자 ID"),
+                                fieldWithPath("body.data.nickname").description("사용자 닉네임"),
+                                fieldWithPath("body.data.birthday").description("사용자 생년월일"),
+                                fieldWithPath("body.data.email").description("사용자 이메일"),
+                                fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+
 }
