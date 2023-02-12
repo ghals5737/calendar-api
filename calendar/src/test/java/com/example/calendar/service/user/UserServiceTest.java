@@ -1,6 +1,7 @@
 package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
+import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.user.request.CreateUserRequest;
 import com.example.calendar.dto.user.request.LoginUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
@@ -44,7 +45,7 @@ public class UserServiceTest {
                 .nickname("star")
                 .password("pw")
                 .email("abc@gmail.com")
-                .snsType("sns_type")
+                .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
     }
@@ -63,6 +64,7 @@ public class UserServiceTest {
         User user = User.builder()
                 .nickname("test nickname")
                 .email("abc@gmail.com")
+                .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.now())
                 .password("abcdefg")
                 .build();
@@ -99,6 +101,28 @@ public class UserServiceTest {
         assertThat(request.getBirthday()).isEqualTo(user.getBirthday());
         assertThat(request.getEmail()).isEqualTo(user.getEmail());
         assertThat(request.getPassword()).isEqualTo(user.getPassword());
+
+    }
+
+    @Test
+    @DisplayName("SNS사용자 생성 API 정상 동작 테스트")
+    void createSnsUserTest() {
+        // given
+        CreateSnsUserRequest request = CreateSnsUserRequest.builder()
+                .nickname("test nickname")
+                .email("abc@gmail.com")
+                .birthday(LocalDate.now())
+                .password("abcdefg")
+                .build();
+
+        // when
+        CreateSnsUserResponse result = userService.createSnsUser(request);
+
+        // then
+        assertThat(request.getNickname()).isEqualTo(result.getNickname());
+        assertThat(request.getBirthday()).isEqualTo(result.getBirthday());
+        assertThat(request.getEmail()).isEqualTo(result.getEmail());
+        assertThat(request.getPassword()).isEqualTo(result.getPassword());
 
     }
 

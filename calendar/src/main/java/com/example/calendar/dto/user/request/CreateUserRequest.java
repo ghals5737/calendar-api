@@ -1,6 +1,7 @@
 package com.example.calendar.dto.user.request;
 
 import com.example.calendar.domain.user.User;
+import com.example.calendar.domain.user.type.SnsType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class CreateUserRequest {
                 .birthday(this.birthday)
                 .email(this.email)
                 .password(this.password)
+                .snsType(SnsType.MINICAL)
                 .build();
     }
 }

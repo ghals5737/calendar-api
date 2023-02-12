@@ -1,5 +1,6 @@
 package com.example.calendar.domain.user;
 
+import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,8 @@ public class User {
     private String nickname;
     private LocalDate birthday;
     private String password;
-    private String snsType;
+    @Enumerated(EnumType.STRING)
+    private SnsType snsType;
 
     public void updateUser(UpdateUserRequest request) {
         this.email = request.getEmail();
