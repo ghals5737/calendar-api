@@ -1,5 +1,6 @@
 package com.example.calendar.dto.user.request;
 
+import com.example.calendar.domain.user.type.SnsType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,5 +29,5 @@ public class UpdateUserRequest {
     @NotBlank
     private String password;
 
-    private String snsType;
+    private SnsType snsType;
 }

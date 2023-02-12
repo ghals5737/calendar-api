@@ -1,5 +1,6 @@
 package com.example.calendar.dto.user.response;
 
+import com.example.calendar.domain.user.type.SnsType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class UpdateUserResponse {
     private String nickname;
     private LocalDate birthday;
     private String password;
-
+    private SnsType snsType;
 }
