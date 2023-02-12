@@ -1,6 +1,8 @@
 package com.example.calendar.controller.user;
 
 import com.example.calendar.domain.user.User;
+import com.example.calendar.domain.user.type.SnsType;
+import com.example.calendar.dto.user.request.CreateSnsUserRequest;
 import com.example.calendar.dto.user.request.CreateUserRequest;
 import com.example.calendar.dto.user.request.UpdateUserRequest;
 import com.example.calendar.repository.user.UserRepository;
@@ -65,6 +67,45 @@ public class UserControllerTest {
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("user-create",
+                        requestFields(
+                                fieldWithPath("nickname").description("사용자 닉네임"),
+                                fieldWithPath("birthday").description("사용자 생년월일"),
+                                fieldWithPath("email").description("사용자 이메일"),
+                                fieldWithPath("password").description("사용자 비밀번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.nickname").description("사용자 닉네임"),
+                                fieldWithPath("body.data.birthday").description("사용자 생년월일"),
+                                fieldWithPath("body.data.email").description("사용자 이메일"),
+                                fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+
+    @Test
+    @DisplayName("사용자 생성 API 정상동작 확인")
+    public void createSnsUserTest() throws Exception {
+        //given
+        CreateSnsUserRequest request = CreateSnsUserRequest.builder()
+                .email("abc@gmail.com")
+                .birthday(null)
+                .snsType(SnsType.GOOGLE)
+                .build();
+
+        //when,then
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .post("/api/sns-user")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("user-create",
                         requestFields(
