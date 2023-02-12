@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -18,8 +19,9 @@ public class CreateSnsUserRequest {
     @NotEmpty(message = "이메일이 공백일 수 없습니다.")
     @Email
     private String email;
+    @Nullable
     private LocalDate birthday;
-    @NotEmpty(message = "SnsType이 공백일 수 없습니다.")
+    @NotNull(message = "SnsType이 공백일 수 없습니다.")
     private SnsType snsType;
 
     public User toUser() {

@@ -79,10 +79,12 @@ public class UserControllerTest {
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.userId").description("사용자 id"),
                                 fieldWithPath("body.data.nickname").description("사용자 닉네임"),
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
                                 fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
@@ -90,11 +92,11 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("사용자 생성 API 정상동작 확인")
+    @DisplayName("SNS사용자 생성 API 정상동작 확인")
     public void createSnsUserTest() throws Exception {
         //given
         CreateSnsUserRequest request = CreateSnsUserRequest.builder()
-                .email("abc@gmail.com")
+                .email("sns@gmail.com")
                 .birthday(null)
                 .snsType(SnsType.GOOGLE)
                 .build();
@@ -102,26 +104,27 @@ public class UserControllerTest {
         //when,then
         this.mockMvc.perform(
                         RestDocumentationRequestBuilders
-                                .post("/api/sns-user")
+                                .post("/api/user/sns")
                                 .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("user-create",
+                .andDo(document("user-sns-create",
                         requestFields(
-                                fieldWithPath("nickname").description("사용자 닉네임"),
-                                fieldWithPath("birthday").description("사용자 생년월일"),
                                 fieldWithPath("email").description("사용자 이메일"),
-                                fieldWithPath("password").description("사용자 비밀번호")
+                                fieldWithPath("snsType").description("사용자 로그인 타입"),
+                                fieldWithPath("birthday").description("사용자 생일")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.userId").description("사용자 id"),
                                 fieldWithPath("body.data.nickname").description("사용자 닉네임"),
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
                                 fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
@@ -158,6 +161,7 @@ public class UserControllerTest {
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
                                 fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
@@ -237,6 +241,7 @@ public class UserControllerTest {
                                 fieldWithPath("body.data.birthday").description("사용자 생년월일"),
                                 fieldWithPath("body.data.email").description("사용자 이메일"),
                                 fieldWithPath("body.data.password").description("사용자 비밀번호"),
+                                fieldWithPath("body.data.snsType").description("사용자 로그인 타입"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
