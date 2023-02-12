@@ -90,7 +90,6 @@ public class UserServiceTest {
                 .password("abcdefg")
                 .build();
 
-        // todo 사용자 이미 있는 이메일인지 체크
         // when
         CreateUserResponse user = userService.createUser(request);
 
