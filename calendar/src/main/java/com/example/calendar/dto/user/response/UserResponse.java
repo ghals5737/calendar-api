@@ -10,6 +10,7 @@ public class UserResponse {
                 .birthday(user.getBirthday())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .snsType(user.getSnsType())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class UserResponse {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .userId(user.getId())
+                .snsType(user.getSnsType())
                 .build();
     }
 
@@ -36,6 +38,7 @@ public class UserResponse {
                 .birthday(user.getBirthday())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .snsType(user.getSnsType())
                 .build();
     }
 
@@ -45,7 +48,7 @@ public class UserResponse {
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .userId(user.getId())
-
+                .snsType(user.getSnsType())
                 .build();
     }
 }

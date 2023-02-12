@@ -1,8 +1,6 @@
 package com.example.calendar.controller.user;
 
-import com.example.calendar.dto.user.request.CreateUserRequest;
-import com.example.calendar.dto.user.request.LoginUserRequest;
-import com.example.calendar.dto.user.request.UpdateUserRequest;
+import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.*;
 import com.example.calendar.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +24,11 @@ public class UserController {
         return userService.createUser(request);
     }
 
+    @PostMapping("/sns")
+    public CreateUserResponse createSnsUser(@RequestBody @Valid CreateSnsUserRequest request) {
+        return userService.createSnsUser(request);
+    }
+
     @DeleteMapping("/{id}")
     public DeleteUserResponse deleteUser(@PathVariable Long id) throws Exception {
         return userService.deleteUserById(id);
@@ -40,4 +43,11 @@ public class UserController {
     public LoginUserResponse login(@RequestBody @Valid LoginUserRequest request) {
         return userService.login(request);
     }
+
+    @PostMapping("/sns-login")
+    public LoginUserResponse login(@RequestBody @Valid LoginSnsUserRequest request) {
+        return userService.loginSns(request);
+    }
+
+
 }
