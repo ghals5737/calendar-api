@@ -186,4 +186,18 @@ public class UserServiceTest {
         assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
         assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
     }
+
+    @Test
+    @DisplayName("SNS 사용자 로그인 테스트")
+    void loginSnsTest() {
+        LoginSnsUserRequest request = LoginSnsUserRequest.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
+        LoginUserResponse loginUser = userService.loginSns(request);
+        assertThat(loginUser.getUserId()).isEqualTo(user.getId());
+        assertThat(loginUser.getBirthday()).isEqualTo(user.getBirthday());
+        assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
+        assertThat(loginUser.getEmail()).isEqualTo(user.getEmail());
+    }
 }
