@@ -177,7 +177,7 @@ class CalendarControllerTest {
                         .delete("/api/calendar/{id}", expect.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("calendar-selectByID"
+                .andDo(document("calendar-delete"
                         , pathParameters(
                                 parameterWithName("id").description("삭제할 캘린더 id")
                         ),
