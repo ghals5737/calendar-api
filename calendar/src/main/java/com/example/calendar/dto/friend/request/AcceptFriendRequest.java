@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AcceptFriendRequest {
-    private Long mainUserId;
-    private Long subUserId;
+    private Long sendUserId;
+    private Long receiveUserId;
 }

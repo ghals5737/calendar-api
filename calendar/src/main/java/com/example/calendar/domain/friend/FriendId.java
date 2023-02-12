@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FriendId implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mainUserId;
+    private Long sendUserId;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subUserId;
+    private Long receiveUserId;
 }

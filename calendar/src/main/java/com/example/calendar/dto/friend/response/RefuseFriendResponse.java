@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AcceptFriendResponse {
+public class RefuseFriendResponse {
     private Long sendUserId;
     private Long receiveUserId;
 }
