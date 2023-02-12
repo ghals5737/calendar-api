@@ -26,14 +26,12 @@ public class CalendarQueryDslRepository {
                 , calendar.description
                 , calendar.category
                 , calendar.color))
-                .from(calendar)
+                .from(user)
                 .innerJoin(userCalendarMpng)
-                .on(calendar.id.eq(userCalendarMpng.calendarId))
-                .innerJoin(user)
                 .on(user.id.eq(userCalendarMpng.userId))
+                .innerJoin(calendar)
+                .on(calendar.id.eq(userCalendarMpng.calendarId))
                 .where(user.id.eq(condition.getUserId()))
                 .fetch();
     }
-
-
 }

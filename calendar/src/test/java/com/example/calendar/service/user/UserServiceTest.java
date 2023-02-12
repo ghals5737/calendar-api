@@ -11,7 +11,10 @@ import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -48,12 +51,12 @@ public class UserServiceTest {
                 .build());
 
         snsUser = userRepository.save(User.builder()
-                    .nickname("sns@gmail.com")
-                    .password(null)
-                    .email("sns@gmail.com")
-                    .snsType(SnsType.GOOGLE)
-                    .birthday(null)
-                    .build());
+                .nickname("sns@gmail.com")
+                .password(null)
+                .email("sns@gmail.com")
+                .snsType(SnsType.GOOGLE)
+                .birthday(null)
+                .build());
     }
 
 
@@ -128,6 +131,7 @@ public class UserServiceTest {
         assertThat(request.getEmail()).isEqualTo(result.getNickname());
         assertThat(request.getBirthday()).isEqualTo(result.getBirthday());
         assertThat(request.getSnsType()).isEqualTo(result.getSnsType());
+    }
 
     @DisplayName("사용자 생성 API 중복으로 인한 사용자 생성 실패 테스트")
     void createUserDuplicateExceptionTest() throws Exception {
