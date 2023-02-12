@@ -8,6 +8,8 @@ public class FriendResponse {
         return RequestFriendResponse.builder()
                 .sendUserId(save.getSendUserId())
                 .receiveUserId(save.getReceiveUserId())
+                .regDtm(save.getRegDtm())
+                .notiId(save.getId())
                 .build();
     }
     public static AcceptFriendResponse toAcceptFriendResponse(Friend save) {

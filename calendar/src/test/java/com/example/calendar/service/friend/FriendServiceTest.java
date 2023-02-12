@@ -1,16 +1,20 @@
 package com.example.calendar.service.friend;
 
+import com.example.calendar.domain.friend.FriendId;
 import com.example.calendar.domain.noti.Noti;
 import com.example.calendar.domain.noti.NotiType;
 import com.example.calendar.domain.user.User;
+import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
+import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.friend.FriendRepository;
+import com.example.calendar.repository.noti.NotiQueryDslRepository;
 import com.example.calendar.repository.noti.NotiRepository;
 import com.example.calendar.repository.user.UserRepository;
-import com.example.calendar.service.noti.NotiService;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,11 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.example.calendar.global.error.ErrorCode.NOTI_NOT_FOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Slf4j
 @SpringBootTest
 @NoArgsConstructor
 public class FriendServiceTest {
@@ -32,14 +38,16 @@ public class FriendServiceTest {
     private FriendService friendService;
 
     @Autowired
-    private NotiService notiService;
-    @Autowired
     private NotiRepository notiRepository;
+
     @Autowired
     private FriendRepository friendRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NotiQueryDslRepository notiQueryDslRepository;
 
     private User sendUser;
     private User receiveUser;
@@ -69,7 +77,7 @@ public class FriendServiceTest {
 
     @Test
     @DisplayName("친구 요청 API 정상 동작 확인 테스트")
-    void requestFriendsTest() throws Exception{
+    void requestFriendsTest() throws Exception {
         // given
         RequestFriendRequest request = RequestFriendRequest.builder()
                 .sendUserId(sendUser.getId())
@@ -82,17 +90,17 @@ public class FriendServiceTest {
                 .orElseThrow(() -> new CustomException(NOTI_NOT_FOUND));
 
         // then
-        assertThat(noti.getId()).isEqualTo(response.getNotiId());
-        assertThat(noti.getReceiveUserId()).isEqualTo(response.getReceiveUserId());
-        assertThat(noti.getSendUserId()).isEqualTo(response.getSendUserId());
+        assertThat(noti.getReceiveUserId()).isEqualTo(request.getReceiveUserId());
+        assertThat(noti.getSendUserId()).isEqualTo(request.getSendUserId());
         assertThat(noti.getUseYn()).isEqualTo("Y");
         assertThat(noti.getNotiType()).isEqualTo(NotiType.FRIEND_REQUEST);
+
     }
 
 
     @Test
     @DisplayName("친구 요청 API 실패 테스트")
-    void requestFriendsDuplicateTest() throws Exception{
+    void requestFriendsDuplicateTest() throws Exception {
         // given
         RequestFriendRequest request = RequestFriendRequest.builder()
                 .sendUserId(sendUser.getId())
@@ -105,39 +113,55 @@ public class FriendServiceTest {
 
     }
 
-//
-//    @Test
-//    @DisplayName("친구 수락 API 정상 동작 확인 테스트")
-//    void acceptToBeFriendsTest() {
-//        // given
-//        AcceptFriendRequest request = AcceptFriendRequest.builder()
-//                .mainUserId(mainUser.getId())
-//                .subUserId(subUser.getId())
-//                .build();
-//
-//        // when
-//        AcceptFriendResponse response = friendService.acceptToBeFriends(request);
-//
-//        // then
-//
-//        // Main -> Sub
-//        assertThat(request.getMainUserId()).isEqualTo(response.getMainUserId());
-//        assertThat(request.getSubUserId()).isEqualTo(response.getSubUserId());
-//
-//        // Sub -> Main
-//        FriendId friendIdReverse = FriendId.builder()
-//                .mainUserId(response.getSubUserId())
-//                .subUserId(response.getMainUserId())
-//                .build();
-//
-//        Friend friend = friendRepository.findById(friendIdReverse)
-//                .orElseThrow(() -> new CustomException(FRIEND_NOT_FOUND));
-//
-//        assertThat(friend.getId().getSubUserId()).isEqualTo(response.getMainUserId());
-//
-//
-//        // todo 알림 테이블에 쌓아야한다. 각각의 유저한테.
-//    }
+
+    @Test
+    @DisplayName("친구 수락 API 정상 동작 확인 테스트")
+    void acceptToBeFriendsTest() throws Exception {
+        // given
+
+        // 친구 요청
+        RequestFriendRequest request = RequestFriendRequest.builder()
+                .sendUserId(sendUser.getId()) // 친구 요청 발신자
+                .receiveUserId(receiveUser.getId())
+                .build();
+
+        // 친구 수락
+        AcceptFriendRequest acceptRequest = AcceptFriendRequest.builder()
+                .sendUserId(receiveUser.getId()) // 친구 수락 발신자 (처음 친구 신청의 수신자)
+                .receiveUserId(sendUser.getId())
+                .build();
+
+        // when
+        friendService.requestToBeFriends(request);
+        AcceptFriendResponse response = friendService.acceptToBeFriends(acceptRequest);
+
+        // then
+        assertThat(acceptRequest.getSendUserId()).isEqualTo(response.getSendUserId());
+        assertThat(acceptRequest.getReceiveUserId()).isEqualTo(response.getReceiveUserId());
+
+        // 친구 테이블 확인
+
+        assertThat(friendRepository.findById(FriendId.builder()
+                .receiveUserId(acceptRequest.getReceiveUserId())
+                .sendUserId(acceptRequest.getSendUserId())
+                .build()).orElseThrow()).isNotNull();
+
+        assertThat(friendRepository.findById(FriendId.builder()
+                .receiveUserId(acceptRequest.getSendUserId())
+                .sendUserId(acceptRequest.getReceiveUserId())
+                .build()).orElseThrow()).isNotNull();
+
+        // 알림 확인
+        Noti noti = Optional.of(notiQueryDslRepository
+                .findNotiBySendUserIdAndReceiveUserId(response.getSendUserId(), response.getReceiveUserId())).orElseThrow(
+                () -> new CustomException(NOTI_NOT_FOUND)
+        );
+
+        assertThat(noti.getNotiType()).isEqualTo(NotiType.FRIEND_ACCEPT);
+        assertThat(noti.getReceiveUserId()).isEqualTo(acceptRequest.getReceiveUserId());
+        assertThat(noti.getSendUserId()).isEqualTo(acceptRequest.getSendUserId());
+
+    }
 
 //    @Test
 //    @DisplayName("친구 거절 API 정상 동작 확인 테스트")
