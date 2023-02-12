@@ -139,18 +139,14 @@ public class NotiControllerTest {
     @DisplayName("알림 아이디로 use_yn N 처리 하는 API 정상동작 확인")
     public void deleteNotiByIdTest() throws Exception {
         //given
-        Noti expect = notiRepository.save(Noti.builder()
-                .notiType(NotiType.FRIEND_REQUEST)
-                .useYn("Y")
-                .build());
 
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .delete("/api/notis/{id}", expect.getId())
+                        .delete("/api/notis/{id}", noti.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("notis-selectByID"
+                .andDo(document("notis-deleteByID"
                         , pathParameters(
                                 parameterWithName("id").description("삭제할 알림 id")
                         ),

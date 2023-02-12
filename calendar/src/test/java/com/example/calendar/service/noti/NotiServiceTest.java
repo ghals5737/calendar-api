@@ -47,13 +47,13 @@ public class NotiServiceTest {
         sendUser = userRepository.save(User.builder()
                 .nickname("sendUser")
                 .password("pw")
-                .email("mainUser@gmail.com")
+                .email("sendUser@gmail.com")
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
         receiveUser = userRepository.save(User.builder()
                 .nickname("receiveUser")
                 .password("pw")
-                .email("subUser@gmail.com")
+                .email("receiveUser@gmail.com")
                 .birthday(LocalDate.of(2023, 2, 26))
                 .build());
         userRepository.save(sendUser);

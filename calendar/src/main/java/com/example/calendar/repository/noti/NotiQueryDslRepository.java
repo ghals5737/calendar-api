@@ -1,5 +1,7 @@
 package com.example.calendar.repository.noti;
 
+import com.example.calendar.domain.noti.NotiType;
+import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.noti.response.DeleteNotiByIdResponse;
 import com.example.calendar.dto.noti.response.NotiResponse;
 import com.example.calendar.dto.noti.response.SelectNotiByIdResponse;
@@ -8,6 +10,7 @@ import com.example.calendar.global.error.exception.CustomException;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -54,5 +57,14 @@ public class NotiQueryDslRepository {
                 .limit(5)
                 .orderBy(noti.regDtm.desc())
                 .fetch();
+    }
+
+    public boolean existsNoti(RequestFriendRequest request) {
+        return queryFactory.select(noti.id).from(noti)
+                .where(noti.receiveUserId.eq(request.getReceiveUserId()),
+                        noti.sendUserId.eq(request.getSendUserId()),
+                        noti.notiType.eq(NotiType.FRIEND_REQUEST),
+                        noti.useYn.eq("Y"))
+                .fetchFirst() != null;
     }
 }
