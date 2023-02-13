@@ -113,13 +113,14 @@ class CalendarControllerTest {
                                 fieldWithPath("title").description("캘린더 제목"),
                                 fieldWithPath("color").description("캘린더 색상"),
                                 fieldWithPath("category").description("캘린더 카테고리"),
-                                fieldWithPath("description").description("캘린더 설명")
+                                fieldWithPath("description").description("캘린더 설명"),
+                                fieldWithPath("userId").description("사용자 아이디")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
-                                fieldWithPath("body.data.id").description("사용자 아이디"),
+                                fieldWithPath("body.data.calendarId").description("캘린더 아이디"),
                                 fieldWithPath("body.data.title").description("캘린더 제목"),
                                 fieldWithPath("body.data.color").description("캘린더 색상"),
                                 fieldWithPath("body.data.category").description("캘린더 카테고리"),
@@ -164,17 +165,11 @@ class CalendarControllerTest {
     @DisplayName("캘린더 아이디로 삭제하는 API 정상동작 확인")
     public void deleteCalendarByIdTest() throws Exception {
         //given
-        Calendar expect = calendarRepository.save(Calendar.builder()
-                .title("test title")
-                .color("test color")
-                .category("test category")
-                .description("test desc")
-                .build());
 
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .delete("/api/calendar/{id}", expect.getId())
+                        .delete("/api/calendar/{id}", calendar.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("calendar-delete"
@@ -195,19 +190,13 @@ class CalendarControllerTest {
     @DisplayName("캘린더 수정 API 정상동작 확인")
     public void updateCalendarTest() throws Exception {
         //given
-        Calendar expect = calendarRepository.save(Calendar.builder()
-                .title("test")
-                .category("test category")
-                .description("test")
-                .color("test")
-                .build());
 
         UpdateCalendarRequest request = UpdateCalendarRequest.builder()
-                .id(expect.getId())
+                .id(calendar.getId())
                 .title("update test")
-                .category("test category")
+                .category("test")
                 .description("update test description")
-                .color("update test color")
+                .color("update")
                 .build();
 
         //when,then
