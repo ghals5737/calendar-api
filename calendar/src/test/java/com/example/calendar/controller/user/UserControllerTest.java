@@ -10,6 +10,7 @@ import com.example.calendar.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +45,18 @@ public class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+    private User user;
+
+    @BeforeEach
+    public void create() {
+        user = userRepository.save(User.builder()
+                .nickname("star")
+                .password("pw")
+                .email("abc@gmail.com")
+                .snsType(SnsType.MINICAL)
+                .birthday(LocalDate.of(2023, 1, 26))
+                .build());
+    }
 
     @AfterEach
     public void clear() {
@@ -108,11 +121,11 @@ public class UserControllerTest {
 
         //when,then
         this.mockMvc.perform(
-                        RestDocumentationRequestBuilders
-                                .post("/api/user/sns")
-                                .content(objectMapper.writeValueAsString(request))
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON))
+                RestDocumentationRequestBuilders
+                        .post("/api/user/sns")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("user-sns-create",
                         requestFields(
@@ -206,19 +219,13 @@ public class UserControllerTest {
     @DisplayName("사용자 수정 API 정상동작 확인")
     public void updateUserTest() throws Exception {
         //given
-        User expect = userRepository.save(User.builder()
-                .nickname("test nickname")
-                .email("abc@gmail.com")
-                .birthday(LocalDate.now())
-                .password("abcdefg")
-                .build());
 
         UpdateUserRequest request = UpdateUserRequest.builder()
-                .id(expect.getId())
-                .nickname("update nickname")
-                .email("update email")
+                .id(user.getId())
+                .nickname("updatenickname")
+                .email("updateemail2@gmail.com")
                 .birthday(LocalDate.of(2000, 1, 24))
-                .password("update password")
+                .password("updatepassword")
                 .build();
 
         //when,then
@@ -271,11 +278,11 @@ public class UserControllerTest {
 
         //when,then
         this.mockMvc.perform(
-                        RestDocumentationRequestBuilders
-                                .post("/api/user/sns-login")
-                                .content(objectMapper.writeValueAsString(request))
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON))
+                RestDocumentationRequestBuilders
+                        .post("/api/user/sns-login")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("user-sns-login",
                         requestFields(
