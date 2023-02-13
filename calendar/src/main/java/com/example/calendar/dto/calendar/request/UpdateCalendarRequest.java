@@ -6,17 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCalendarRequest {
-    @NotBlank
+    @NotNull
     private Long id;
-    @NotBlank
+    @NotNull
     private String title;
-    @NotBlank
+    @NotNull
     private String description;
     @NotBlank
     private String category;
