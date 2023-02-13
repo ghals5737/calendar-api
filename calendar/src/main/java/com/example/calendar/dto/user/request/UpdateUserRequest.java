@@ -19,14 +19,16 @@ import java.time.LocalDate;
 public class UpdateUserRequest {
     @NotBlank
     private Long id;
-    @NotBlank @Email
+    @NotBlank(message = "이메일이 공백일 수 없습니다.")
+    @Email(message = "이메일 형식이 아닙니다.")
     private String email;
-    @NotBlank
+    @NotBlank(message = "닉네임에 공백이 포함될 수 없습니다.")
     private String nickname;
-    @NotBlank @DateTimeFormat(pattern = "yyyyMMdd")
+    @NotBlank
+    @DateTimeFormat(pattern = "yyyyMMdd")
     @PastOrPresent
     private LocalDate birthday;
-    @NotBlank
+    @NotBlank(message = "비밀번호가 공백일 수 없습니다.")
     private String password;
 
     private SnsType snsType;

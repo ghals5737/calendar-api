@@ -6,11 +6,11 @@ import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.CreateUserResponse;
 import com.example.calendar.dto.user.response.LoginUserResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
+import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,8 +95,8 @@ public class UserServiceTest {
     void createUserTest() throws Exception {
         // given
         CreateUserRequest request = CreateUserRequest.builder()
-                .nickname("test nickname")
-                .email("abc@gmail.com")
+                .nickname("nickname")
+                .email("abcdefg@gmail.com")
                 .birthday(LocalDate.now())
                 .password("abcdefg")
                 .build();
@@ -114,8 +113,7 @@ public class UserServiceTest {
     }
 
     @Test
-
-    @DisplayName("SNS사용자 생성 API 정상 동작 테스트")
+    @DisplayName("SNS 사용자 생성 API 정상 동작 테스트")
     void createSnsUserTest() {
         // given
         CreateSnsUserRequest request = CreateSnsUserRequest.builder()
@@ -174,28 +172,26 @@ public class UserServiceTest {
     @Test
     @DisplayName("사용자 수정 API 정상 동작 테스트")
     void updateUserTest() {
-
         // given
 
         // when
         UpdateUserRequest request = UpdateUserRequest.builder()
                 .id(user.getId())
-                .nickname("update nickname")
-                .email("update email")
+                .nickname("updatenickname")
+                .email("updateemail@gmail.com")
                 .birthday(LocalDate.of(2000, 1, 24))
-                .password("update password")
+                .password("updatepassword")
                 .build();
 
         userService.updateUser(request);
 
         // then
-        List<User> results = userRepository.findAll();
-        AssertionsForInterfaceTypes.assertThat(results).hasSize(1);
-        assertThat(results.get(0).getId()).isEqualTo(request.getId());
-        assertThat(results.get(0).getNickname()).isEqualTo(request.getNickname());
-        assertThat(results.get(0).getBirthday()).isEqualTo(request.getBirthday());
-        assertThat(results.get(0).getEmail()).isEqualTo(request.getEmail());
-        assertThat(results.get(0).getPassword()).isEqualTo(request.getPassword());
+        User user = userRepository.findById(this.user.getId()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        assertThat(user.getId()).isEqualTo(request.getId());
+        assertThat(user.getNickname()).isEqualTo(request.getNickname());
+        assertThat(user.getBirthday()).isEqualTo(request.getBirthday());
+        assertThat(user.getEmail()).isEqualTo(request.getEmail());
+        assertThat(user.getPassword()).isEqualTo(request.getPassword());
     }
 
     @Test
