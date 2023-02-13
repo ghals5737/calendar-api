@@ -58,10 +58,10 @@ public class UserControllerTest {
                 .build());
     }
 
-//    @AfterEach
-//    public void clear() {
-//        userRepository.deleteAll();
-//    }
+    @AfterEach
+    public void clear() {
+        userRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("사용자 생성 API 정상동작 확인")
