@@ -40,7 +40,7 @@ public class UserService {
     @Transactional
     public DeleteUserResponse deleteUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         userRepository.delete(user);
         return UserResponse.toDeleteUserResponse(user);
     }
@@ -48,7 +48,7 @@ public class UserService {
     @Transactional
     public UpdateUserResponse updateUser(UpdateUserRequest request) {
         User user = userRepository.findById(request.getId())
-                .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         user.updateUser(request);
         return UserResponse.toUpdateUserResponse(user);
     }
