@@ -50,25 +50,25 @@ public class UserControllerTest {
     @BeforeEach
     public void create() {
         user = userRepository.save(User.builder()
-                .nickname("star")
+                .nickname("staasdfr")
                 .password("pw")
-                .email("abc@gmail.com")
+                .email("absdfadfc@gmail.com")
                 .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.of(2023, 1, 26))
                 .build());
     }
 
-    @AfterEach
-    public void clear() {
-        userRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void clear() {
+//        userRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName("사용자 생성 API 정상동작 확인")
     public void createUserTest() throws Exception {
         //given
         CreateUserRequest request = CreateUserRequest.builder()
-                .nickname("test nickname")
+                .nickname("testnickname")
                 .email("abc@gmail.com")
                 .birthday(LocalDate.now())
                 .password("abcdefg")
@@ -219,13 +219,13 @@ public class UserControllerTest {
     @DisplayName("사용자 수정 API 정상동작 확인")
     public void updateUserTest() throws Exception {
         //given
-
         UpdateUserRequest request = UpdateUserRequest.builder()
                 .id(user.getId())
                 .nickname("updatenickname")
-                .email("updateemail2@gmail.com")
+                .email("updateemail@gmail.com")
                 .birthday(LocalDate.of(2000, 1, 24))
                 .password("updatepassword")
+                .snsType(SnsType.GOOGLE)
                 .build();
 
         //when,then
@@ -242,11 +242,12 @@ public class UserControllerTest {
                                 fieldWithPath("nickname").description("사용자 닉네임"),
                                 fieldWithPath("birthday").description("사용자 생년월일"),
                                 fieldWithPath("email").description("사용자 이메일"),
-                                fieldWithPath("password").description("사용자 비밀번호")
+                                fieldWithPath("password").description("사용자 비밀번호"),
+                                fieldWithPath("snsType").description("SNS 타입")
                         ),
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
-                                fieldWithPath("body.error").description("API 에러 정보??"),
+                                fieldWithPath("body.error").description("API 에러 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data.userId").description("사용자 ID"),
                                 fieldWithPath("body.data.nickname").description("사용자 닉네임"),
