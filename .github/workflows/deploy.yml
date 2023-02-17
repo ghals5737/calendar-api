@@ -59,7 +59,7 @@ jobs:
         shell: bash
 
         # [2]
-      - name: Build with Gradle
+      - name: Build with Gradle And Clean Cache
         run: ./gradlew clean build --exclude-task test --exclude-task asciidoctor
         working-directory: ${{ env.WORKING_DIRECTORY }}
         shell: bash
