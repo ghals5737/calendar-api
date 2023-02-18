@@ -7,15 +7,9 @@
 ## 2.프로젝트 아키택쳐
 
 ### Architecture
-
-![Auto 2.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f3230d9f-eaff-474e-b229-63864cc715de/Auto_2.png)
-
+![Auto 2](https://user-images.githubusercontent.com/52785761/219866660-9456ba2c-2cab-4b1b-9502-11e8549e8839.png)
 ### CI/CD
-
-![Auto 3.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b05f6315-9144-4d05-9d2e-a48e2989778b/Auto_3.png)
-
+![Auto 3](https://user-images.githubusercontent.com/52785761/219866688-ef48b388-a661-44d8-a30a-797b67750122.png)
 ## 3.ERD
-
-![erd.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b23ad20a-ba8c-44d9-8b1b-562384659bea/erd.png)
-
+![erd PNG](https://user-images.githubusercontent.com/52785761/219866704-6aebe409-b928-4a03-8b60-28c46bbe87bc.png)
 ## 4.기술스택
