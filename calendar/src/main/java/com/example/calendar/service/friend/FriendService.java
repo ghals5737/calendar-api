@@ -5,6 +5,7 @@ import com.example.calendar.domain.friend.FriendId;
 import com.example.calendar.domain.noti.Noti;
 import com.example.calendar.domain.noti.NotiType;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
+import com.example.calendar.dto.friend.request.RefuseFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.FriendResponse;
@@ -76,12 +77,11 @@ public class FriendService {
     }
 
     @Transactional
-    public RefuseFriendResponse refuseToBeFriends(Long notiId) {
-        Noti requestNoti = notiRepository.findById(notiId).orElseThrow();
-        notiQueryDslRepository.updateUseYnNById(notiId);
+    public RefuseFriendResponse refuseToBeFriends(RefuseFriendRequest request) {
+        notiQueryDslRepository.updateUseYnNById(request.getNotiId());
         return FriendResponse.toRefuseFriendResponse(notiRepository.save(Noti.builder()
-                .sendUserId(requestNoti.getReceiveUserId())
-                .receiveUserId(requestNoti.getSendUserId())
+                .sendUserId(request.getSendUserId())
+                .receiveUserId(request.getReceiveUserId())
                 .notiType(NotiType.FRIEND_DECLINE)
                 .regDtm(LocalDateTime.now())
                 .useYn("Y")

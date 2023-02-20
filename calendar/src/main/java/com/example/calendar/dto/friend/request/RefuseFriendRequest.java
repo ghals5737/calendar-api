@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RefuseFriendRequest {
     private Long notiId;
-    private Long sendId;
-    private Long receiveId;
+    private Long sendUserId;
+    private Long receiveUserId;
 }
