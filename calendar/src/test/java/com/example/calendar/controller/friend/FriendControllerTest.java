@@ -132,15 +132,13 @@ public class FriendControllerTest {
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/api/friends/accept/notis/{id}", acceptRequest.getNotiId())
+                        .post("/api/friends/accept")
                         .content(objectMapper.writeValueAsString(acceptRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("calendar-create",
-                        pathParameters(
-                                parameterWithName("id").description("조회할 알림 ID")
-                        ), requestFields(
+                .andDo(document("friend-accept",
+                       requestFields(
                                 fieldWithPath("sendUserId").description("발신 사용자 아이디"),
                                 fieldWithPath("receiveUserId").description("수신 사용자 아이디"),
                                 fieldWithPath("notiId").description("알림 아이디")
@@ -156,6 +154,7 @@ public class FriendControllerTest {
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }
+
     @Test
     @DisplayName("친구 거절 API 정상동작 확인")
     public void refuseFriendTest() throws Exception {
@@ -167,19 +166,22 @@ public class FriendControllerTest {
                 .build();
         RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(request);
         Long notiId = requestFriendResponse.getNotiId();
-
+        RefuseFriendRequest refuseRequest = RefuseFriendRequest.builder()
+                .sendUserId(requestFriendResponse.getReceiveUserId())
+                .receiveUserId(requestFriendResponse.getSendUserId())
+                .notiId(notiId)
+                .build();
 
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .post("/api/friends/refuse/notis/{id}", notiId)
+                        .post("/api/friends/refuse")
+                        .content(objectMapper.writeValueAsString(refuseRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("calendar-create",
-                        pathParameters(
-                                parameterWithName("id").description("조회할 알림 ID")
-                        ),
+                .andDo(document("friend-refuse",
+
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),

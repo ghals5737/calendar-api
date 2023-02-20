@@ -1,6 +1,7 @@
 package com.example.calendar.controller.friend;
 
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
+import com.example.calendar.dto.friend.request.RefuseFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.RefuseFriendResponse;
@@ -23,13 +24,12 @@ public class FriendController {
         return friendService.requestToBeFriends(request);
     }
 
-    @PostMapping("accept/notis/{id}")
-    public AcceptFriendResponse acceptToBeFriends(@PathVariable Long id, @RequestBody @Valid AcceptFriendRequest request) {
-        request.setNotiId(id);
+    @PostMapping("accept")
+    public AcceptFriendResponse acceptToBeFriends(@RequestBody @Valid AcceptFriendRequest request) {
         return friendService.acceptToBeFriends(request);
     }
-    @PostMapping("refuse/notis/{id}")
-    public RefuseFriendResponse refuseToBeFriends(@PathVariable Long id) {
-        return friendService.refuseToBeFriends(id);
+    @PostMapping("refuse")
+    public RefuseFriendResponse refuseToBeFriends(@RequestBody @Valid RefuseFriendRequest request) {
+        return friendService.refuseToBeFriends(request);
     }
 }

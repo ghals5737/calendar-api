@@ -5,6 +5,7 @@ import com.example.calendar.domain.noti.Noti;
 import com.example.calendar.domain.noti.NotiType;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
+import com.example.calendar.dto.friend.request.RefuseFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.RefuseFriendResponse;
@@ -115,7 +116,7 @@ public class FriendServiceTest {
 
     @Test
     @DisplayName("친구 수락 API 정상 동작 확인 테스트")
-    void acceptToBeFriendsTest() throws Exception {
+    void acceptFriendRequestTest() throws Exception {
         // given
 
         // 친구 요청
@@ -129,11 +130,12 @@ public class FriendServiceTest {
                 .build();
 
         // when
-        AcceptFriendResponse response = friendService.acceptToBeFriends(acceptRequest);
+        AcceptFriendResponse acceptResponse  = friendService.acceptToBeFriends(acceptRequest);
 
         // then
-        assertThat(acceptRequest.getSendUserId()).isEqualTo(response.getSendUserId());
-        assertThat(acceptRequest.getReceiveUserId()).isEqualTo(response.getReceiveUserId());
+        assertThat(acceptResponse).isNotNull();
+        assertThat(acceptRequest.getSendUserId()).isEqualTo(acceptResponse .getSendUserId());
+        assertThat(acceptRequest.getReceiveUserId()).isEqualTo(acceptResponse .getReceiveUserId());
 
         // 친구 테이블 확인
 
@@ -148,14 +150,14 @@ public class FriendServiceTest {
                 .build()).orElseThrow()).isNotNull();
 
         // 알림 확인 - 친구 요청 알림 USER_YN = N
-        Noti friendRequest = notiRepository.findById(notiId)
+        Noti friendRequestNoti = notiRepository.findById(notiId)
                 .orElseThrow(() -> new CustomException(NOTI_NOT_FOUND));
 
-        assertThat(friendRequest.getUseYn()).isEqualTo("N");
+        assertThat(friendRequestNoti.getUseYn()).isEqualTo("N");
 
         // 알림 확인 - 친구 수락
         Noti noti = Optional.of(notiQueryDslRepository
-                .findNotiBySendUserIdAndReceiveUserId(response.getSendUserId(), response.getReceiveUserId()))
+                .findNotiBySendUserIdAndReceiveUserId(acceptResponse .getSendUserId(), acceptResponse .getReceiveUserId()))
                 .orElseThrow(
                         () -> new CustomException(NOTI_NOT_FOUND)
                 );
@@ -173,8 +175,13 @@ public class FriendServiceTest {
         RequestFriendResponse requestFriendResponse = friendService.requestToBeFriends(requestFriendRequest);
         Long notiId = requestFriendResponse.getNotiId();
 
+        RefuseFriendRequest refuseRequest = RefuseFriendRequest.builder()
+                .sendUserId(requestFriendResponse.getReceiveUserId())
+                .receiveUserId(requestFriendResponse.getSendUserId())
+                .notiId(notiId)
+                .build();
         // when
-        RefuseFriendResponse response = friendService.refuseToBeFriends(notiId);
+        RefuseFriendResponse response = friendService.refuseToBeFriends(refuseRequest);
 
         // then
         Noti requestNoti = notiRepository.findById(notiId).orElseThrow();
