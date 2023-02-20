@@ -55,27 +55,24 @@ public class UserService {
 
     @Transactional
     public LoginUserResponse login(LoginUserRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new CustomException(EMAIL_NOT_FOUND));
-        if (request.getPassword().equals(user.getPassword())) {
-            return UserResponse.toLoginUserResponse(user);
-        }
-        throw new CustomException(EMAIL_NOT_FOUND); // 로그인 실패 시?
+        User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(),null)
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return UserResponse.toLoginUserResponse(user);
     }
 
     @Transactional
     public CreateUserResponse createSnsUser(CreateSnsUserRequest request) {
+        if (userQueryDslRepository.existsByEmailAndSnsType(request.toUser())){
+            throw new CustomException(ErrorCode.DUPLICATE_USER);
+        }
         return UserResponse.toCreateUserResponse(
                 userRepository.save(request.toUser()));
     }
 
     @Transactional
     public LoginUserResponse loginSns(LoginSnsUserRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(),request.getSnsType())
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        if (request.getSnsType().equals(user.getSnsType())) {
-            return UserResponse.toLoginUserResponse(user);
-        }
-        throw new CustomException(SNS_TYPE_NOT_FOUND); // 로그인 실패 시?
+        return UserResponse.toLoginUserResponse(user);
     }
 }
