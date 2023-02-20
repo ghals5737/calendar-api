@@ -138,9 +138,7 @@ public class FriendControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("friend-accept",
-                        pathParameters(
-                                parameterWithName("id").description("조회할 알림 ID")
-                        ), requestFields(
+                       requestFields(
                                 fieldWithPath("sendUserId").description("발신 사용자 아이디"),
                                 fieldWithPath("receiveUserId").description("수신 사용자 아이디"),
                                 fieldWithPath("notiId").description("알림 아이디")
@@ -183,9 +181,7 @@ public class FriendControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("friend-refuse",
-                        pathParameters(
-                                parameterWithName("id").description("조회할 알림 ID")
-                        ),
+
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
