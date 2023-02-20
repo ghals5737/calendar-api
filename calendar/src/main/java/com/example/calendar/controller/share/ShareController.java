@@ -1,0 +1,24 @@
+package com.example.calendar.controller.share;
+
+import com.example.calendar.dto.share.request.ShareCalendarRequest;
+import com.example.calendar.dto.share.response.ShareCalendarResponse;
+import com.example.calendar.service.share.ShareService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/share")
+public class ShareController {
+    private final ShareService shareService;
+
+    @PostMapping
+    public ShareCalendarResponse shareCalendar(@RequestBody @Valid ShareCalendarRequest request) throws Exception {
+        return shareService.shareCalendar(request);
+    }
+}
