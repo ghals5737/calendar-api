@@ -4,16 +4,14 @@ import com.example.calendar.dto.share.request.ShareCalendarRequest;
 import com.example.calendar.dto.share.response.ShareCalendarResponse;
 import com.example.calendar.service.share.ShareService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/share")
+@CrossOrigin(origins = "*")
 public class ShareController {
     private final ShareService shareService;
 

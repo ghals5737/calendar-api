@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/notis")
+@CrossOrigin(origins = "*")
 public class NotiController {
     private final NotiService notiService;
 

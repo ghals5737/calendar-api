@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/friends")
+@CrossOrigin(origins = "*")
 public class FriendController {
 
     private final FriendService friendService;
