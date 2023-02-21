@@ -1,5 +1,6 @@
 package com.example.calendar.dto.calendar.request;
 
+import com.example.calendar.domain.category.type.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class UpdateCalendarRequest {
     @NotNull
     private String description;
     @NotBlank
-    private String category;
+    private CategoryType category;
     @NotBlank
     private String color;
 }

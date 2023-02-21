@@ -16,6 +16,8 @@ public class UpdateScheduleRequest {
     private String title;
     private LocalDateTime startDt;
     private LocalDateTime endDt;
+    private String startYmd;
+    private String endYmd;
     private String des;
     private String color;
 }

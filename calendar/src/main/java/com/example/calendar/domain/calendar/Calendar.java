@@ -1,5 +1,6 @@
 package com.example.calendar.domain.calendar;
 
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.dto.calendar.request.UpdateCalendarRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,8 @@ public class Calendar {
     private String title;
     private String description;
     private String color;
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private CategoryType category;
 
     public void updateCalendar(UpdateCalendarRequest request) {
         this.title = request.getTitle();

@@ -15,7 +15,6 @@ import javax.transaction.Transactional;
 import static com.example.calendar.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
-
 @Service
 public class UserService {
     private final UserRepository userRepository;
