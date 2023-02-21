@@ -31,6 +31,8 @@ public class Schedule {
 
     public void updateSchedule(UpdateScheduleRequest request){
         this.title=request.getTitle();
+        this.startYmd= request.getStartYmd();
+        this.endYmd= request.getEndYmd();
         this.startDt=request.getStartDt();
         this.endDt=request.getEndDt();
         this.description=request.getDes();
