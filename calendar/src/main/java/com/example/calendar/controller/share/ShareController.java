@@ -11,7 +11,6 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/share")
-@CrossOrigin(origins = "*")
 public class ShareController {
     private final ShareService shareService;
 
