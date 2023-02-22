@@ -21,7 +21,6 @@ public class CreateCalendarRequest {
     private String title;
     @NotBlank(message = "설명이 공백이 포함될 수 없습니다.")
     private String description;
-    @NotNull(message = "카테고리가 공백이 포함될 수 없습니다.")
     private CategoryType category;
     @NotBlank
     private String color;
