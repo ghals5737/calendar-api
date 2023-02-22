@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
+        registry.addMapping("/api/**")
                 .allowedOrigins("https://minical.vercel.app")
                 .allowedMethods("POST", "GET", "PUT", "DELETE","OPTIONS")
                 .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Custom-Header")
