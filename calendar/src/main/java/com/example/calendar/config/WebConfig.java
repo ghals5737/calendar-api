@@ -9,14 +9,14 @@ import org.springframework.core.Ordered;
 @Configuration
 public class WebConfig {
 
-    @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
-        FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new CorsFilter());
-        registrationBean.addUrlPatterns("/api/*");
-        registrationBean.setName("CorsFilter");
-        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return registrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<CorsFilter> corsFilter() {
+//        FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>();
+//        registrationBean.setFilter(new CorsFilter());
+//        registrationBean.addUrlPatterns("/api/*");
+//        registrationBean.setName("CorsFilter");
+//        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//        return registrationBean;
+//    }
 
 }
