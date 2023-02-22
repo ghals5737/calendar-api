@@ -2,13 +2,14 @@ package com.example.calendar.dto.calendar.request;
 
 import com.example.calendar.domain.calendar.Calendar;
 import com.example.calendar.domain.category.type.CategoryType;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
@@ -16,11 +17,11 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class CreateCalendarRequest {
 
-    @NotBlank
+    @NotBlank(message = "제목에 공백이 포함될 수 없습니다.")
     private String title;
-    @NotBlank
+    @NotBlank(message = "설명이 공백이 포함될 수 없습니다.")
     private String description;
-    @NotBlank
+    @NotNull(message = "카테고리가 공백이 포함될 수 없습니다.")
     private CategoryType category;
     @NotBlank
     private String color;
