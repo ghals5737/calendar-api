@@ -25,8 +25,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-origin", "https://minical.vercel.app");
         if (body instanceof ErrorResponse) {
             ErrorResponse errorResponse = (ErrorResponse) body;
             ApiResponse<Object> apiResponse = ApiResponse
@@ -34,10 +32,10 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                     .code(HttpStatus.BAD_REQUEST)
                     .error(errorResponse)
                     .build();
-            return new ResponseEntity<>(apiResponse,responseHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         }
 
         ApiResponse<Object> apiResponse = ApiResponse.builder().code(HttpStatus.OK).data(body).build();
-        return new ResponseEntity<>(apiResponse,responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }
