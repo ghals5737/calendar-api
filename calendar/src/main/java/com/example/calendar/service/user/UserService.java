@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 import static com.example.calendar.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
@@ -77,5 +80,9 @@ public class UserService {
         User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(),request.getSnsType())
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return UserResponse.toLoginUserResponse(user);
+    }
+
+    public List<SelectUserByEmailResponse> selectUserByEmail(String email) {
+        return Optional.ofNullable(userQueryDslRepository.findAllByEmail(email)).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
 }

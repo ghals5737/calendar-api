@@ -3,12 +3,17 @@ package com.example.calendar.repository.user;
 import com.example.calendar.domain.user.QUser;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.domain.user.type.SnsType;
+import com.example.calendar.dto.user.response.SelectUserByEmailResponse;
+import com.example.calendar.dto.user.response.SelectUserByIdResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 
 @RequiredArgsConstructor
 @Repository
@@ -40,5 +45,16 @@ public class UserQueryDslRepository {
             whereClause.and(QUser.user.snsType.isNull());
         }
         return whereClause;
+    }
+
+    public List<SelectUserByEmailResponse> findAllByEmail(String email){
+        return  queryFactory.select(Projections.constructor(SelectUserByEmailResponse.class
+                ,QUser.user.id
+                ,QUser.user.email
+                ,QUser.user.nickname
+                ))
+                .from(QUser.user)
+                .where(QUser.user.email.eq(email))
+                .fetch();
     }
 }
