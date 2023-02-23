@@ -5,6 +5,7 @@ import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.CreateUserResponse;
 import com.example.calendar.dto.user.response.LoginUserResponse;
+import com.example.calendar.dto.user.response.SelectUserByEmailResponse;
 import com.example.calendar.dto.user.response.SelectUserByIdResponse;
 import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,7 +98,7 @@ public class UserServiceTest {
         // given
         User user = User.builder()
                 .nickname("test nickname")
-                .email("abc@gmail.com")
+                .email("testEmail@gmail.com")
                 .snsType(SnsType.MINICAL)
                 .birthday(LocalDate.now())
                 .password("abcdefg")
@@ -104,14 +106,12 @@ public class UserServiceTest {
         User save = userRepository.save(user);
 
         //when
-        SelectUserByIdResponse response = userService.selectUserByEmail(save.getEmail());
+        List<SelectUserByEmailResponse> response = userService.selectUserByEmail(save.getEmail());
 
         //then
-        assertThat(response.getUserId()).isEqualTo(user.getId());
-        assertThat(response.getNickname()).isEqualTo(user.getNickname());
-        assertThat(response.getPassword()).isEqualTo(user.getPassword());
-        assertThat(response.getBirthday()).isEqualTo(user.getBirthday());
-        assertThat(response.getEmail()).isEqualTo(user.getEmail());
+        assertThat(response.get(0).getUserId()).isEqualTo(user.getId());
+        assertThat(response.get(0).getNickname()).isEqualTo(user.getNickname());
+        assertThat(response.get(0).getEmail()).isEqualTo(user.getEmail());
 
     }
 
@@ -142,7 +142,7 @@ public class UserServiceTest {
     void createSnsUserTest() {
         // given
         CreateSnsUserRequest request = CreateSnsUserRequest.builder()
-                .email("abc@gmail.com")
+                .email("test@gmail.com")
                 .birthday(null)
                 .snsType(SnsType.GOOGLE)
                 .build();
