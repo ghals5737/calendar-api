@@ -4,15 +4,20 @@ files:
   - source:  /
     destination: /home/ubuntu/github_action
     overwrite: yes
-
+    owner: root
+    group: root
+    mode: '0755'
+    
 permissions:
   - object: /
     pattern: "**"
-    owner: ubuntu
+    owner: root
     group: ubuntu
+    mode: '0755'
 
 hooks:
   ApplicationStart:
     - location: scripts/gh_deploy.sh
       timeout: 10000
-      runas: ubuntu
+      runas: root
+ 
