@@ -13,4 +13,7 @@ import lombok.NoArgsConstructor;
 public class SelectNotiNotUsedByUserIdResponse {
     private Long notiId;
     private NotiType notiType;
+    private String nickname;
+    private String email;
+
 }

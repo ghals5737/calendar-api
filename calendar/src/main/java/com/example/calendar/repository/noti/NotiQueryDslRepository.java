@@ -51,7 +51,9 @@ public class NotiQueryDslRepository {
     public List<SelectNotiNotUsedByUserIdResponse> searchNotiNotUsedByUserId(Long id) {
         return queryFactory.select(Projections.constructor(SelectNotiNotUsedByUserIdResponse.class
                 , noti.id
-                , noti.notiType))
+                , noti.notiType
+                , user.nickname
+                , user.email))
                 .from(user)
                 .innerJoin(noti)
                 .on(user.id.eq(noti.receiveUserId))
