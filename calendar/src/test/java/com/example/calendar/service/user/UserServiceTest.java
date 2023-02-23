@@ -91,6 +91,31 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 이메일로 조회 정상 동작 테스트")
+    void selectUserByEmailTest() throws Exception {
+        // given
+        User user = User.builder()
+                .nickname("test nickname")
+                .email("abc@gmail.com")
+                .snsType(SnsType.MINICAL)
+                .birthday(LocalDate.now())
+                .password("abcdefg")
+                .build();
+        User save = userRepository.save(user);
+
+        //when
+        SelectUserByIdResponse response = userService.selectUserByEmail(save.getEmail());
+
+        //then
+        assertThat(response.getUserId()).isEqualTo(user.getId());
+        assertThat(response.getNickname()).isEqualTo(user.getNickname());
+        assertThat(response.getPassword()).isEqualTo(user.getPassword());
+        assertThat(response.getBirthday()).isEqualTo(user.getBirthday());
+        assertThat(response.getEmail()).isEqualTo(user.getEmail());
+
+    }
+
+    @Test
     @DisplayName("사용자 생성 API 정상 동작 테스트")
     void createUserTest() throws Exception {
         // given
