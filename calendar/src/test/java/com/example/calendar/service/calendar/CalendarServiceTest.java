@@ -49,6 +49,7 @@ public class CalendarServiceTest {
     public void clear() {
         calendarRepository.deleteAll();
         userCalendarMpngRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     Calendar calendar;
@@ -131,7 +132,9 @@ public class CalendarServiceTest {
 
         // then
         Optional<UserCalendarMpng> byId = userCalendarMpngRepository.findByCalendarIdAndUserId(calendar.getId(), user.getId());
+        Optional<Calendar> byCalendarId = calendarRepository.findById(calendar.getId());
         assertThat(byId.isPresent()).isEqualTo(false);
+        assertThat(byCalendarId.isPresent()).isEqualTo(false);
     }
 
     @Test
@@ -187,5 +190,29 @@ public class CalendarServiceTest {
 
         // then
         assertThat(response).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("사용자, 캘린더 매핑정보 개수 반환하는 로직 정상 동작 테스트")
+    void countCalendarUserMpng() {
+
+        // given
+        User user2 = userRepository.save(User.builder()
+                .nickname("star")
+                .password("pw")
+                .email("abc@gmail.com")
+                .birthday(LocalDate.of(2023, 1, 26))
+                .build());
+
+        userCalendarMpng = userCalendarMpngRepository.save(UserCalendarMpng.builder()
+                .calendarId(calendar.getId())
+                .userId(user2.getId())
+                .build());
+
+        // when
+        Integer count = calendarService.countUser(calendar.getId());
+
+        // then
+        assertThat(count).isEqualTo(2);
     }
 }
