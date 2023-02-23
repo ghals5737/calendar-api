@@ -1,6 +1,7 @@
 package com.example.calendar.repository.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.calendar.condition.CalendarSearchByUserIdCondition;
@@ -45,7 +46,7 @@ class CalendarRepositoryImplTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("trip calendar")
-                        .category("trip")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips")
                         .build());
 

@@ -170,7 +170,7 @@ class CalendarControllerTest {
         //when,then
         this.mockMvc.perform(
                 RestDocumentationRequestBuilders
-                        .delete("/api/calendar/{id}", calendar.getId())
+                        .delete("/api/calendar/{id}?userId="+user.getId(), calendar.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("calendar-delete"
@@ -182,7 +182,7 @@ class CalendarControllerTest {
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
-                                fieldWithPath("body.data.calendarId").description("삭제된 캘린더 ID"),
+                                fieldWithPath("body.data").description("삭제된 캘린더 ID"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
     }

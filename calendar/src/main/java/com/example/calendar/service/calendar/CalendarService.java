@@ -97,4 +97,11 @@ public class CalendarService {
                         .searchByUserId(condition))
                 .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
     }
+
+    @Transactional
+    public void deleteCalendarByIdAndUserId(Long calendarId, Long userId) {
+        UserCalendarMpng userCalendar = userCalendarRepository
+                .findByCalendarIdAndUserId(calendarId,userId).orElseThrow(() -> new CustomException(USER_CALENDAR_NOT_FOUND));
+        userCalendarRepository.delete(userCalendar);
+    }
 }

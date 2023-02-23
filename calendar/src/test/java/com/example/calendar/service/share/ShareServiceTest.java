@@ -1,6 +1,7 @@
 package com.example.calendar.service.share;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.domain.user.type.SnsType;
@@ -58,7 +59,7 @@ public class ShareServiceTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("shareTest1")
-                        .category("trip")
+                        .category(CategoryType.TRIP)
                         .description("trip plan")
                         .build());
 
@@ -66,7 +67,7 @@ public class ShareServiceTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("shareTest2")
-                        .category("study")
+                        .category(CategoryType.WORK)
                         .description("study plan")
                         .build());
     }

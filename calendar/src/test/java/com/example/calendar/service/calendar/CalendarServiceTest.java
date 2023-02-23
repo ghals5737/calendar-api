@@ -130,7 +130,7 @@ public class CalendarServiceTest {
         calendarService.deleteCalendarByIdAndUserId(calendar.getId(),user.getId());
 
         // then
-        Optional<Calendar> byId = calendarRepository.findById(calendar.getId());
+        Optional<UserCalendarMpng> byId = userCalendarMpngRepository.findByCalendarIdAndUserId(calendar.getId(), user.getId());
         assertThat(byId.isPresent()).isEqualTo(false);
     }
 
@@ -173,7 +173,7 @@ public class CalendarServiceTest {
                 Calendar.builder()
                         .color("yellow2")
                         .title("trip calendar2")
-                        .category("trip2")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips2")
                         .build());
 
