@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,5 +50,8 @@ public class UserController {
         return userService.loginSns(request);
     }
 
-
+    @PostMapping("/email")
+    public List<SelectUserByEmailResponse> searchUserEmail(@RequestBody @Valid SelectUserByEmailRequest request){
+        return userService.selectUserByEmail(request.getEmail());
+    }
 }
