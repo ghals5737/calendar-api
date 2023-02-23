@@ -106,6 +106,8 @@ public class NotiControllerTest {
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("body.data.[].notiId").description("알림 ID"),
                                 fieldWithPath("body.data.[].notiType").description("알림 타입"),
+                                fieldWithPath("body.data.[].nickname").description("닉네임"),
+                                fieldWithPath("body.data.[].email").description("이메일"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
                         )));
