@@ -57,6 +57,9 @@ public class UserService {
     public LoginUserResponse login(LoginUserRequest request) {
         User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(), SnsType.MINICAL)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        if(!user.getPassword().equals(request.getPassword())) {
+            throw new CustomException(USER_PASSWORD_NOT_EQUALS);
+        }
         return UserResponse.toLoginUserResponse(user);
     }
 
