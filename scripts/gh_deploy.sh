@@ -56,3 +56,4 @@ if [ -n "$current_pid" ]
 then
   echo "> 어플리케이션이 성공적으로 실행되었습니다. (PID: $current_pid)" >> "$deploy_log_path"
   echo "> 배포가 완료되었습니다. : $(date +%c)" >> "$deploy_log_path"
+fi
