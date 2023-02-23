@@ -1,6 +1,7 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
@@ -61,7 +62,7 @@ public class CalendarServiceTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("trip calendar")
-                        .category("trip")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips")
                         .build());
 
@@ -106,7 +107,7 @@ public class CalendarServiceTest {
         CreateCalendarRequest request = CreateCalendarRequest.builder()
                 .title("test title")
                 .description("test des")
-                .category("test category")
+                .category(CategoryType.PRSN)
                 .color("test color")
                 .userId(user.getId())
                 .build();
@@ -126,7 +127,7 @@ public class CalendarServiceTest {
         // given
 
         // when
-        calendarService.deleteCalendarById(calendar.getId());
+        calendarService.deleteCalendarByIdAndUserId(calendar.getId(),user.getId());
 
         // then
         Optional<Calendar> byId = calendarRepository.findById(calendar.getId());
@@ -147,7 +148,7 @@ public class CalendarServiceTest {
                 .id(calendar.getId())
                 .title("update title")
                 .description("update des")
-                .category("update category")
+                .category(CategoryType.WORK)
                 .color("update color")
                 .build();
 

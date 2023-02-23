@@ -1,6 +1,7 @@
 package com.example.calendar.controller.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
@@ -71,7 +72,7 @@ class CalendarControllerTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("trip calendar")
-                        .category("trip")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips")
                         .build());
 
@@ -95,7 +96,7 @@ class CalendarControllerTest {
         CreateCalendarRequest request = CreateCalendarRequest.builder()
                 .title("test title")
                 .color("test color")
-                .category("test category")
+                .category(CategoryType.COUPLE)
                 .description("test desc")
                 .userId(user.getId())
                 .build();
@@ -162,7 +163,7 @@ class CalendarControllerTest {
     }
 
     @Test
-    @DisplayName("캘린더 아이디로 삭제하는 API 정상동작 확인")
+    @DisplayName("캘린더 아이디와 유저 아이디로 삭제하는 API 정상동작 확인")
     public void deleteCalendarByIdTest() throws Exception {
         //given
 
@@ -194,7 +195,7 @@ class CalendarControllerTest {
         UpdateCalendarRequest request = UpdateCalendarRequest.builder()
                 .id(calendar.getId())
                 .title("update test")
-                .category("test")
+                .category(CategoryType.WORK)
                 .description("update test description")
                 .color("update")
                 .build();
