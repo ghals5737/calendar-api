@@ -6,6 +6,7 @@ import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.noti.response.DeleteNotiByIdResponse;
 import com.example.calendar.dto.noti.response.SelectNotiByIdResponse;
 import com.example.calendar.dto.noti.response.SelectNotiNotUsedByUserIdResponse;
+import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.noti.NotiRepository;
 import com.example.calendar.repository.user.UserRepository;
@@ -75,9 +76,19 @@ public class NotiServiceTest {
     @Test
     @DisplayName("사용자 아이디로 열람하지 않았던 5건의 최신 알림 조회 정상 동작 확인")
     void selectNotiNotUsedByUserIdTest() {
+
+        // when
         List<SelectNotiNotUsedByUserIdResponse> response = notiService.selectNotiNotUsedByUserId(receiveUser.getId());
+
+        // then
+
         assertThat(response.get(0).getNotiId()).isEqualTo(noti.getId());
         assertThat(response.get(0).getNotiType()).isEqualTo(noti.getNotiType());
+
+        // 발신자 확인
+        User user = userRepository.findById(sendUser.getId()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        assertThat(response.get(0).getEmail()).isEqualTo(user.getEmail());
+        assertThat(response.get(0).getNickname()).isEqualTo(user.getNickname());
     }
 
     @Test
