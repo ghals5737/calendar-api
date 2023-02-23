@@ -1,6 +1,7 @@
 package com.example.calendar.service.calendar;
 
 import com.example.calendar.domain.calendar.Calendar;
+import com.example.calendar.domain.category.type.CategoryType;
 import com.example.calendar.domain.mapping.UserCalendarMpng;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.calendar.request.CreateCalendarRequest;
@@ -48,6 +49,7 @@ public class CalendarServiceTest {
     public void clear() {
         calendarRepository.deleteAll();
         userCalendarMpngRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     Calendar calendar;
@@ -61,7 +63,7 @@ public class CalendarServiceTest {
                 Calendar.builder()
                         .color("yellow")
                         .title("trip calendar")
-                        .category("trip")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips")
                         .build());
 
@@ -106,7 +108,7 @@ public class CalendarServiceTest {
         CreateCalendarRequest request = CreateCalendarRequest.builder()
                 .title("test title")
                 .description("test des")
-                .category("test category")
+                .category(CategoryType.PRSN)
                 .color("test color")
                 .userId(user.getId())
                 .build();
@@ -126,11 +128,13 @@ public class CalendarServiceTest {
         // given
 
         // when
-        calendarService.deleteCalendarById(calendar.getId());
+        calendarService.deleteCalendarByIdAndUserId(calendar.getId(),user.getId());
 
         // then
-        Optional<Calendar> byId = calendarRepository.findById(calendar.getId());
+        Optional<UserCalendarMpng> byId = userCalendarMpngRepository.findByCalendarIdAndUserId(calendar.getId(), user.getId());
+        Optional<Calendar> byCalendarId = calendarRepository.findById(calendar.getId());
         assertThat(byId.isPresent()).isEqualTo(false);
+        assertThat(byCalendarId.isPresent()).isEqualTo(false);
     }
 
     @Test
@@ -147,7 +151,7 @@ public class CalendarServiceTest {
                 .id(calendar.getId())
                 .title("update title")
                 .description("update des")
-                .category("update category")
+                .category(CategoryType.WORK)
                 .color("update color")
                 .build();
 
@@ -172,7 +176,7 @@ public class CalendarServiceTest {
                 Calendar.builder()
                         .color("yellow2")
                         .title("trip calendar2")
-                        .category("trip2")
+                        .category(CategoryType.TRIP)
                         .description("for planning trips2")
                         .build());
 
@@ -186,5 +190,29 @@ public class CalendarServiceTest {
 
         // then
         assertThat(response).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("사용자, 캘린더 매핑정보 개수 반환하는 로직 정상 동작 테스트")
+    void countCalendarUserMpng() {
+
+        // given
+        User user2 = userRepository.save(User.builder()
+                .nickname("star")
+                .password("pw")
+                .email("abc@gmail.com")
+                .birthday(LocalDate.of(2023, 1, 26))
+                .build());
+
+        userCalendarMpng = userCalendarMpngRepository.save(UserCalendarMpng.builder()
+                .calendarId(calendar.getId())
+                .userId(user2.getId())
+                .build());
+
+        // when
+        Integer count = calendarService.countUser(calendar.getId());
+
+        // then
+        assertThat(count).isEqualTo(2);
     }
 }

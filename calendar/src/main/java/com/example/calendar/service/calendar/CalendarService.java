@@ -9,6 +9,7 @@ import com.example.calendar.dto.calendar.response.*;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.calendar.CalendarQueryDslRepository;
 import com.example.calendar.repository.calendar.CalendarRepository;
+import com.example.calendar.repository.mapping.UserCalendarMpngQuertDslRepository;
 import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarQueryDslRepository calendarQueryDslRepository;
     private final UserCalendarMpngRepository userCalendarRepository;
+    private final UserCalendarMpngQuertDslRepository userCalendarMpngQuertDslRepository;
 
     @Transactional
     public SelectCalendarByIdResponse selectCalendarById(Long calendarId) throws Exception {
@@ -96,5 +98,22 @@ public class CalendarService {
         return Optional.ofNullable(calendarQueryDslRepository
                         .searchByUserId(condition))
                 .orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+    }
+
+    @Transactional
+    public void deleteCalendarByIdAndUserId(Long calendarId, Long userId) {
+        if(countUser(calendarId)==1){
+            Calendar calendar = calendarRepository
+                    .findById(calendarId).orElseThrow(() -> new CustomException(CALENDAR_NOT_FOUND));
+            calendarRepository.delete(calendar);
+        }
+        UserCalendarMpng userCalendar = userCalendarRepository
+                .findByCalendarIdAndUserId(calendarId,userId).orElseThrow(() -> new CustomException(USER_CALENDAR_NOT_FOUND));
+
+        userCalendarRepository.delete(userCalendar);
+    }
+
+    public Integer countUser(Long calendarId) {
+        return userCalendarMpngQuertDslRepository.countUser(calendarId).orElseThrow(()->new CustomException(USER_CALENDAR_NOT_FOUND));
     }
 }

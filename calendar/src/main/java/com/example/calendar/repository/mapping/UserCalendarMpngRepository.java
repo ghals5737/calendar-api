@@ -12,4 +12,6 @@ public interface UserCalendarMpngRepository extends JpaRepository<UserCalendarMp
     List<UserCalendarMpng> findByUserId(Long userId);
     Optional<UserCalendarMpng> findByCalendarId(Long calendarId);
 
+    Optional<UserCalendarMpng> findByCalendarIdAndUserId(Long calendarId,Long userId);
+
 }
