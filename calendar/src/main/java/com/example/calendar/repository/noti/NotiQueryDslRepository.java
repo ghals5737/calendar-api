@@ -9,7 +9,9 @@ import com.example.calendar.dto.noti.response.NotiResponse;
 import com.example.calendar.dto.noti.response.SelectNotiByIdResponse;
 import com.example.calendar.dto.noti.response.SelectNotiNotUsedByUserIdResponse;
 import com.example.calendar.global.error.exception.CustomException;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -52,8 +54,15 @@ public class NotiQueryDslRepository {
         return queryFactory.select(Projections.constructor(SelectNotiNotUsedByUserIdResponse.class
                 , noti.id
                 , noti.notiType
-                , user.nickname
-                , user.email))
+                , ExpressionUtils.as(
+                        JPAExpressions.select(user.nickname)
+                                .from(user)
+                                .where(user.id.eq(noti.sendUserId)), "nickname")
+                , ExpressionUtils.as(
+                        JPAExpressions.select(user.email)
+                                .from(user)
+                                .where(user.id.eq(noti.sendUserId)), "email")
+        ))
                 .from(user)
                 .innerJoin(noti)
                 .on(user.id.eq(noti.receiveUserId))
