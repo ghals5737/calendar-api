@@ -1,6 +1,7 @@
 package com.example.calendar.service.user;
 
 import com.example.calendar.domain.user.User;
+import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.user.request.*;
 import com.example.calendar.dto.user.response.*;
 import com.example.calendar.global.error.ErrorCode;
@@ -54,7 +55,7 @@ public class UserService {
 
     @Transactional
     public LoginUserResponse login(LoginUserRequest request) {
-        User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(),null)
+        User user = userQueryDslRepository.selectByEmailAndSnsType(request.getEmail(), SnsType.MINICAL)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return UserResponse.toLoginUserResponse(user);
     }
