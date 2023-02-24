@@ -55,6 +55,10 @@ public class NotiQueryDslRepository {
                 , noti.id
                 , noti.notiType
                 , ExpressionUtils.as(
+                        JPAExpressions.select(user.id)
+                                .from(user)
+                                .where(user.id.eq(noti.sendUserId)), "sendUserId")
+                , ExpressionUtils.as(
                         JPAExpressions.select(user.nickname)
                                 .from(user)
                                 .where(user.id.eq(noti.sendUserId)), "nickname")
