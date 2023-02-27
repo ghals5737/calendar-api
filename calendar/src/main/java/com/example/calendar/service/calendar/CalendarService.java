@@ -9,7 +9,7 @@ import com.example.calendar.dto.calendar.response.*;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.calendar.CalendarQueryDslRepository;
 import com.example.calendar.repository.calendar.CalendarRepository;
-import com.example.calendar.repository.mapping.UserCalendarMpngQuertDslRepository;
+import com.example.calendar.repository.mapping.UserCalendarMpngQueryDslRepository;
 import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarQueryDslRepository calendarQueryDslRepository;
     private final UserCalendarMpngRepository userCalendarRepository;
-    private final UserCalendarMpngQuertDslRepository userCalendarMpngQuertDslRepository;
+    private final UserCalendarMpngQueryDslRepository userCalendarMpngQuertDslRepository;
 
     @Transactional
     public SelectCalendarByIdResponse selectCalendarById(Long calendarId) throws Exception {
@@ -70,7 +70,7 @@ public class CalendarService {
 
     @Transactional
     public List<SelectCalendarByIdResponse> selectCalendarByUserId(Long userId) {
-        List<UserCalendarMpng> userCalendarList = userCalendarRepository.findByUserId(userId);
+        List<UserCalendarMpng> userCalendarList = userCalendarRepository.findAllByUserId(userId);
         List<Long> calendarIds = new ArrayList<>();
         for (UserCalendarMpng userCalendar : userCalendarList) {
             Long calendarId = userCalendar.getCalendarId();

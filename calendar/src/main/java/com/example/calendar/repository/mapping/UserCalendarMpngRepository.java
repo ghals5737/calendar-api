@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserCalendarMpngRepository extends JpaRepository<UserCalendarMpng, Long> {
-    List<UserCalendarMpng> findByUserId(Long userId);
+    List<UserCalendarMpng> findAllByUserId(Long userId);
     Optional<UserCalendarMpng> findByCalendarId(Long calendarId);
 
     Optional<UserCalendarMpng> findByCalendarIdAndUserId(Long calendarId,Long userId);

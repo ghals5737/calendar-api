@@ -86,7 +86,7 @@ public class CalendarServiceTest {
         //given
 
         //when
-        List<UserCalendarMpng> userCalendarMpngs = userCalendarMpngRepository.findByUserId(user.getId());
+        List<UserCalendarMpng> userCalendarMpngs = userCalendarMpngRepository.findAllByUserId(user.getId());
         List<SelectCalendarByIdResponse> calendars = new ArrayList<>();
         for (UserCalendarMpng calendar : userCalendarMpngs) {
             SelectCalendarByIdResponse selectCalendarByIdResponse = calendarService.selectCalendarById(calendar.getCalendarId());
