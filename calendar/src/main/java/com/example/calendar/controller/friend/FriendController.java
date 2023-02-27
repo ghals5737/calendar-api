@@ -6,11 +6,13 @@ import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.RefuseFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
+import com.example.calendar.dto.friend.response.SelectFriendListResponse;
 import com.example.calendar.service.friend.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,5 +33,10 @@ public class FriendController {
     @PostMapping("refuse")
     public RefuseFriendResponse refuseToBeFriends(@RequestBody @Valid RefuseFriendRequest request) {
         return friendService.refuseToBeFriends(request);
+    }
+
+    @GetMapping("users/{userId}")
+    public List<SelectFriendListResponse> selectFriendListTest(@PathVariable Long userId) {
+        return friendService.selectFriendList(userId);
     }
 }

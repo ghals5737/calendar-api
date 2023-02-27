@@ -216,14 +216,13 @@ public class FriendControllerTest {
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("select-friends",
-
                         responseFields(
                                 fieldWithPath("headers").description("해더 정보"),
                                 fieldWithPath("body.result").description("API 실행결과정보"),
                                 fieldWithPath("body.data").description("바디"),
-                                fieldWithPath("body.data.userId").description("친구 ID"),
-                                fieldWithPath("body.data.email").description("친구 이메일"),
-                                fieldWithPath("body.data.nickname").description("친구 닉네임"),
+                                fieldWithPath("body.data.[].userId").description("친구 ID"),
+                                fieldWithPath("body.data.[].email").description("친구 이메일"),
+                                fieldWithPath("body.data.[].nickname").description("친구 닉네임"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
