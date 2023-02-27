@@ -7,12 +7,10 @@ import com.example.calendar.domain.noti.NotiType;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RefuseFriendRequest;
 import com.example.calendar.dto.friend.request.RequestFriendRequest;
-import com.example.calendar.dto.friend.response.AcceptFriendResponse;
-import com.example.calendar.dto.friend.response.FriendResponse;
-import com.example.calendar.dto.friend.response.RefuseFriendResponse;
-import com.example.calendar.dto.friend.response.RequestFriendResponse;
+import com.example.calendar.dto.friend.response.*;
 import com.example.calendar.global.error.ErrorCode;
 import com.example.calendar.global.error.exception.CustomException;
+import com.example.calendar.repository.friend.FriendQueryDslRepository;
 import com.example.calendar.repository.friend.FriendRepository;
 import com.example.calendar.repository.noti.NotiQueryDslRepository;
 import com.example.calendar.repository.noti.NotiRepository;
@@ -22,6 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import static com.example.calendar.global.error.ErrorCode.FRIEND_NOT_FOUND;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +32,8 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final NotiRepository notiRepository;
     private final NotiQueryDslRepository notiQueryDslRepository;
+
+    private final FriendQueryDslRepository friendQueryDslRepository;
 
     @Transactional
     public RequestFriendResponse requestToBeFriends(RequestFriendRequest request) throws Exception {
@@ -86,5 +90,9 @@ public class FriendService {
                 .regDtm(LocalDateTime.now())
                 .useYn("Y")
                 .build()));
+    }
+
+    public List<SelectFriendListResponse> selectFriendList(Long userId) {
+        return friendQueryDslRepository.selectFriendList(userId);
     }
 }

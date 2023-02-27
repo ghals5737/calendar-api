@@ -1,5 +1,7 @@
 package com.example.calendar.controller.friend;
 
+import com.example.calendar.domain.friend.Friend;
+import com.example.calendar.domain.friend.FriendId;
 import com.example.calendar.domain.user.User;
 import com.example.calendar.dto.friend.request.AcceptFriendRequest;
 import com.example.calendar.dto.friend.request.RefuseFriendRequest;
@@ -189,6 +191,38 @@ public class FriendControllerTest {
                                 fieldWithPath("body.data.notiId").description("알림 아이디"),
                                 fieldWithPath("body.data.sendUserId").description("발시 사용자 아이디"),
                                 fieldWithPath("body.data.receiveUserId").description("수신 사용자 아이디"),
+                                fieldWithPath("body.error").description("에러"),
+                                fieldWithPath("statusCode").description("http status 상태코드"),
+                                fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
+                        )));
+    }
+
+    @Test
+    @DisplayName("친구 조회 API 정상동작 확인")
+    public void selectFriendListTest() throws Exception {
+        //given
+        // 친구 요청
+        friendRepository.save(Friend.builder()
+                .id(FriendId.builder()
+                        .sendUserId(sendUser.getId())
+                        .receiveUserId(receiveUser.getId())
+                        .build())
+                .build());
+
+        //when,then
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders
+                                .get("/api/friends/users/{userId}",sendUser.getId())
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("select-friends",
+                        responseFields(
+                                fieldWithPath("headers").description("해더 정보"),
+                                fieldWithPath("body.result").description("API 실행결과정보"),
+                                fieldWithPath("body.data").description("바디"),
+                                fieldWithPath("body.data.[].userId").description("친구 ID"),
+                                fieldWithPath("body.data.[].email").description("친구 이메일"),
+                                fieldWithPath("body.data.[].nickname").description("친구 닉네임"),
                                 fieldWithPath("body.error").description("에러"),
                                 fieldWithPath("statusCode").description("http status 상태코드"),
                                 fieldWithPath("statusCodeValue").description("http status 상태숫자코드")
