@@ -1,5 +1,6 @@
 package com.example.calendar.service.friend;
 
+import com.example.calendar.domain.friend.Friend;
 import com.example.calendar.domain.friend.FriendId;
 import com.example.calendar.domain.noti.Noti;
 import com.example.calendar.domain.noti.NotiType;
@@ -10,6 +11,7 @@ import com.example.calendar.dto.friend.request.RequestFriendRequest;
 import com.example.calendar.dto.friend.response.AcceptFriendResponse;
 import com.example.calendar.dto.friend.response.RefuseFriendResponse;
 import com.example.calendar.dto.friend.response.RequestFriendResponse;
+import com.example.calendar.dto.friend.response.SelectFriendListResponse;
 import com.example.calendar.global.error.exception.CustomException;
 import com.example.calendar.repository.friend.FriendQueryDslRepository;
 import com.example.calendar.repository.friend.FriendRepository;
@@ -26,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.calendar.global.error.ErrorCode.NOTI_NOT_FOUND;
@@ -203,13 +206,19 @@ public class FriendServiceTest {
     @DisplayName("유저 id에 해당되는 친구목록 조회 서비스가 정상 작동한다.")
     void selectFriendList() throws Exception{
         // given
+        friendRepository.save(Friend.builder()
+                .id(FriendId.builder()
+                        .sendUserId(sendUser.getId())
+                        .receiveUserId(receiveUser.getId())
+                        .build())
+                .build());
         // when
         List<SelectFriendListResponse> results=friendService.selectFriendList(sendUser.getId());
 
         // then
-        assertThat(results.get(0)).isEqualTo(NotiType.FRIEND_DECLINE);
-        assertThat(noti.getUseYn()).isEqualTo("Y");
-        assertThat(noti.getReceiveUserId()).isEqualTo(requestNoti.getSendUserId());
-        assertThat(noti.getSendUserId()).isEqualTo(requestNoti.getReceiveUserId());
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getUserId()).isEqualTo(receiveUser.getId());
+        assertThat(results.get(0).getEmail()).isEqualTo(receiveUser.getEmail());
+        assertThat(results.get(0).getNickname()).isEqualTo(receiveUser.getNickname());
     }
 }
