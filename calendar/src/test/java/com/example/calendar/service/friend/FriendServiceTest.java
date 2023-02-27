@@ -204,7 +204,7 @@ public class FriendServiceTest {
 
     @Test
     @DisplayName("유저 id에 해당되는 친구목록 조회 서비스가 정상 작동한다.")
-    void selectFriendList() throws Exception{
+    void selectFriendListTest() throws Exception{
         // given
         friendRepository.save(Friend.builder()
                 .id(FriendId.builder()
