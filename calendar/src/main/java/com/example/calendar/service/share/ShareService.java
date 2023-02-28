@@ -28,12 +28,14 @@ public class ShareService {
         if (existCalendarIds.size() > 0) {
             calendarIds.removeAll(existCalendarIds);
         }
-        calendarIds.stream().map(calendarId ->
+
+        calendarIds.stream().forEach(calendarId ->
                 userCalendarMpngRepository.save(UserCalendarMpng.builder()
                         .calendarId(calendarId)
                         .userId(request.getReceiveUserId())
                         .build()
                 ));
+
         return ShareResponse.toShareCalendarResponse(ShareCalendarResponse.builder()
                 .userId(request.getReceiveUserId())
                 .calendarIds(calendarIds)

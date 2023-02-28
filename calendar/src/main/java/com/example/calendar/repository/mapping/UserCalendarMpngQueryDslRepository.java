@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.example.calendar.domain.calendar.QCalendar.calendar;
 import static com.example.calendar.domain.mapping.QUserCalendarMpng.userCalendarMpng;
@@ -37,8 +36,6 @@ public class UserCalendarMpngQueryDslRepository {
                 .where(user.id.eq(request.getReceiveUserId())
                         , calendar.id.in(request.getCalendarIds()))
                 .fetch();
-
-
     }
 
     public List<UserCalendarMpng> findAllByUserId(Long receiveUserId) {
