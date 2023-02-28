@@ -11,3 +11,12 @@
 ## 3.ERD
 ![erd PNG](https://user-images.githubusercontent.com/52785761/219866704-6aebe409-b928-4a03-8b60-28c46bbe87bc.png)
 ## 4.기술스택
+**JAVA**
+
+**SPRING BOOT**
+
+**JUNIT5**
+
+**JPA**
+
+**QueryDsl**
