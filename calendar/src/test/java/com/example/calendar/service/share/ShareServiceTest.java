@@ -8,12 +8,13 @@ import com.example.calendar.domain.user.type.SnsType;
 import com.example.calendar.dto.share.request.ShareCalendarRequest;
 import com.example.calendar.dto.share.response.ShareCalendarResponse;
 import com.example.calendar.repository.calendar.CalendarRepository;
+import com.example.calendar.repository.mapping.UserCalendarMpngQueryDslRepository;
 import com.example.calendar.repository.mapping.UserCalendarMpngRepository;
 import com.example.calendar.repository.user.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,8 @@ public class ShareServiceTest {
 
     @Autowired
     private UserCalendarMpngRepository userCalendarMpngRepository;
+ @Autowired
+    private UserCalendarMpngQueryDslRepository userCalendarMpngQueryDslRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -73,6 +76,7 @@ public class ShareServiceTest {
     }
 
     @Test
+    @DisplayName("캘린더 공유 정상 동작 테스트")
     void shareServiceTest() {
         List<Long> calendarIds = List.of(calendar.getId(), calendar2.getId());
 
@@ -87,7 +91,7 @@ public class ShareServiceTest {
 
         // then
         assertThat(response.getUserId()).isEqualTo(request.getReceiveUserId());
-        List<UserCalendarMpng> calendars = userCalendarMpngRepository.findByUserId(request.getReceiveUserId());
+        List<UserCalendarMpng> calendars = userCalendarMpngQueryDslRepository.findAllByUserId(request.getReceiveUserId());
         List<Long> calIds = new ArrayList<>();
         for (UserCalendarMpng calendar : calendars) {
             Long calendarId = calendar.getCalendarId();
