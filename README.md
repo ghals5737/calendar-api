@@ -7,7 +7,7 @@
 ## 2.프로젝트 아키택쳐
 
 ### Architecture
-![Auto 3](https://user-images.githubusercontent.com/52785761/219866688-ef48b388-a661-44d8-a30a-797b67750122.png)
+![Auto 3 (1)](https://user-images.githubusercontent.com/52785761/221881591-5815e211-1fe3-431a-a056-7b86c0711be0.png)
 ## 3.ERD
 ![erd PNG](https://user-images.githubusercontent.com/52785761/219866704-6aebe409-b928-4a03-8b60-28c46bbe87bc.png)
 ## 4.기술스택
