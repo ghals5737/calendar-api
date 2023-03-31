@@ -46,7 +46,7 @@
 - Swagger와 비교하면 컨트롤러 단 코드에 어노테이션 등 부가코드가 불필요해져 Restdoc이 깔끔함 
 - 하지만 초기 설정 시 스웨거보다 까다롭다는 단점이 있음
 
-<img width="1019" alt="스크린샷 2023-03-31 오후 10 37 23" src="https://user-images.githubusercontent.com/89332391/229136051-c19d204e-8db3-4dba-8d66-adb92b9babae.png">
+<img width="700" alt="스크린샷 2023-03-31 오후 10 37 23" src="https://user-images.githubusercontent.com/89332391/229136051-c19d204e-8db3-4dba-8d66-adb92b9babae.png">
 
 
 
@@ -58,3 +58,6 @@ https://gray-cake-b29.notion.site/84e7f859e35a4ac9abdd37c18fd9be71
 
 ## 6. 회의록
 https://gray-cake-b29.notion.site/5aee5f3dcb374992916b3ae87e467d41
+
+<img width="800" alt="스크린샷 2023-03-31 오후 11 04 35" src="https://user-images.githubusercontent.com/89332391/229142476-dd5737a3-e833-41c1-aeb9-6508c3c13f47.png">
+
