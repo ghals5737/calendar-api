@@ -27,5 +27,7 @@
 **Spring Restdoc**
 
 ## 5. 트러블슈팅
+https://gray-cake-b29.notion.site/84e7f859e35a4ac9abdd37c18fd9be71
 
-## 6. 깃 컨벤션
+## 6. 회의록
+https://gray-cake-b29.notion.site/5aee5f3dcb374992916b3ae87e467d41
