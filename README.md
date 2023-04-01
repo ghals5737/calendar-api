@@ -21,7 +21,8 @@
  4. 일정 CRUD
  <img width="533" alt="스크린샷 2023-04-01 오후 12 24 18" src="https://user-images.githubusercontent.com/89332391/229263829-6483bbc7-0f4c-4692-80ab-05ca3cd9cb70.png">
 
- 5. 알림 닫기를 누르면 더이상 보이지 않도록
+ 5. 알림 닫기 및 더이상 보이지 않기
+ 
  
  6. 회원가입
 
