@@ -8,13 +8,24 @@
 
 [기능]
  1. 친구 요청, 수락, 거절
+ <img width="356" alt="스크린샷 2023-04-01 오후 12 23 42" src="https://user-images.githubusercontent.com/89332391/229263877-3736e61c-c21f-452b-b214-fe2ece215b5a.png">
+
  2. 친구에게 캘린더 공유
+ <img width="581" alt="스크린샷 2023-04-01 오후 12 26 31" src="https://user-images.githubusercontent.com/89332391/229263867-a6a76aa0-af45-4e99-876a-5edbb7ba1754.png">
+ <img width="1432" alt="스크린샷 2023-04-01 오후 12 30 39" src="https://user-images.githubusercontent.com/89332391/229263953-fd77a3d8-28b0-4cc4-9d23-f48ff224bac5.png">
+
+
  3. 캘랜더 CRUD
+ <img width="163" alt="스크린샷 2023-04-01 오후 12 26 18" src="https://user-images.githubusercontent.com/89332391/229263822-a62513f5-6e87-4e6a-9ea0-4a80fa2ea2ae.png">
+
  4. 일정 CRUD
+ <img width="533" alt="스크린샷 2023-04-01 오후 12 24 18" src="https://user-images.githubusercontent.com/89332391/229263829-6483bbc7-0f4c-4692-80ab-05ca3cd9cb70.png">
+
  5. 알림 닫기를 누르면 더이상 보이지 않도록
+ 
  6. 회원가입
 
-<img width="1000" alt="스크린샷 2023-03-31 오후 11 47 18" src="https://user-images.githubusercontent.com/89332391/229157446-77a26aac-8381-4fa4-97b0-a1538aff462f.png">
+<img width="440" alt="스크린샷 2023-04-01 오후 12 37 45" src="https://user-images.githubusercontent.com/89332391/229263921-9dcc7390-d894-48f1-8d61-06bc5a13af27.png">
 
 
 
@@ -61,6 +72,7 @@
 
 <img width="700" alt="스크린샷 2023-03-31 오후 10 37 23" src="https://user-images.githubusercontent.com/89332391/229136051-c19d204e-8db3-4dba-8d66-adb92b9babae.png">
 
+### Github Action
 
 
 
