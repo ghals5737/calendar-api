@@ -78,12 +78,13 @@
 
 
 ## 5. 트러블슈팅
-https://gray-cake-b29.notion.site/84e7f859e35a4ac9abdd37c18fd9be71
+
+<a href="https://gray-cake-b29.notion.site/84e7f859e35a4ac9abdd37c18fd9be71" target="_blank">[Notion] 트러블슈팅 목록</a>
 
 <img width="532" alt="스크린샷 2023-03-31 오후 10 22 48" src="https://user-images.githubusercontent.com/89332391/229131826-e208afbf-33d0-4a6b-aa36-49c3739e300e.png">
 
 ## 6. 회의록
-https://gray-cake-b29.notion.site/5aee5f3dcb374992916b3ae87e467d41
+<a href="https://gray-cake-b29.notion.site/5aee5f3dcb374992916b3ae87e467d41" target="_blank">[Notion] 회의록 목록</a>
 
 <img width="800" alt="스크린샷 2023-03-31 오후 11 04 35" src="https://user-images.githubusercontent.com/89332391/229142476-dd5737a3-e833-41c1-aeb9-6508c3c13f47.png">
 
